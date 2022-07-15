@@ -1,0 +1,77 @@
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import { HiChevronDown } from 'react-icons/hi';
+import { MdArrowBack, MdSearch } from 'react-icons/md';
+
+const Search = ({ previousPage }: { previousPage: string }) => {
+  const [selectValue, setSelectValue] = useState('');
+  const [searchInput, setSearchInput] = useState('');
+  const router = useRouter();
+  function handleBackClick(e: React.SyntheticEvent<HTMLButtonElement>) {
+    if (!previousPage) {
+      return router.replace('/app');
+    }
+    router.replace(previousPage);
+    return;
+  }
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setSearchInput(e.currentTarget.value);
+    if (!e.currentTarget.value) return router.replace(previousPage);
+    if (router.asPath === '/app/search') return;
+    return router.push('/app/search');
+  }
+
+  return (
+    <div className='sticky z-10 top-2'>
+      <form className=''>
+        <div className='grid grid-cols-[1fr_auto] px-3 py-2 bg-CustomBackgroundBlack rounded'>
+          <label className='relative border-r-2 border-r-CustomBackgroundBlack'>
+            <span className='sr-only'>
+              Search for a radio station by entering a{' '}
+            </span>
+            <input
+              type='text'
+              className='h-full w-full rounded-l-md py-4 pr-4 pl-10 peer text-CustomWhite bg-CustomLightGrey outline-none placeholder:text-CustomWhite'
+              placeholder={`Enter a ${selectValue || 'station name'}`}
+              value={searchInput}
+              onChange={handleInputChange}
+            />
+            <MdSearch className='absolute top-1/2 -translate-y-1/2 ml-2 text-3xl opacity-0 transition-[opacity] duration-300 peer-placeholder-shown:fill-CustomWhite peer-placeholder-shown:opacity-100' />
+            <button
+              className='absolute top-1/2 -translate-y-1/2  left-0 h-full opacity-100 delay-300  peer-placeholder-shown:opacity-0 peer-placeholder-shown:delay-75'
+              type='button'
+              onClick={handleBackClick}
+            >
+              <MdArrowBack className='ml-2 text-3xl fill-CustomWhite' />
+            </button>
+          </label>
+          <label className='relative'>
+            <span className='absolute h-full w-full bg-CustomLightGrey text-CustomWhite  pointer-events-none grid grid-cols-[2fr_1fr] justify-center items-center rounded-r-md'>
+              <span className='justify-self-center capitalize truncate w-[6ch] inline-block '>
+                {selectValue}
+              </span>
+              <HiChevronDown className='fill-CustomWhite text-2xl justify-self-center' />
+            </span>
+            <select
+              name='searchCategory'
+              id=''
+              className='h-[95%] my-[2%]  bg-CustomWhite outline-none w-[95%] mx-[2%]'
+              onChange={(e) => {
+                setSelectValue(e.target.value);
+              }}
+              title={selectValue}
+            >
+              <option value=''></option>
+              <option value='name'>Name</option>
+              <option value='country'>Country</option>
+              <option value='language'>Language</option>
+              <option value='genre'>Genre</option>
+            </select>
+          </label>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default React.memo(Search);
