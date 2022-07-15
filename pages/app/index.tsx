@@ -50,15 +50,17 @@ const App: NextPageWithLayout<
               </Link>
 
               <button>
+                <span className='sr-only'>Play station</span>
                 <HiPlay className='text-6xl mt-1 hover:fill-CustomActivePurple  bg-clip-border' />
               </button>
             </div>
             <div className='col-span-3 flex justify-center items-center'>
               <picture className='relative w-[30%] flex justify-center items-center'>
                 <img
-                  src={topVotedStationsWorldWide[2].favicon}
+                  src='/images/logo/vector/default-monochrome-white.svg'
                   alt='User image'
                   width='300px'
+                  height='auto'
                 />
               </picture>
             </div>
