@@ -63,7 +63,7 @@ const Home: NextPage = () => {
 
         <div className='relative row-start-1 sm:row-start-1 sm:col-start-2 lg:row-end-3'>
           <Image
-            src='/images/hero.svg'
+            src='/images/heroop.svg'
             alt='hero'
             width='618px'
             height='617px'
