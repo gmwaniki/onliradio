@@ -36,13 +36,22 @@ const Search = ({ previousPage }: { previousPage: string }) => {
               value={searchInput}
               onChange={handleInputChange}
             />
-            <MdSearch className='absolute top-1/2 -translate-y-1/2 ml-2 text-3xl opacity-0 transition-[opacity] duration-300 peer-placeholder-shown:fill-CustomWhite peer-placeholder-shown:opacity-100' />
+
+            <MdSearch
+              className='absolute top-1/2 -translate-y-1/2 ml-2 text-3xl opacity-0 transition-[opacity] duration-300 peer-placeholder-shown:fill-CustomWhite peer-placeholder-shown:opacity-100'
+              aria-hidden='true'
+            />
+
             <button
               className='absolute top-1/2 -translate-y-1/2  left-0 h-full opacity-100 delay-300  peer-placeholder-shown:opacity-0 peer-placeholder-shown:delay-75'
               type='button'
               onClick={handleBackClick}
             >
-              <MdArrowBack className='ml-2 text-3xl fill-CustomWhite' />
+              <span className='sr-only'>Go back</span>
+              <MdArrowBack
+                className='ml-2 text-3xl fill-CustomWhite'
+                aria-hidden='true'
+              />
             </button>
           </label>
           <label className='relative'>
