@@ -11,14 +11,16 @@ import {
 } from 'react-icons/md';
 import AppLayout from '../../components/Layout/AppLayout';
 import { getRadioServerUrl } from '../../util/getUrl';
+import { playableStations, TStation } from '../../util/playableStation';
+import StationCard from '../../components/Station/StationCard';
 
 const App: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ topVotedStationsWorldWide }) => {
   // console.log(topVotedStationsWorldWide[0].favicon);
-  console.log(topVotedStationsWorldWide);
+  // console.log(topVotedStationsWorldWide);
   return (
-    <div className='text-CustomTextGrey'>
+    <div className='text-CustomTextGrey overflow-hidden'>
       <section className='mt-5'>
         <div className='flex justify-between items-center'>
           <h1 className='font-semibold text-lg break-words'>
@@ -29,74 +31,43 @@ const App: NextPageWithLayout<
               <span className='sr-only'>Previous Station</span>
               <MdOutlineArrowBackIos className='text-2xl' />
             </button>
-            <span className='text-CustomActivePurple font-bold'>1</span>
+            <p className=''>
+              <span className='text-CustomActivePurple font-bold'>1</span>
+              <span className='align-[20%]'> ... </span>
+              <span>5</span>
+            </p>
             <button className='hover:text-CustomActivePurple'>
               <span className='sr-only'>Next Station</span>
               <MdOutlineArrowForwardIos className='text-2xl' />
             </button>
           </span>
         </div>
-        <section className='bg-CustomBackgroundBlack grid grid-flow-col mt-4 pb-4 rounded-md'>
-          <div className='grid grid-cols-3 grid-rows-[auto_1fr_auto] px-2 '>
-            <div className='col-start-1 col-end-4 flex justify-between items-center'>
-              <Link href={topVotedStationsWorldWide[0].homepage}>
-                <a target='_blank'>
-                  <span className='sr-only'>Go to radio station website</span>
-                  <HiExternalLink
-                    className='text-3xl hover:fill-CustomActivePurple'
-                    aria-hidden='true'
-                  />
-                </a>
-              </Link>
-
-              <button>
-                <span className='sr-only'>Play station</span>
-                <HiPlay className='text-6xl mt-1 hover:fill-CustomActivePurple  bg-clip-border' />
-              </button>
-            </div>
-            <div className='col-span-3 flex justify-center items-center'>
-              <picture className='relative w-[30%] flex justify-center items-center'>
-                <img
-                  src='/images/logo/vector/default-monochrome-white.svg'
-                  alt='User image'
-                  width='300px'
-                  height='auto'
-                />
-              </picture>
-            </div>
-            <div className='mt-4'>
-              <h2
-                className='text-ellipsis overflow-hidden whitespace-nowrap block'
-                title={topVotedStationsWorldWide[1].name}
-              >
-                {topVotedStationsWorldWide[0].name}
-              </h2>
-              <div className='flex items-center'>
-                <div className='sr-only'>Language</div>
-                <MdTranslate aria-hidden='true' />
-                <span className='ml-1'>English</span>
-              </div>
-            </div>
-            <div></div>
-          </div>
-        </section>
+        <div className='min-w-[300px] flex overflow-x-auto scroll-smooth snap-x snap-mandatory lg:snap-none  px-3 [&>*+*]:ml-3 scrollbar'>
+          {topVotedStationsWorldWide.map((station) => {
+            return (
+              <StationCard
+                station={station}
+                key={station.stationuuid}
+                className='w-11/12 snap-center flex-shrink-0 max-w-[320px]'
+              />
+            );
+          })}
+        </div>
       </section>
     </div>
   );
 };
 
 export const getServerSideProps: GetServerSideProps<{
-  topVotedStationsWorldWide: any[];
+  topVotedStationsWorldWide: TStation[];
 }> = async () => {
   try {
     const url = await getRadioServerUrl();
-    // console.log(url);
-    // console.log(`${url}/json/stations/topvote/`);
     const topVotedStation = await axios.get(`${url}/json/stations/topvote/10`);
-    const topVotedStationsWorldWide = topVotedStation.data;
+    const topVotedStationsWorldWide = playableStations(topVotedStation.data);
     return {
       props: {
-        topVotedStationsWorldWide: topVotedStationsWorldWide,
+        topVotedStationsWorldWide,
       },
     };
   } catch (error) {
