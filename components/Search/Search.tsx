@@ -3,7 +3,13 @@ import React, { useState } from 'react';
 import { HiChevronDown } from 'react-icons/hi';
 import { MdArrowBack, MdSearch } from 'react-icons/md';
 
-const Search = ({ previousPage }: { previousPage: string }) => {
+const Search = ({
+  previousPage,
+  className,
+}: {
+  previousPage: string;
+  className?: string;
+}) => {
   const [selectValue, setSelectValue] = useState('');
   const [searchInput, setSearchInput] = useState('');
   const router = useRouter();
@@ -22,12 +28,12 @@ const Search = ({ previousPage }: { previousPage: string }) => {
   }
 
   return (
-    <div className='sticky z-10 top-2'>
+    <div className='sticky top-0 z-10'>
       <form className=''>
         <div className='grid grid-cols-[1fr_auto] px-3 py-2 bg-CustomBackgroundBlack rounded'>
           <label className='relative border-r-2 border-r-CustomBackgroundBlack'>
             <span className='sr-only'>
-              Search for a radio station by entering a{' '}
+              Search for a radio station by entering a {selectValue || 'name'}
             </span>
             <input
               type='text'
