@@ -17,7 +17,6 @@ export async function getRadioServerUrl(): Promise<string> {
     }
   });
   const response = await Promise.all(urlsfromip);
-  console.log(response);
   const requestAddress = Math.floor(Math.random() * response.length);
   return `https://${response[requestAddress]}`;
 }
