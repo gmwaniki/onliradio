@@ -38,13 +38,9 @@ export type TStation = {
 type TplayableStations<T = TStation> = (stations: Array<T>) => Array<T>;
 
 export const playableStations: TplayableStations = function (stations) {
-  console.log('The stations');
-
-  // console.log(stations);
   const stationsNoHls = stations
     .filter((station) => {
       return station.hls === 0;
-      // console.log(station);
     })
     .map((station) => {
       if (!station.favicon) return station;
@@ -59,6 +55,5 @@ export const playableStations: TplayableStations = function (stations) {
         return station;
       }
     });
-  // console.log(stationsNoHls);
   return stationsNoHls;
 };
