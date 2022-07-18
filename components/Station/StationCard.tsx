@@ -7,9 +7,11 @@ import { TStation } from '../../util/playableStation';
 const StationCard = ({
   station,
   className,
+  refCallback,
 }: {
   station: TStation;
   className?: string;
+  refCallback: (el: HTMLImageElement) => void;
 }): JSX.Element => {
   const { homepage, name, favicon, language } = station;
 
@@ -37,11 +39,12 @@ const StationCard = ({
         <div className='col-span-3 flex justify-center items-center'>
           <picture className='relative w-[35%]  flex justify-center items-center'>
             <img
-              src={favicon || '/images/logo/cover.png'}
-              alt='User image'
+              data-src={favicon || '/images/logo/profile.png'}
+              alt={name}
               width='300px'
               height='300px'
-              className='object-contain'
+              className='object-contain '
+              ref={refCallback}
             />
           </picture>
         </div>
