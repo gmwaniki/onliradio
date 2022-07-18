@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import type { ReactElement } from 'react';
+import { ReactElement, useCallback, useEffect, useRef } from 'react';
 import type { NextPageWithLayout } from '../_app';
 import axios, { AxiosError } from 'axios';
 import { HiExternalLink, HiPlay } from 'react-icons/hi';
@@ -13,18 +13,27 @@ import AppLayout from '../../components/Layout/AppLayout';
 import { getRadioServerUrl } from '../../util/getUrl';
 import { playableStations, TStation } from '../../util/playableStation';
 import StationCard from '../../components/Station/StationCard';
+import useInterSectionObserver from '../../hooks/useIntersectionObserver';
 
 const App: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ topVotedStationsWorldWide }) => {
-  // console.log(topVotedStationsWorldWide[0].favicon);
-  // console.log(topVotedStationsWorldWide);
+  const ref = useRef<HTMLImageElement[]>([]);
+  useInterSectionObserver(ref);
+
+  const setImageElementRef = useCallback((el: HTMLImageElement) => {
+    if (ref.current) {
+      if (!el) return;
+      ref.current.push(el);
+    }
+  }, []);
+
   return (
     <div className='text-CustomTextGrey overflow-hidden'>
       <section className='mt-5'>
         <div className='flex justify-between items-center'>
           <h1 className='font-semibold text-lg break-words'>
-            Top Voted Stations
+            Top Voted Station
           </h1>
           <span className='grid grid-flow-col items-center gap-[0.375rem] ml-4'>
             <button className='hover:text-CustomActivePurple'>
@@ -49,6 +58,7 @@ const App: NextPageWithLayout<
                 station={station}
                 key={station.stationuuid}
                 className='w-11/12 snap-center flex-shrink-0 max-w-[320px]'
+                refCallback={setImageElementRef}
               />
             );
           })}
