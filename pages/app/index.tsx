@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { ReactElement, useCallback, useEffect, useRef } from 'react';
 import type { NextPageWithLayout } from '../_app';
 import axios, { AxiosError } from 'axios';
@@ -16,7 +16,7 @@ import StationCard from '../../components/Station/StationCard';
 import useInterSectionObserver from '../../hooks/useIntersectionObserver';
 
 const App: NextPageWithLayout<
-  InferGetServerSidePropsType<typeof getServerSideProps>
+  InferGetStaticPropsType<typeof getStaticProps>
 > = ({ topVotedStationsWorldWide }) => {
   const ref = useRef<HTMLImageElement[]>([]);
   useInterSectionObserver(ref);
@@ -68,7 +68,7 @@ const App: NextPageWithLayout<
   );
 };
 
-export const getServerSideProps: GetServerSideProps<{
+export const getStaticProps: GetStaticProps<{
   topVotedStationsWorldWide: TStation[];
 }> = async () => {
   try {
@@ -79,6 +79,7 @@ export const getServerSideProps: GetServerSideProps<{
       props: {
         topVotedStationsWorldWide,
       },
+      revalidate: 300,
     };
   } catch (error) {
     if (error instanceof AxiosError) {
