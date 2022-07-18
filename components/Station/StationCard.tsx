@@ -39,6 +39,7 @@ const StationCard = ({
         <div className='col-span-3 flex justify-center items-center'>
           <picture className='relative w-[35%]  flex justify-center items-center'>
             <img
+              src='/images/logo/profile.png'
               data-src={favicon || '/images/logo/profile.png'}
               alt={name}
               width='300px'
