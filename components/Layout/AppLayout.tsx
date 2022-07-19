@@ -1,5 +1,7 @@
 import Head from 'next/head';
 import { ReactElement, useState } from 'react';
+import StationContextProvider from '../../Context/AudioContext';
+import Player from '../Player';
 
 import Search from '../Search/Search';
 
@@ -19,10 +21,13 @@ const AppLayout = ({
           content='Listen to all your favorite radio stations on the go'
         />
       </Head>
-      <div className='bg-CustomBlack min-h-screen relative '>
-        <div className='container mx-auto pt-6 px-3 sm:px-0 h-screen relative overflow-x-hidden '>
-          <Search previousPage={previousPage} />
-          <main>{children}</main>
+      <div className='bg-CustomBlack relative min-h-screen h-full overflow-x-hidden'>
+        <div className='container mx-auto pt-6 px-3 sm:px-0 h-screen relative  '>
+          <StationContextProvider>
+            <Search previousPage={previousPage} />
+            <main>{children}</main>
+            <Player />
+          </StationContextProvider>
         </div>
       </div>
     </>
