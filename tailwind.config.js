@@ -17,7 +17,7 @@ module.exports = {
         CustomWhite: '#F2F4FF',
         CustomBlack: '#040404',
         // Custom
-        CustomBackgroundBlack: '#161616',
+        CustomBackgroundBlack: '#262626',
         CustomLightGrey: '#6C6C6C',
         CustomTextGrey: '#9A9A9A',
       },
