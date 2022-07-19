@@ -35,6 +35,7 @@ export type TStation = {
   geo_long: number;
   has_extended_info: boolean;
 };
+export type TstationApp = TStation & { isPlaying?: boolean };
 type TplayableStations<T = TStation> = (stations: Array<T>) => Array<T>;
 
 export const playableStations: TplayableStations = function (stations) {
