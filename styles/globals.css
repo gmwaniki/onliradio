@@ -22,4 +22,7 @@
   .scrollbar::-webkit-scrollbar-thumb:hover {
     background: #ba78fc;
   }
+  .svgthin path {
+    @apply stroke-1;
+  }
 }
