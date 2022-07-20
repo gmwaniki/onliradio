@@ -26,7 +26,11 @@ const Header = () => {
         <div className='justify-self-end grid place-items-center sm:hidden'>
           <button onClick={handleMenuClick} className='text-3xl '>
             <span className='sr-only'>Menu</span>
-            {menu ? <HiX /> : <HiMenuAlt3 />}
+            {menu ? (
+              <HiX data-testid='closemenu' />
+            ) : (
+              <HiMenuAlt3 data-testid='hamburger' />
+            )}
           </button>
         </div>
         <nav className='hidden sm:grid sm:grid-cols-[1fr_auto]'>
