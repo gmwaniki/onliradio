@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import React, { ReactElement, useContext } from 'react';
 import {
-  HiExternalLink,
-  HiMusicNote,
+  HiOutlineHeart,
+  HiOutlineInformationCircle,
   HiOutlineMusicNote,
   HiOutlinePlay,
+  HiPause,
   HiPlay,
 } from 'react-icons/hi';
 import { MdTranslate } from 'react-icons/md';
@@ -19,14 +20,15 @@ const StationCard = ({
   station,
   className,
   refCallback,
-  isPlaying,
+  isPlaying = null,
 }: {
   station: TStation;
   className?: string;
-  isPlaying?: boolean;
+  isPlaying: boolean | null;
   refCallback: (el: HTMLImageElement) => void;
 }): JSX.Element => {
-  const { homepage, name, favicon, language, countrycode, country } = station;
+  const { homepage, name, favicon, language, countrycode, country, votes } =
+    station;
   const { dispatch } = useContext(stationContext);
 
   return (
@@ -38,8 +40,8 @@ const StationCard = ({
           <Link href={homepage}>
             <a target='_blank'>
               <span className='sr-only'>Go to radio station website</span>
-              <HiExternalLink
-                className='text-3xl hover:fill-CustomActivePurple'
+              <HiOutlineInformationCircle
+                className='text-3xl hover:stroke-CustomActivePurple '
                 aria-hidden='true'
               />
             </a>
@@ -47,15 +49,28 @@ const StationCard = ({
 
           <button
             onClick={() => {
+              // if(!state)
+              if (isPlaying === null) {
+                dispatch({
+                  type: StationReducerActionType.PLAY,
+                  payload: station,
+                });
+                return;
+              }
               dispatch({
-                type: StationReducerActionType.PLAY,
-                payload: station,
+                type: StationReducerActionType.TOGGLE,
+                payload: { ...station, isPlaying },
               });
             }}
           >
             <span className='sr-only'>Play station</span>
-
-            <HiOutlinePlay className='[&_path]:stroke-1  text-6xl mt-1 hover:stroke-CustomActivePurple ' />
+            {isPlaying !== null && isPlaying === false ? (
+              <HiPlay className='text-6xl mt-1 fill-CustomActivePurple' />
+            ) : isPlaying === true ? (
+              <HiPause className=' text-6xl mt-1 fill-CustomActivePurple ' />
+            ) : (
+              <HiOutlinePlay className='svgthin  text-6xl mt-1 hover:stroke-CustomActivePurple ' />
+            )}
           </button>
         </div>
         <div className='col-span-3 flex justify-center items-center relative w-[35%] mx-auto'>
@@ -77,7 +92,7 @@ const StationCard = ({
         </div>
         <div className='mt-4 col-span-2'>
           <h2
-            className='text-ellipsis overflow-hidden whitespace-nowrap block capitalize'
+            className='text-ellipsis overflow-hidden whitespace-nowrap block capitalize mr-4'
             title={name}
           >
             {name.toUpperCase()}
@@ -89,10 +104,14 @@ const StationCard = ({
           </div>
         </div>
         <div
-          className='text-2xl col-start-3 justify-self-center self-center'
+          className='text-xl col-start-3 justify-self-center self-end grid grid-rows-[auto_auto]  '
           title={country}
         >
-          {getFlagEmoji(countrycode)}
+          <div>{getFlagEmoji(countrycode)}</div>
+          <div className='grid grid-cols-[auto_auto] gap-1 items-center'>
+            <HiOutlineHeart />
+            <span className='text-base'>{votes}</span>
+          </div>
         </div>
       </div>
     </section>
