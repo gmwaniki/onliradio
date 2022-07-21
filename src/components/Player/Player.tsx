@@ -64,7 +64,7 @@ const Player = () => {
   const { country, name, favicon, url_resolved, countrycode } = state;
   return (
     <section className='fixed right-0 left-0 bottom-2  z-10 text-CustomTextGrey  grid place-items-center px-2'>
-      <div className='grid grid-cols-[1fr_auto_1fr] justify-between bg-CustomBackgroundBlack container sm:grid-cols-[minmax(auto,.7fr)_1fr_auto_auto]  py-1 pl-2 pr-1  gap-6 rounded-md'>
+      <div className='grid grid-cols-[1fr_auto_1fr] justify-between bg-CustomBackgroundBlack container sm:grid-cols-[auto_1fr_auto_auto]  py-1 pl-2 pr-1  gap-6 rounded-md'>
         <div className='grid grid-cols-[auto_1fr] items-center gap-1 sm:gap-2'>
           <div className='w-[50px]'>
             {favicon ? (
@@ -81,11 +81,11 @@ const Player = () => {
             )}
           </div>
           <div className='overflow-x-hidden overflow-y-auto'>
-            <p className='Capitalize whitespace-nowrap animate-marqueetext hover:animate-none'>
+            <p className='text-sm  Capitalize whitespace-nowrap animate-marqueetext hover:animate-none sm:text-base md:animate-none'>
               {name}
             </p>
             <div className='hidden overflow-x-hidden sm:grid  sm:grid-cols-[1fr_auto] sm:gap-2'>
-              {getFlagEmoji(countrycode)}
+              {getFlagEmoji(countrycode) || '🤷'}
             </div>
           </div>
         </div>
