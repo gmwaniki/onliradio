@@ -27,6 +27,19 @@ module.exports = {
       fontFamily: {
         sans: ['Nunito', ...defaultTheme.fontFamily.sans],
       },
+      keyframes: {
+        marqueetext: {
+          '0%,100%': {
+            transform: 'translate3d(25%,0,0)',
+          },
+          '50%': {
+            transform: 'translate3d(-125%,0,0)',
+          },
+        },
+      },
+      animation: {
+        marqueetext: 'marqueetext 13s linear infinite',
+      },
     },
   },
   plugins: [],
