@@ -11,6 +11,7 @@ const HomeLayout = ({ children }: { children: ReactNode }) => {
           name='description'
           content='Listen to over 30,000 radio station from over 200 countries '
         />
+        <link rel='icon' href='/images/logo/favicon/icons-96.png' />
       </Head>
       <div className='min-h-screen bg-CustomWhite relative'>
         <div className='container mx-auto pt-5 px-6 sm:px-0 md:px-6 md:pt-7 grid grid-flow-row gap-10 '>
