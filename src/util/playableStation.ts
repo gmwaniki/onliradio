@@ -47,7 +47,6 @@ export const playableStations: TplayableStations = function (stations) {
       if (station.favicon) {
         station.favicon = sethttps(station.favicon);
       }
-      station.url_resolved = sethttps(station.url_resolved);
 
       return station;
     });
