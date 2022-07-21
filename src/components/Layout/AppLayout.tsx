@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { ReactElement, useState } from 'react';
 import StationContextProvider from '../../Context/AudioContext';
-import Player from '../Player';
+import Player from '../Player/Player';
 
 import Search from '../Search/Search';
 
@@ -23,8 +23,8 @@ const AppLayout = ({
       </Head>
       <div className='bg-CustomBlack relative min-h-screen h-full overflow-x-hidden'>
         <div className='container mx-auto pt-6 px-3 sm:px-0 h-screen relative  '>
+          <Search previousPage={previousPage} />
           <StationContextProvider>
-            <Search previousPage={previousPage} />
             <main>{children}</main>
             <Player />
           </StationContextProvider>
