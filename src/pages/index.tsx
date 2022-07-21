@@ -62,14 +62,11 @@ const Home: NextPage = () => {
         </div>
 
         <div className='relative row-start-1 sm:row-start-1 sm:col-start-2 lg:row-end-3'>
-          <Image
-            src='/images/heroop.svg'
-            alt='hero'
-            width='618px'
-            height='617px'
-            objectFit='contain'
-            layout='responsive'
-          />
+          <picture>
+            <source srcSet='/images/heroop.avif' type='image/avif' />
+            <source srcSet='/images/heroop.webp' type='image/webp' />
+            <img src='/images/heroop.png' alt='Astronaut sitting on a radio' />
+          </picture>
         </div>
       </section>
     </HomeLayout>
