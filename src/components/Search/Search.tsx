@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HiChevronDown } from 'react-icons/hi';
 import { MdArrowBack, MdSearch } from 'react-icons/md';
 
@@ -11,7 +11,7 @@ const Search = ({
   className?: string;
 }) => {
   const [selectValue, setSelectValue] = useState('');
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState<string>('');
   const router = useRouter();
   function handleBackClick(e: React.SyntheticEvent<HTMLButtonElement>) {
     if (!previousPage) {
@@ -22,14 +22,17 @@ const Search = ({
   }
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchInput(e.currentTarget.value);
-    if (!e.currentTarget.value) return router.replace(previousPage);
-    if (router.asPath === '/app/search') return;
-    return router.push('/app/search');
   }
 
   return (
     <div className='sticky top-0 z-10'>
-      <form className=''>
+      <form
+        onFocus={() => router.prefetch('/app/seart')}
+        onSubmit={(e) => {
+          e.preventDefault();
+          router.push('/app/search');
+        }}
+      >
         <div className='grid grid-cols-[1fr_auto] px-3 py-2 bg-CustomBackgroundBlack rounded'>
           <label className='relative border-r-2 border-r-CustomBackgroundBlack'>
             <span className='sr-only'>
