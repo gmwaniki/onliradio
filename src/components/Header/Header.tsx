@@ -60,7 +60,7 @@ const Header = () => {
           <ul className='grid grid-flow-col items-center gap-8'>
             <li>
               <Link href='/app'>
-                <a className='bg-gradient text-white py-[10px] px-[30px] rounded-md hover:opacity-90'>
+                <a className='bg-gradient text-white py-[10px] px-[30px] rounded-md transition-transform duration-300 hover:opacity-90 '>
                   Listen
                 </a>
               </Link>
