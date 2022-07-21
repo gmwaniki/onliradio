@@ -13,7 +13,7 @@ import { getRadioServerUrl } from '../../util/getUrl';
 import { playableStations, TStation } from '../../util/playableStation';
 import StationCard from '../../components/Station/StationCard';
 import useInterSectionObserver from '../../hooks/useIntersectionObserver';
-import { stationContext } from '../../Context/AudioContext';
+import { stationContext, useStationState } from '../../Context/AudioContext';
 import { stat } from 'fs';
 
 const App: NextPageWithLayout<
@@ -21,7 +21,7 @@ const App: NextPageWithLayout<
 > = ({ topVotedStationsWorldWide }) => {
   const ref = useRef<HTMLImageElement[]>([]);
   useInterSectionObserver(ref);
-  const { state } = useContext(stationContext);
+  const { state } = useStationState();
 
   const setImageElementRef = useCallback((el: HTMLImageElement) => {
     if (ref.current) {
@@ -29,6 +29,13 @@ const App: NextPageWithLayout<
       ref.current.push(el);
     }
   }, []);
+  const isplaying = (station: TStation) => {
+    if (state === null || state.isPlaying === undefined) return null;
+    if (state.stationuuid !== station.stationuuid) {
+      return null;
+    }
+    return state.isPlaying;
+  };
 
   return (
     <div className='text-CustomTextGrey overflow-hidden'>
@@ -46,12 +53,7 @@ const App: NextPageWithLayout<
                 key={station.stationuuid}
                 className='w-11/12 snap-center flex-shrink-0 max-w-[320px]'
                 refCallback={setImageElementRef}
-                isPlaying={
-                  state === null || state.isPlaying === undefined
-                    ? false
-                    : state.stationuuid === station.stationuuid &&
-                      state.isPlaying
-                }
+                isPlaying={isplaying(station)}
               />
             );
           })}
