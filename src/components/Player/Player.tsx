@@ -1,4 +1,3 @@
-import { stat } from 'fs';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
   HiOutlineHeart,
@@ -35,7 +34,7 @@ const Player = () => {
       }
     };
   }, [state?.isPlaying, state]);
-
+  if (!state) return <div></div>;
   const handleAudioLoadStart = (e: React.SyntheticEvent<HTMLAudioElement>) => {
     if (state !== null && state.isPlaying === false) {
       setAudioStatus({ status: 'paused', message: 'Paused' });
@@ -47,10 +46,21 @@ const Player = () => {
     setAudioStatus({ status: 'playing', message: 'Playing' });
   };
   const handleAudioPause = (e: React.SyntheticEvent<HTMLAudioElement>) => {
+    if (e.currentTarget.error) {
+      setAudioStatus({
+        status: 'error',
+        message: 'An error occured',
+      });
+
+      dispatch({
+        type: StationReducerActionType.PAUSE,
+        payload: state,
+      });
+      return;
+    }
     setAudioStatus({ status: 'paused', message: 'Paused' });
   };
 
-  if (!state) return <div></div>;
   const { country, name, favicon, url_resolved, countrycode } = state;
   return (
     <section className='fixed right-0 left-0 bottom-2  z-10 text-CustomTextGrey  grid place-items-center px-2'>
@@ -94,13 +104,26 @@ const Player = () => {
             onLoadStart={handleAudioLoadStart}
             onPlaying={handleAudioPlaying}
             onPause={handleAudioPause}
+            onError={(e) => {
+              e.preventDefault();
+              setAudioStatus({
+                status: 'error',
+                message: 'An error occured',
+              });
+            }}
           />
           {state.isPlaying ? (
             <HiPause className='fill-CustomActivePurple' />
           ) : (
             <HiPlay className='fill-CustomActivePurple  stroke-CustomActivePurple' />
           )}
-          <span className='inline-block text-sm'>{audioStatus.message}</span>
+          <span
+            className={`inline-block text-sm ${
+              audioStatus.status === 'error' && 'text-red-600'
+            }`}
+          >
+            {audioStatus.message}
+          </span>
         </button>
         <div className='hidden  sm:grid grid-cols-[repeat(2,auto)] items-center justify-center gap-2'>
           <HiVolumeUp className='text-3xl' />
