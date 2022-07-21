@@ -38,7 +38,7 @@ const App: NextPageWithLayout<
             Top Voted Station
           </h1>
         </div>
-        <div className='min-w-[300px] flex overflow-x-auto scroll-smooth snap-x snap-mandatory lg:snap-none  px-3 [&>*+*]:ml-3 scrollbar'>
+        <div className='min-w-[300px] flex overflow-x-auto scroll-smooth snap-x snap-mandatory sm:snap-none  px-3 [&>*+*]:ml-3 scrollbar'>
           {topVotedStationsWorldWide.map((station) => {
             return (
               <StationCard
@@ -64,10 +64,9 @@ export const getStaticProps: GetStaticProps<{
     const topVotedStation = await axios.get(
       `${url}/json/stations/topvote/10?hidebroken=true`
     );
-    console.log(topVotedStation);
 
     const topVotedStationsWorldWide = playableStations(topVotedStation.data);
-    console.log(topVotedStationsWorldWide);
+
     return {
       props: {
         topVotedStationsWorldWide,
