@@ -32,17 +32,24 @@ export const stationContext = createContext<{
     type: StationReducerActionType;
     payload: TStation | TstationApp;
   }>;
-  state: null | TstationApp;
-}>({ dispatch: () => {}, state: null });
+}>({ dispatch: () => {} });
+const StationStateContext = createContext<{ state: null | TstationApp }>({
+  state: null,
+});
 
 const StationContextProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(stationReducer, null);
 
   return (
-    <stationContext.Provider value={{ dispatch, state }}>
-      {children}
+    <stationContext.Provider value={{ dispatch }}>
+      <StationStateContext.Provider value={{ state }}>
+        {children}
+      </StationStateContext.Provider>
     </stationContext.Provider>
   );
+};
+export const useStationState = () => {
+  return React.useContext(StationStateContext);
 };
 
 export default StationContextProvider;
