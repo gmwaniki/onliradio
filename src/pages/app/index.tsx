@@ -1,11 +1,5 @@
 import type { GetStaticProps, InferGetStaticPropsType } from 'next';
-import {
-  ReactElement,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-} from 'react';
+import { ReactElement, useCallback, useRef } from 'react';
 import type { NextPageWithLayout } from '../_app';
 import axios, { AxiosError } from 'axios';
 import AppLayout from '../../components/Layout/AppLayout';
@@ -13,8 +7,7 @@ import { getRadioServerUrl } from '../../util/getUrl';
 import { playableStations, TStation } from '../../util/playableStation';
 import StationCard from '../../components/Station/StationCard';
 import useInterSectionObserver from '../../hooks/useIntersectionObserver';
-import { stationContext, useStationState } from '../../Context/AudioContext';
-import { stat } from 'fs';
+import { useStationState } from '../../Context/AudioContext';
 
 const App: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
@@ -68,13 +61,18 @@ export const getStaticProps: GetStaticProps<{
 }> = async () => {
   try {
     const url = await getRadioServerUrl();
-    const topVotedStation = await axios.get(`${url}/json/stations/topvote/10`);
+    const topVotedStation = await axios.get(
+      `${url}/json/stations/topvote/10?hidebroken=true`
+    );
+    console.log(topVotedStation);
+
     const topVotedStationsWorldWide = playableStations(topVotedStation.data);
+    console.log(topVotedStationsWorldWide);
     return {
       props: {
         topVotedStationsWorldWide,
       },
-      revalidate: 300,
+      revalidate: 60,
     };
   } catch (error) {
     if (error instanceof AxiosError) {
