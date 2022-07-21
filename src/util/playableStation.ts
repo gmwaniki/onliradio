@@ -44,17 +44,25 @@ export const playableStations: TplayableStations = function (stations) {
       return station.hls === 0;
     })
     .map((station) => {
-      if (!station.favicon) return station;
-      if (station.favicon.startsWith('https')) return station;
-      const url = new URL(station.favicon);
-      if (url.protocol === 'http:') {
-        url.protocol = 'https:';
-        station.favicon = url.toString();
-        return station;
-      } else {
-        station.favicon = '';
-        return station;
+      if (station.favicon) {
+        station.favicon = sethttps(station.favicon);
       }
+      station.url_resolved = sethttps(station.url_resolved);
+
+      return station;
     });
   return stationsNoHls;
+};
+
+const sethttps = (url: string): string => {
+  try {
+    const urlObject = new URL(url);
+    if (urlObject.protocol !== 'https:') {
+      urlObject.protocol = 'https:';
+      url = urlObject.toString();
+    }
+  } catch (error) {
+    url = '';
+  }
+  return url;
 };
