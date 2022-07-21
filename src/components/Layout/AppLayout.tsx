@@ -20,6 +20,7 @@ const AppLayout = ({
           name='description'
           content='Listen to all your favorite radio stations on the go'
         />
+        <link rel='icon' href='/images/logo/favicon/icons-96.png' />
       </Head>
       <div className='bg-CustomBlack relative min-h-screen h-full overflow-x-hidden'>
         <div className='container mx-auto pt-6 px-3 sm:px-0 h-screen relative  '>
