@@ -30,10 +30,10 @@ module.exports = {
       keyframes: {
         marqueetext: {
           '0%,100%': {
-            transform: 'translate3d(25%,0,0)',
+            transform: 'translateX(15%)',
           },
           '50%': {
-            transform: 'translate3d(-125%,0,0)',
+            transform: 'translateX(-115%)',
           },
         },
       },
