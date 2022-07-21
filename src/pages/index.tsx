@@ -65,7 +65,12 @@ const Home: NextPage = () => {
           <picture>
             <source srcSet='/images/heroop.avif' type='image/avif' />
             <source srcSet='/images/heroop.webp' type='image/webp' />
-            <img src='/images/heroop.png' alt='Astronaut sitting on a radio' />
+            <img
+              src='/images/heroop.png'
+              alt='Astronaut sitting on a radio'
+              width='618px'
+              height='617px'
+            />
           </picture>
         </div>
       </section>
