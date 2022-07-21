@@ -107,7 +107,7 @@ const StationCard = ({
           className='text-xl col-start-3 justify-self-center self-end grid grid-rows-[auto_auto]  '
           title={country}
         >
-          <div>{getFlagEmoji(countrycode)}</div>
+          <div>{getFlagEmoji(countrycode) || '🤷'}</div>
           <div className='grid grid-cols-[auto_auto] gap-1 items-center'>
             <HiOutlineHeart />
             <span className='text-base'>{votes}</span>
