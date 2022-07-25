@@ -61,7 +61,7 @@ const Home: NextPage = () => {
           </div>
         </div>
 
-        <div className='relative row-start-1 sm:row-start-1 sm:col-start-2 lg:row-end-3'>
+        <div className='relative justify-self-end row-start-1 sm:row-start-1 sm:col-start-2 lg:row-end-3'>
           <picture>
             <source srcSet='/images/heroop.avif' type='image/avif' />
             <source srcSet='/images/heroop.webp' type='image/webp' />
