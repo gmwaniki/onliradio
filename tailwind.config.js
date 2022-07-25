@@ -30,15 +30,18 @@ module.exports = {
       keyframes: {
         marqueetext: {
           '0%,100%': {
-            transform: 'translateX(15%)',
+            transform: 'translateX(10%)',
           },
           '50%': {
-            transform: 'translateX(-115%)',
+            transform: 'translateX(-100%)',
           },
         },
       },
       animation: {
-        marqueetext: 'marqueetext 13s linear infinite',
+        marqueetext: 'marqueetext 10s linear infinite',
+      },
+      boxShadow: {
+        active: '7px 5px 5px 1px #BA78FC',
       },
     },
   },
