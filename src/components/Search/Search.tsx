@@ -25,7 +25,7 @@ const Search = ({
   }
 
   return (
-    <div className='sticky top-0 z-10'>
+    <div className='sticky top-2 z-10'>
       <form
         onFocus={() => router.prefetch('/app/seart')}
         onSubmit={(e) => {
@@ -40,7 +40,7 @@ const Search = ({
             </span>
             <input
               type='text'
-              className='h-full w-full rounded-l-md py-4 pr-4 pl-10 peer text-CustomWhite bg-CustomLightGrey outline-none placeholder:text-CustomWhite'
+              className='h-full w-full rounded-l-md py-4 pr-4 pl-10 peer text-CustomWhite bg-CustomLightGrey  placeholder:text-CustomWhite outline-none focus:ring-1 ring-CustomActivePurple'
               placeholder={`Enter a ${selectValue || 'station name'}`}
               value={searchInput}
               onChange={handleInputChange}
@@ -55,6 +55,7 @@ const Search = ({
               className='absolute top-1/2 -translate-y-1/2  left-0 h-full opacity-100 delay-300  peer-placeholder-shown:opacity-0 peer-placeholder-shown:delay-75'
               type='button'
               onClick={handleBackClick}
+              disabled={!searchInput}
             >
               <span className='sr-only'>Go back</span>
               <MdArrowBack
@@ -63,8 +64,8 @@ const Search = ({
               />
             </button>
           </label>
-          <label className='relative'>
-            <span className='absolute h-full w-full bg-CustomLightGrey text-CustomWhite  pointer-events-none grid grid-cols-[2fr_1fr] justify-center items-center rounded-r-md'>
+          <label className='relative group'>
+            <span className='absolute h-full w-full bg-CustomLightGrey text-CustomWhite  pointer-events-none grid grid-cols-[2fr_1fr] justify-center items-center rounded-r-md group-focus-within:ring-1 ring-CustomActivePurple'>
               <span className='justify-self-center capitalize truncate w-[6ch] inline-block '>
                 {selectValue}
               </span>
