@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { ReactElement, useContext } from 'react';
+import React, { useContext } from 'react';
 import {
   HiOutlineHeart,
   HiOutlineInformationCircle,
@@ -33,9 +33,11 @@ const StationCard = ({
 
   return (
     <section
-      className={`bg-CustomBackgroundBlack grid grid-flow-col mt-4 pb-4 rounded-md ${className}`}
+      className={`bg-CustomBackgroundBlack grid grid-flow-col p-2 rounded-md ${className} flex-shrink-0 snap-center transition-all ${
+        isPlaying && 'shadow-active -translate-y-2 '
+      }`}
     >
-      <div className='grid grid-cols-3 grid-rows-[auto_1fr_auto] px-2 '>
+      <div className='grid grid-cols-[repeat(3,100px)] grid-rows-[64px_125px_52px] gap-y-2'>
         <div className='col-start-1 col-end-4 flex justify-between items-center'>
           <Link href={homepage}>
             <a target='_blank'>
@@ -49,7 +51,6 @@ const StationCard = ({
 
           <button
             onClick={() => {
-              // if(!state)
               if (isPlaying === null) {
                 dispatch({
                   type: StationReducerActionType.PLAY,
@@ -73,34 +74,42 @@ const StationCard = ({
             )}
           </button>
         </div>
-        <div className='col-span-3 flex justify-center items-center relative w-[35%] mx-auto'>
+        <div className='col-span-3 flex justify-center items-center relative w-[35%]  justify-self-center'>
           {favicon ? (
             <picture>
               <img
                 src='/images/musicnote.svg'
-                data-src={favicon}
+                data-src={`/api/image?url=${favicon}`}
                 alt={name}
                 width='300px'
                 height='300px'
                 className='object-contain rounded'
                 ref={refCallback}
+                onError={(e) => {
+                  e.currentTarget.src = '/images/musicnote.svg';
+                }}
               />
             </picture>
           ) : (
             <HiOutlineMusicNote className='w-full h-full svgthin' />
           )}
         </div>
-        <div className='mt-4 col-span-2'>
-          <h2
-            className='text-ellipsis overflow-hidden whitespace-nowrap block capitalize mr-4'
+        <div className='col-span-2 '>
+          <p
+            className='text-ellipsis overflow-hidden whitespace-nowrap capitalize w-[90%] mr-auto '
             title={name}
           >
-            {name.toUpperCase()}
-          </h2>
-          <div className='flex items-center'>
+            {name}
+          </p>
+          <div className='grid grid-cols-[auto_1fr] items-center'>
             <div className='sr-only'>Language</div>
-            <MdTranslate aria-hidden='true' />
-            <span className='ml-1 capitalize'>{language}</span>
+            <MdTranslate aria-hidden='true' className='' />
+            <span
+              className='ml-1 capitalize text-ellipsis overflow-hidden whitespace-nowrap'
+              title={language}
+            >
+              {language}
+            </span>
           </div>
         </div>
         <div
