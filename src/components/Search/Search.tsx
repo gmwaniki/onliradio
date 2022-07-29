@@ -25,7 +25,7 @@ const Search = ({
   }
 
   return (
-    <div className='sticky top-2 z-10'>
+    <div className='sticky top-4 z-10'>
       <form
         onFocus={() => router.prefetch('/app/seart')}
         onSubmit={(e) => {
