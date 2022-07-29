@@ -44,7 +44,7 @@ const App: NextPageWithLayout<
             Top Voted Stations Worldwide
           </h1>
         </div>
-        <div className=' flex overflow-x-scroll scroll-smooth snap-x snap-mandatory [&>*+*]:ml-[.85rem] scrollbar sm:px-0 md:snap-none xl:snap-x'>
+        <div className=' flex overflow-x-scroll scroll-smooth snap-x snap-mandatory [&>*+*]:ml-[.85rem] scrollbar sm:px-0 '>
           {topVotedStationsWorldWide.map((station) => {
             return (
               <StationHeaderCard
