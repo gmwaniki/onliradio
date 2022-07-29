@@ -5,9 +5,11 @@ import axios, { AxiosError } from 'axios';
 import AppLayout from '../../components/Layout/AppLayout';
 import { getRadioServerUrl } from '../../util/getUrl';
 import { playableStations, TStation } from '../../util/playableStation';
-import StationCard from '../../components/Station/StationCard';
+import StationHeaderCard from '../../components/Station/StationHeaderCard';
 import useInterSectionObserver from '../../hooks/useIntersectionObserver';
 import { useStationState } from '../../Context/AudioContext';
+import { useRouter } from 'next/router';
+import StationCard from '../../components/Station/StationCard';
 
 const App: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
@@ -22,6 +24,10 @@ const App: NextPageWithLayout<
       ref.current.push(el);
     }
   }, []);
+  const { query } = useRouter();
+
+  // const country = Router.query['country']
+
   const isplaying = (station: TStation) => {
     if (state === null || state.isPlaying === undefined) return null;
     if (state.stationuuid !== station.stationuuid) {
@@ -31,20 +37,44 @@ const App: NextPageWithLayout<
   };
 
   return (
-    <div className='text-CustomTextGrey overflow-hidden'>
-      <section className='mt-5'>
+    <div className='text-CustomTextGrey  sm:overflow-hidden grid sm:grid-cols-[1fr_.4fr] sm:grid-flow-row sm:gap-6 pt-5'>
+      <section className='overflow-x-auto'>
         <div className=''>
           <h1 className='font-semibold text-lg break-words'>
-            Top Voted Station
+            Top Voted Stations Worldwide
           </h1>
         </div>
-        <div className='min-w-[300px] flex overflow-x-auto scroll-smooth snap-x snap-mandatory sm:snap-none  px-3 [&>*+*]:ml-3 scrollbar'>
+        <div className=' flex overflow-x-scroll scroll-smooth snap-x snap-mandatory [&>*+*]:ml-[.85rem] scrollbar sm:px-0 md:snap-none xl:snap-x'>
+          {topVotedStationsWorldWide.map((station) => {
+            return (
+              <StationHeaderCard
+                station={station}
+                key={station.stationuuid}
+                className=''
+                refCallback={setImageElementRef}
+                isPlaying={isplaying(station)}
+              />
+            );
+          })}
+        </div>
+      </section>
+      <section className='hidden sm:block sm:bg-CustomBackgroundBlack sm:mt-7'>
+        Recently played
+      </section>
+      <div className='row-start-2  col-span-full'>{query?.country}</div>
+
+      <section className='col-start-1 col-span-full overflow-x-auto'>
+        <div className=''>
+          <h1 className='font-semibold text-lg break-words'>
+            Stations by Votes
+          </h1>
+        </div>
+        <div className=' flex overflow-x-scroll scroll-smooth snap-x snap-mandatory [&>*+*]:ml-[.85rem] scrollbar sm:px-2 pt-2 md:snap-none '>
           {topVotedStationsWorldWide.map((station) => {
             return (
               <StationCard
                 station={station}
                 key={station.stationuuid}
-                className='w-11/12 snap-center flex-shrink-0 max-w-[320px]'
                 refCallback={setImageElementRef}
                 isPlaying={isplaying(station)}
               />
@@ -64,6 +94,9 @@ export const getStaticProps: GetStaticProps<{
     const topVotedStation = await axios.get(
       `${url}/json/stations/topvote/10?hidebroken=true`
     );
+    // const topVotedStation = await axios.get(
+    //   `${url}/json/stations/bycountrycodeexact/ke?hidebroken=true&order=votes&reverse=true`
+    // );
 
     const topVotedStationsWorldWide = playableStations(topVotedStation.data);
 
