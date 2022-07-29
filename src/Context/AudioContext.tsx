@@ -1,4 +1,9 @@
-import React, { createContext, ReactNode, useReducer } from 'react';
+import React, {
+  createContext,
+  ReactNode,
+  useCallback,
+  useReducer,
+} from 'react';
 import { TStation, TstationApp } from '../util/playableStation';
 
 type TstationReducer<T extends TStation> = (
@@ -39,9 +44,12 @@ const StationStateContext = createContext<{ state: null | TstationApp }>({
 
 const StationContextProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(stationReducer, null);
+  const dispatchCallback = useCallback<typeof dispatch>((arg) => {
+    dispatch({ ...arg });
+  }, []);
 
   return (
-    <stationContext.Provider value={{ dispatch }}>
+    <stationContext.Provider value={{ dispatch: dispatchCallback }}>
       <StationStateContext.Provider value={{ state }}>
         {children}
       </StationStateContext.Provider>
