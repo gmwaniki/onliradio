@@ -1,5 +1,6 @@
+import Image from 'next/image';
 import Link from 'next/link';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   HiOutlineHeart,
   HiOutlineInformationCircle,
@@ -15,20 +16,20 @@ import {
 } from '../../Context/AudioContext';
 import getFlagEmoji from '../../util/getFlagEmoji';
 import { TStation } from '../../util/playableStation';
+import { shimmer, toBase64 } from '../../util/shimmer';
 
 const StationCard = ({
   station,
   className,
-  refCallback,
   isPlaying = null,
 }: {
   station: TStation;
   className?: string;
   isPlaying: boolean | null;
-  refCallback: (el: HTMLImageElement) => void;
 }): JSX.Element => {
   const { homepage, name, favicon, language, countrycode, country, votes } =
     station;
+  const [src, setSrc] = useState(`/api/image?url=${favicon}`);
   const { dispatch } = useContext(stationContext);
 
   return (
@@ -40,7 +41,7 @@ const StationCard = ({
       <div className='grid grid-cols-[repeat(3,100px)] grid-rows-[64px_125px_52px] gap-y-2'>
         <div className='col-start-1 col-end-4 flex justify-between items-center'>
           <Link href={homepage}>
-            <a target='_blank'>
+            <a target='_blank' rel='nofollow noreferrer'>
               <span className='sr-only'>Go to radio station website</span>
               <HiOutlineInformationCircle
                 className='text-3xl hover:stroke-CustomActivePurple '
@@ -76,20 +77,17 @@ const StationCard = ({
         </div>
         <div className='col-span-3 flex justify-center items-center relative w-[35%]  justify-self-center'>
           {favicon ? (
-            <picture>
-              <img
-                src='/images/musicnote.svg'
-                data-src={`/api/image?url=${favicon}`}
-                alt={name}
-                width='300px'
-                height='300px'
-                className='object-contain rounded'
-                ref={refCallback}
-                onError={(e) => {
-                  e.currentTarget.src = '/images/musicnote.svg';
-                }}
-              />
-            </picture>
+            <Image
+              src={src}
+              alt={name}
+              width='300px'
+              height='300px'
+              placeholder='blur'
+              blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                shimmer(300, 300)
+              )}`}
+              onError={() => setSrc('/images/musicnote.svg')}
+            />
           ) : (
             <HiOutlineMusicNote className='w-full h-full svgthin' />
           )}

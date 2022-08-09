@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { useContext, useState } from 'react';
 import {
@@ -18,17 +19,16 @@ import { TStation } from '../../util/playableStation';
 const StationHeaderCard = ({
   station,
   className,
-  refCallback,
+
   isPlaying = null,
 }: {
   station: TStation;
   className?: string;
   isPlaying: boolean | null;
-  refCallback: (el: HTMLImageElement) => void;
 }): JSX.Element => {
-  const [imageError, setImageError] = useState<boolean>(false);
   const { homepage, name, favicon, language, countrycode, country, votes } =
     station;
+  const [src, setSrc] = useState(`/api/image?url=${favicon}`);
   const { dispatch } = useContext(stationContext);
   const handlePlayPauseButton = () => {
     if (isPlaying === null) {
@@ -50,7 +50,7 @@ const StationHeaderCard = ({
     >
       <div className='grid grid-cols-3 grid-rows-[auto_200px_auto] sm:grid-rows-[auto_auto_auto] gap-y-6 items-center'>
         <Link href={homepage}>
-          <a target='_blank' className=''>
+          <a target='_blank' rel='nofollow noreferrer'>
             <span className='sr-only'>Go to radio station website</span>
             <HiOutlineInformationCircle
               className='text-3xl hover:stroke-CustomActivePurple sm:text-4xl'
@@ -61,20 +61,15 @@ const StationHeaderCard = ({
         <div className=' row-start-2 row-end-3 col-span-3 '>
           <div className='flex relative w-[40%] sm:w-[25%] max-w-[200px] 2xl:max-w-[640px]  mx-auto'>
             {favicon ? (
-              <picture>
-                <img
-                  src='/images/musicnote.svg'
-                  data-src={`/api/image?url=${favicon}`}
-                  alt={name}
-                  width='300px'
-                  height='300px'
-                  className='object-cover rounded '
-                  ref={refCallback}
-                  onError={(e) => {
-                    e.currentTarget.src = '/images/musicnote.svg';
-                  }}
-                />
-              </picture>
+              <Image
+                src={src}
+                alt={name}
+                width='300px'
+                height='300px'
+                placeholder='blur'
+                blurDataURL='/images/placeholder.png'
+                onError={() => setSrc('/images/musicnote.svg')}
+              />
             ) : (
               <HiOutlineMusicNote className='w-[300px] h-full svgthin' />
             )}
