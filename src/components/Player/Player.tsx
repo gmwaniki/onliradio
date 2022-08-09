@@ -44,6 +44,11 @@ const Player = () => {
         artwork: [
           {
             src: `/images/logo/favicon/icon.jpg`,
+            sizes: '256x256',
+            type: 'image/jpg',
+          },
+          {
+            src: `/images/heroop.webp`,
             sizes: '512x512',
             type: 'image/jpg',
           },
