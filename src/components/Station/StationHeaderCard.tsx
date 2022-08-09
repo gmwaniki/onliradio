@@ -15,6 +15,7 @@ import {
 } from '../../Context/AudioContext';
 import getFlagEmoji from '../../util/getFlagEmoji';
 import { TStation } from '../../util/playableStation';
+import { shimmer, toBase64 } from '../../util/shimmer';
 
 const StationHeaderCard = ({
   station,
@@ -67,7 +68,9 @@ const StationHeaderCard = ({
                 width='300px'
                 height='300px'
                 placeholder='blur'
-                blurDataURL='/images/placeholder.png'
+                blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                  shimmer(300, 300)
+                )}`}
                 onError={() => setSrc('/images/musicnote.svg')}
               />
             ) : (
