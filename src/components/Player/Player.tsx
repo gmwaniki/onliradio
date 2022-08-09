@@ -47,6 +47,14 @@ const Player = () => {
   };
   const handleAudioPause = (e: React.SyntheticEvent<HTMLAudioElement>) => {
     if (e.currentTarget.error) {
+      if (e.currentTarget.error.code === 2) {
+        e.currentTarget.load();
+        dispatch({
+          type: StationReducerActionType.PLAY,
+          payload: state,
+        });
+        return;
+      }
       setAudioStatus({
         status: 'error',
         message: 'An error occured',
