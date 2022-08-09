@@ -34,6 +34,42 @@ const Player = () => {
       }
     };
   }, [state?.isPlaying, state]);
+  useEffect(() => {
+    if (!state) {
+      return;
+    }
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: state?.name,
+        artwork: [
+          {
+            src: `/images/logo/favicon/icon.jpg`,
+            sizes: '512x512',
+            type: 'image/jpg',
+          },
+        ],
+      });
+
+      navigator.mediaSession.setActionHandler('play', function () {
+        dispatch({
+          type: StationReducerActionType.PLAY,
+          payload: state,
+        });
+      });
+      navigator.mediaSession.setActionHandler('pause', function () {
+        dispatch({
+          type: StationReducerActionType.PAUSE,
+          payload: state,
+        });
+      });
+      navigator.mediaSession.setActionHandler('stop', function () {
+        dispatch({
+          type: StationReducerActionType.PAUSE,
+          payload: state,
+        });
+      });
+    }
+  }, [state, dispatch]);
   if (!state) return <div></div>;
   const handleAudioLoadStart = (e: React.SyntheticEvent<HTMLAudioElement>) => {
     if (state !== null && state.isPlaying === false) {
