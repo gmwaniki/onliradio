@@ -70,7 +70,7 @@ const Player = () => {
             {favicon ? (
               <picture className='w-[30%]'>
                 <img
-                  src={favicon}
+                  src={`/api/image?url=${favicon}`}
                   alt={'woow'}
                   width='100%'
                   className='object-contain rounded'
