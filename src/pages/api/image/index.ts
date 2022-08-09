@@ -45,7 +45,7 @@ export default async function handler(
 
     const smallerimage = sharp()
       .resize(100, 100, { fit: 'outside', width: 100, height: 100 })
-      .png({ quality: 5 });
+      .png({ quality: 5, compressionLevel: 9 });
 
     res.setHeader('Content-Type', 'image/png');
     imageResponse
