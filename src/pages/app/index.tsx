@@ -1,30 +1,39 @@
 import type { GetStaticProps, InferGetStaticPropsType } from 'next';
-import { ReactElement, useCallback, useRef } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import type { NextPageWithLayout } from '../_app';
 import axios, { AxiosError } from 'axios';
 import AppLayout from '../../components/Layout/AppLayout';
 import { getRadioServerUrl } from '../../util/getUrl';
 import { playableStations, TStation } from '../../util/playableStation';
 import StationHeaderCard from '../../components/Station/StationHeaderCard';
-import useInterSectionObserver from '../../hooks/useIntersectionObserver';
+
 import { useStationState } from '../../Context/AudioContext';
 import { useRouter } from 'next/router';
-import StationCard from '../../components/Station/StationCard';
+
+import StationSection from '../../components/Station/StationSection';
 
 const App: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
-> = ({ topVotedStationsWorldWide }) => {
-  const ref = useRef<HTMLImageElement[]>([]);
-  useInterSectionObserver(ref);
+> = ({ topVotedStationsWorldWide, topClickedStationsWorldWide, url }) => {
   const { state } = useStationState();
-
-  const setImageElementRef = useCallback((el: HTMLImageElement) => {
-    if (ref.current) {
-      if (!el) return;
-      ref.current.push(el);
-    }
-  }, []);
   const { query } = useRouter();
+  const { country } = query;
+  const [localStations, setLocalStations] = useState<TStation[] | null>(null);
+  useEffect(() => {
+    if (!country || !url) {
+      return;
+    }
+    console.log(url);
+    const getLocalStations = async () => {
+      const result = await axios.get(
+        `${url}/stations/search?limit=15&order=votes&reverse=true&is_https=true&hidebroken=true&countrycode=${country}`
+      );
+      const data: TStation[] = result.data;
+      setLocalStations(data);
+    };
+
+    getLocalStations();
+  }, [country, url]);
 
   // const country = Router.query['country']
 
@@ -50,8 +59,6 @@ const App: NextPageWithLayout<
               <StationHeaderCard
                 station={station}
                 key={station.stationuuid}
-                className=''
-                refCallback={setImageElementRef}
                 isPlaying={isplaying(station)}
               />
             );
@@ -61,48 +68,48 @@ const App: NextPageWithLayout<
       <section className='hidden sm:block sm:bg-CustomBackgroundBlack sm:mt-7'>
         Recently played
       </section>
-      <div className='row-start-2  col-span-full'>{query?.country}</div>
-
-      <section className='col-start-1 col-span-full overflow-x-auto'>
-        <div className=''>
-          <h1 className='font-semibold text-lg break-words'>
-            Stations by Votes
-          </h1>
-        </div>
-        <div className=' flex overflow-x-scroll scroll-smooth snap-x snap-mandatory [&>*+*]:ml-[.85rem] scrollbar sm:px-2 pt-2 md:snap-none '>
-          {topVotedStationsWorldWide.map((station) => {
-            return (
-              <StationCard
-                station={station}
-                key={station.stationuuid}
-                refCallback={setImageElementRef}
-                isPlaying={isplaying(station)}
-              />
-            );
-          })}
-        </div>
-      </section>
+      {localStations !== null ? (
+        <StationSection
+          stations={localStations}
+          title='Top Stations in your Area'
+        />
+      ) : null}
+      <StationSection
+        stations={topVotedStationsWorldWide}
+        title='Stations by Votes'
+      />
+      <StationSection
+        stations={topClickedStationsWorldWide}
+        title='Stations by Clicks'
+      />
     </div>
   );
 };
 
 export const getStaticProps: GetStaticProps<{
+  url: string;
   topVotedStationsWorldWide: TStation[];
+  topClickedStationsWorldWide: TStation[];
 }> = async () => {
   try {
     const url = await getRadioServerUrl();
     const topVotedStation = await axios.get(
-      `${url}/json/stations/topvote/10?hidebroken=true`
+      `${url}/stations/search?limit=15&order=votes&reverse=true&is_https=true&hidebroken=true`
     );
-    // const topVotedStation = await axios.get(
-    //   `${url}/json/stations/bycountrycodeexact/ke?hidebroken=true&order=votes&reverse=true`
-    // );
+    const topClickedStations = await axios.get(
+      `${url}/stations/search?limit=15&order=clickcount&reverse=true&is_https=true`
+    );
 
     const topVotedStationsWorldWide = playableStations(topVotedStation.data);
+    const topClickedStationsWorldWide = playableStations(
+      topClickedStations.data
+    );
 
     return {
       props: {
+        url,
         topVotedStationsWorldWide,
+        topClickedStationsWorldWide,
       },
       revalidate: 60,
     };
