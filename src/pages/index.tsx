@@ -62,16 +62,12 @@ const Home: NextPage = () => {
         </div>
 
         <div className='relative justify-self-end row-start-1 sm:row-start-1 sm:col-start-2 lg:row-end-3'>
-          <picture>
-            <source srcSet='/images/heroop.avif' type='image/avif' />
-            <source srcSet='/images/heroop.webp' type='image/webp' />
-            <img
-              src='/images/heroop.png'
-              alt='Astronaut sitting on a radio'
-              width='618px'
-              height='617px'
-            />
-          </picture>
+          <Image
+            src='/images/heroop.svg'
+            alt='Astronaut sitting on a radio'
+            width='618px'
+            height='617px'
+          />
         </div>
       </section>
     </HomeLayout>
