@@ -20,7 +20,6 @@ import { shimmer, toBase64 } from '../../util/shimmer';
 const StationHeaderCard = ({
   station,
   className,
-
   isPlaying = null,
 }: {
   station: TStation;
