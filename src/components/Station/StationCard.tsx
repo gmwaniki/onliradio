@@ -64,6 +64,11 @@ const StationCard = ({
                 payload: { ...station, isPlaying },
               });
             }}
+            onKeyDown={(e) => {
+              if (e.code === 'Space' && isPlaying !== undefined) {
+                e.preventDefault();
+              }
+            }}
           >
             <span className='sr-only'>Play station</span>
             {isPlaying !== null && isPlaying === false ? (
