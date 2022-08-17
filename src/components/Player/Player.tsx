@@ -74,6 +74,40 @@ const Player = () => {
         });
       });
     }
+    const spaceBarDown = (e: globalThis.KeyboardEvent) => {
+      window.addEventListener('keydown', (e) => {
+        if (e.code === 'Space' && e.target === document.body) {
+          e.preventDefault();
+        }
+      });
+    };
+
+    const keyuplistenter = (e: globalThis.KeyboardEvent) => {
+      if (
+        e.code !== 'Space' ||
+        audioRef.current === null ||
+        audioRef.current.currentTime === 0
+      ) {
+        return;
+      }
+
+      if (e.target == document.body) {
+        e.preventDefault();
+      }
+
+      dispatch({
+        type: StationReducerActionType.TOGGLE,
+        payload: state,
+      });
+
+      return;
+    };
+    addEventListener('keyup', keyuplistenter);
+    addEventListener('keydown', spaceBarDown);
+    return () => {
+      removeEventListener('keyup', keyuplistenter);
+      removeEventListener('keydown', spaceBarDown);
+    };
   }, [state, dispatch]);
   if (!state) return <div></div>;
   const handleAudioLoadStart = (e: React.SyntheticEvent<HTMLAudioElement>) => {
