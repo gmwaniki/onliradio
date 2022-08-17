@@ -15,7 +15,8 @@ module.exports = {
         CustomLightPurple: '#B6C3FF',
 
         CustomWhite: '#F2F4FF',
-        CustomBlack: '#040404',
+        CustomBlack: '#100F0F',
+        // CustomBlack: '#040404',
         // Custom
         CustomBackgroundBlack: '#262626',
         CustomLightGrey: '#6C6C6C',
