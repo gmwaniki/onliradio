@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   HiOutlineHeart,
   HiOutlineInformationCircle,
@@ -49,7 +49,7 @@ const StationHeaderCard = ({
       className={`bg-CustomBackgroundBlack grid grid-flow-col p-2 sm:p-5 rounded-md w-full snap-center flex-shrink-0  sm:max-w-full ${className} `}
     >
       <div className='grid grid-cols-3 grid-rows-[auto_200px_auto] sm:grid-rows-[auto_auto_auto] gap-y-6 items-center'>
-        <Link href={homepage}>
+        <Link href={homepage} prefetch={false}>
           <a target='_blank' rel='nofollow noreferrer'>
             <span className='sr-only'>Go to radio station website</span>
             <HiOutlineInformationCircle
@@ -116,4 +116,4 @@ const StationHeaderCard = ({
   );
 };
 
-export default StationHeaderCard;
+export default React.memo(StationHeaderCard);
