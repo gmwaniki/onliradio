@@ -1,12 +1,16 @@
 import Head from 'next/head';
-import { ReactElement } from 'react';
+import { ReactElement, Suspense } from 'react';
 import StationContextProvider from '../../Context/AudioContext';
 import SearchContextProvider from '../../Context/SearchContext';
-import Player from '../Player/Player';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import Search from '../Search/Search';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import dynamic from 'next/dynamic';
+
+const DynamicPlayer = dynamic(() => import('../Player/Player'), {
+  suspense: true,
+});
 
 const AppLayout = ({
   children,
@@ -32,7 +36,9 @@ const AppLayout = ({
               <Search />
               <StationContextProvider>
                 <main className='xl:container mx-auto pb-32'>{children}</main>
-                <Player />
+                <Suspense fallback={<div></div>}>
+                  <DynamicPlayer />
+                </Suspense>
               </StationContextProvider>
             </SearchContextProvider>
           </div>
