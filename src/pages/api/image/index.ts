@@ -6,11 +6,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // setInterval(() => {
-  //   const { heapTotal, rss, heapUsed, external } = process.memoryUsage();
-  //   console.log(rss / 1024 / 1024, external / 1024 / 1024);
-  // }, 5000);
-
   let { url } = req.query;
 
   if (!url || Array.isArray(url)) {
@@ -48,6 +43,8 @@ export default async function handler(
       .png({ quality: 5, compressionLevel: 9 });
 
     res.setHeader('Content-Type', 'image/png');
+    res.setHeader('Cache-Control', 'max-age=31536000, immutable');
+
     imageResponse
       .pipe(smallerimage)
       .on('error', (error) => {
