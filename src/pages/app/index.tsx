@@ -1,5 +1,5 @@
-import type { GetStaticProps, InferGetStaticPropsType } from 'next';
-import { ReactElement, useEffect, useState } from 'react';
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { ReactElement, Suspense, useEffect, useState } from 'react';
 import type { NextPageWithLayout } from '../_app';
 import axios, { AxiosError } from 'axios';
 import AppLayout from '../../components/Layout/AppLayout';
@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 import StationSection from '../../components/Station/StationSection';
 
 const App: NextPageWithLayout<
-  InferGetStaticPropsType<typeof getStaticProps>
+  InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ topVotedStationsWorldWide, topClickedStationsWorldWide, url }) => {
   const { state } = useStationState();
   const { query } = useRouter();
@@ -26,7 +26,7 @@ const App: NextPageWithLayout<
     console.log(url);
     const getLocalStations = async () => {
       const result = await axios.get(
-        `${url}/stations/search?limit=15&order=votes&reverse=true&is_https=true&hidebroken=true&countrycode=${country}`
+        `${url}/stations/search?limit=10&order=votes&reverse=true&is_https=true&hidebroken=true&countrycode=${country}`
       );
       const data: TStation[] = result.data;
       setLocalStations(data);
@@ -46,63 +46,68 @@ const App: NextPageWithLayout<
   };
 
   return (
-    <div className='text-CustomTextGrey  sm:overflow-hidden grid sm:grid-cols-[1fr_.4fr] sm:grid-flow-row sm:gap-6 pt-5'>
-      <section className='overflow-x-auto'>
-        <div className=''>
-          <h1 className='font-semibold text-lg break-words'>
-            Top Voted Stations Worldwide
-          </h1>
-        </div>
-        <div className=' flex overflow-x-scroll scroll-smooth snap-x snap-mandatory [&>*+*]:ml-[.85rem] scrollbar sm:px-0 '>
-          {topVotedStationsWorldWide.map((station) => {
-            return (
-              <StationHeaderCard
-                station={station}
-                key={station.stationuuid}
-                isPlaying={isplaying(station)}
-              />
-            );
-          })}
-        </div>
-      </section>
-      <section className='hidden sm:block sm:bg-CustomBackgroundBlack sm:mt-7'>
-        Recently played
-      </section>
-      {localStations !== null ? (
+    <Suspense fallback={`Loading...`}>
+      <div className='text-CustomTextGrey  sm:overflow-hidden grid sm:grid-cols-[1fr_.4fr] sm:grid-flow-row sm:gap-6 pt-5'>
+        <section className='overflow-x-auto'>
+          <div className=''>
+            <h1 className='font-semibold text-lg break-words'>
+              Top Voted Stations Worldwide
+            </h1>
+          </div>
+          <div className=' flex overflow-x-scroll scroll-smooth snap-x snap-mandatory [&>*+*]:ml-[.85rem] scrollbar sm:px-0 '>
+            {topVotedStationsWorldWide.map((station) => {
+              return (
+                <StationHeaderCard
+                  station={station}
+                  key={station.stationuuid}
+                  isPlaying={isplaying(station)}
+                />
+              );
+            })}
+          </div>
+        </section>
+        <section className='hidden sm:block sm:bg-CustomBackgroundBlack sm:mt-7'>
+          Recently played
+        </section>
+        {localStations !== null ? (
+          <StationSection
+            stations={localStations}
+            title='Top Stations in your Area'
+          />
+        ) : null}
         <StationSection
-          stations={localStations}
-          title='Top Stations in your Area'
+          stations={topClickedStationsWorldWide}
+          title='Stations by Clicks'
         />
-      ) : null}
-      <StationSection
-        stations={topVotedStationsWorldWide}
-        title='Stations by Votes'
-      />
-      <StationSection
-        stations={topClickedStationsWorldWide}
-        title='Stations by Clicks'
-      />
-    </div>
+      </div>
+    </Suspense>
   );
 };
 
-export const getStaticProps: GetStaticProps<{
+export const getServerSideProps: GetServerSideProps<{
   url: string;
   topVotedStationsWorldWide: TStation[];
   topClickedStationsWorldWide: TStation[];
-}> = async () => {
+}> = async ({ req, res }) => {
   try {
     const url = await getRadioServerUrl();
-    const topVotedStation = await axios.get(
-      `${url}/stations/search?limit=15&order=votes&reverse=true&is_https=true&hidebroken=true`
-    );
-    const topClickedStations = await axios.get(
-      `${url}/stations/search?limit=15&order=clickcount&reverse=true&is_https=true`
-    );
+
+    const [topVotedStation, topClickedStations] = await Promise.all([
+      axios.get(
+        `${url}/stations/search?limit=10&order=votes&reverse=true&is_https=true&hidebroken=true`
+      ),
+      axios.get(
+        `${url}/stations/search?limit=10&order=clickcount&reverse=true&is_https=true`
+      ),
+    ]);
 
     const topVotedStationsWorldWide = playableStations(topVotedStation.data);
     const topClickedStationsWorldWide = playableStations(
       topClickedStations.data
+    );
+    res.setHeader(
+      'Cache-Control',
+      'public, s-maxage=10, stale-while-revalidate=59'
     );
 
     return {
@@ -111,7 +116,7 @@ export const getStaticProps: GetStaticProps<{
         topVotedStationsWorldWide,
         topClickedStationsWorldWide,
       },
-      revalidate: 60,
+      // revalidate: 21600,
     };
   } catch (error) {
     if (error instanceof AxiosError) {
