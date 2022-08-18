@@ -67,6 +67,7 @@ const Home: NextPage = () => {
             alt='Astronaut sitting on a radio'
             width='618px'
             height='617px'
+            priority
           />
         </div>
       </section>
