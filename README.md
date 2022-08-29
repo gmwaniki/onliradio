@@ -1,9 +1,9 @@
 # Onliradio
 
-Onliradio is a radio station player that can search and play radio stations identified in over 190 countries. Onliradio uses [Radio Browser](https://www.radio-browser.info/) api to which aggregates radio stations from all over the world.<br>
+Onliradio is a radio station player that can search and play radio stations identified in over 190 countries. Onliradio uses the [Radio Browser](https://www.radio-browser.info/) api which aggregates radio stations from all over the world.<br>
 You can view the final app on [Onliradio](https://onliradio.vercel.app/).
 ![Onliradio homepage](./showcaseImages/onliradiodisplay.png)
-![Onliradio Mobile](./showcaseImages/Screen%20Shot%202022-08-19%20at%2010.26.35.png)
+<img src="./showcaseImages/onliradioMobile.jpg" alt="Onliradio Mobile" style="width:300px; height:300px; object-fit:contain;"/>
 
 ## Technologies used
 
