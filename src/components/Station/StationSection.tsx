@@ -20,9 +20,11 @@ const StationSection = ({
   };
 
   return (
-    <section className='col-start-1 col-span-full overflow-x-auto'>
+    <section className='col-start-1 col-span-full overflow-x-auto '>
       <div className=''>
-        <h1 className='font-semibold text-lg break-words'>{title}</h1>
+        <h1 className='font-semibold text-lg sm:text-2xl  break-words tracking-wide'>
+          {title}
+        </h1>
       </div>
       <div className=' flex overflow-x-scroll scroll-smooth snap-x snap-mandatory [&>*+*]:ml-[.85rem] scrollbar sm:px-2 pt-2 md:snap-none '>
         {stations.map((station) => {

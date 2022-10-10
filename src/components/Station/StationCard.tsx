@@ -34,7 +34,7 @@ const StationCard = ({
 
   return (
     <section
-      className={`bg-CustomBackgroundBlack grid grid-flow-col p-2 rounded-md ${className} flex-shrink-0 snap-center transition-all ${
+      className={`bg-CustomBackgroundBlack grid grid-flow-col p-2 rounded-md ${className} flex-shrink-0 snap-center transition-all min-w-[300px] mr-2 ${
         isPlaying && 'shadow-active -translate-y-2 '
       }`}
     >
@@ -92,6 +92,7 @@ const StationCard = ({
                 shimmer(300, 300)
               )}`}
               onError={() => setSrc('/images/musicnote.svg')}
+              className='rounded-md'
             />
           ) : (
             <HiOutlineMusicNote className='w-full h-full svgthin' />
