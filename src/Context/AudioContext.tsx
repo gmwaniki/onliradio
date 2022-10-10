@@ -19,6 +19,56 @@ export enum StationReducerActionType {
 const stationReducer: TstationReducer<TstationApp> = (state, action) => {
   switch (action.type) {
     case StationReducerActionType.PLAY: {
+      const addStationToStorage = () => {
+        const recentlyPlayedStationsString = localStorage.getItem(
+          'recentlyPlayedStations'
+        );
+        const currentTime = new Date().getTime();
+        const stationsFromStorage: { id: string; date: number }[] | null =
+          recentlyPlayedStationsString
+            ? JSON.parse(recentlyPlayedStationsString)
+            : null;
+        const recetlyPlayedStation = {
+          id: action.payload.stationuuid,
+          date: currentTime,
+        };
+        if (!Array.isArray(stationsFromStorage)) {
+          localStorage.setItem(
+            'recentlyPlayedStations',
+            JSON.stringify([recetlyPlayedStation])
+          );
+        } else {
+          //  Check if there is station with similar id
+          // if true update array and
+          const isStationInStorage = stationsFromStorage.some((station)=>{
+            if (station.id ===recetlyPlayedStation.id ) {
+              return true;
+            }
+            return false
+          })
+          if (isStationInStorage) {
+            
+          }
+          const newStations = stationsFromStorage
+            .map((station) => {
+              if (station.id === action.payload.stationuuid) {
+                return { ...station, date: currentTime };
+              }
+              return station;
+            })
+            .sort((recentStation, nextStation) => {
+              return recentStation.date - nextStation.date;
+            });
+          localStorage.removeItem('recentlyPlayedStations');
+          console.log(newStations);
+          localStorage.setItem(
+            'recentlyPlayedStations',
+            JSON.stringify(newStations)
+          );
+        }
+      };
+      addStationToStorage()
+
       return { ...state, ...action.payload, isPlaying: true };
     }
     case StationReducerActionType.PAUSE: {
