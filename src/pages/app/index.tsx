@@ -1,4 +1,4 @@
-import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { ReactElement, Suspense, useEffect, useState } from 'react';
 import type { NextPageWithLayout } from '../_app';
 import axios, { AxiosError } from 'axios';
@@ -11,32 +11,21 @@ import { useStationState } from '../../Context/AudioContext';
 import { useRouter } from 'next/router';
 
 import StationSection from '../../components/Station/StationSection';
+import LocalStation from '../../components/Station/LocalStations';
+import Spinner from '../../components/Spinner/Spinner';
+import { Sign } from 'crypto';
+import StationsPlayed from '../../components/Station/StationsPlayed';
 
 const App: NextPageWithLayout<
-  InferGetServerSidePropsType<typeof getServerSideProps>
+  InferGetStaticPropsType<typeof getStaticProps>
 > = ({ topVotedStationsWorldWide, topClickedStationsWorldWide, url }) => {
+  const [recentlyPlayedStations, setRecentlyPlayedStations] = useState<
+    string | null
+  >(null);
   const { state } = useStationState();
-  const { query } = useRouter();
-  const { country } = query;
-  const [localStations, setLocalStations] = useState<TStation[] | null>(null);
-  useEffect(() => {
-    if (!country || !url) {
-      return;
-    }
-    console.log(url);
-    const getLocalStations = async () => {
-      const result = await axios.get(
-        `${url}/stations/search?limit=10&order=votes&reverse=true&is_https=true&hidebroken=true&countrycode=${country}`
-      );
-      const data: TStation[] = result.data;
-      setLocalStations(data);
-    };
+  const router = useRouter();
 
-    getLocalStations();
-  }, [country, url]);
-
-  // const country = Router.query['country']
-
+  const localCountry = router.query?.country as string | undefined;
   const isplaying = (station: TStation) => {
     if (state === null || state.isPlaying === undefined) return null;
     if (state.stationuuid !== station.stationuuid) {
@@ -44,51 +33,75 @@ const App: NextPageWithLayout<
     }
     return state.isPlaying;
   };
+  useEffect(() => {
+    const stationsRecentlyPlayed = localStorage.getItem(
+      'recentlyPlayedStations'
+    );
+
+    setRecentlyPlayedStations(stationsRecentlyPlayed);
+  }, []);
 
   return (
-    <Suspense fallback={`Loading...`}>
-      <div className='text-CustomTextGrey  sm:overflow-hidden grid sm:grid-cols-[1fr_.4fr] sm:grid-flow-row sm:gap-6 pt-5'>
-        <section className='overflow-x-auto'>
-          <div className=''>
-            <h1 className='font-semibold text-lg break-words'>
-              Top Voted Stations Worldwide
-            </h1>
-          </div>
-          <div className=' flex overflow-x-scroll scroll-smooth snap-x snap-mandatory [&>*+*]:ml-[.85rem] scrollbar sm:px-0 '>
-            {topVotedStationsWorldWide.map((station) => {
-              return (
-                <StationHeaderCard
-                  station={station}
-                  key={station.stationuuid}
-                  isPlaying={isplaying(station)}
-                />
-              );
-            })}
-          </div>
-        </section>
-        <section className='hidden sm:block sm:bg-CustomBackgroundBlack sm:mt-7'>
-          Recently played
-        </section>
-        {localStations !== null ? (
-          <StationSection
-            stations={localStations}
-            title='Top Stations in your Area'
-          />
-        ) : null}
-        <StationSection
-          stations={topClickedStationsWorldWide}
-          title='Stations by Clicks'
+    <div className='text-CustomTextGrey  sm:overflow-hidden grid sm:grid-cols-[1fr_.4fr] sm:grid-flow-row sm:gap-6 pt-5'>
+      <section className='overflow-x-auto '>
+        <div className=''>
+          <h1 className='font-semibold text-lg sm:text-xl '>
+            Top Voted Stations Worldwide
+          </h1>
+        </div>
+        <div className=' flex overflow-x-scroll scroll-smooth snap-x snap-mandatory [&>*+*]:ml-[.85rem] scrollbar sm:px-0 '>
+          {topVotedStationsWorldWide.map((station) => {
+            return (
+              <StationHeaderCard
+                station={station}
+                key={station.stationuuid}
+                isPlaying={isplaying(station)}
+              />
+            );
+          })}
+        </div>
+      </section>
+      <section className='hidden sm:block sm:bg-CustomBackgroundBlack sm:mt-7 sm:rounded-md sm:text-center sm:p-2'>
+        <h2 className='text-2xl'>Recently played</h2>
+        <div>
+          {recentlyPlayedStations !== null ? (
+            <StationsPlayed />
+          ) : (
+            <div>No Stations played yet</div>
+          )}
+        </div>
+      </section>
+      {localCountry ? (
+        <Suspense
+          fallback={
+            <Spinner
+              message='Loading stations in your area '
+              className='col-span-full'
+            />
+          }
+        >
+          <LocalStation url={url} country={localCountry} />
+        </Suspense>
+      ) : (
+        <Spinner
+          message='Loading stations in your area'
+          className='col-span-full'
         />
-      </div>
-    </Suspense>
+      )}
+
+      <StationSection
+        stations={topClickedStationsWorldWide}
+        title='Stations by Clicks'
+      />
+    </div>
   );
 };
 
-export const getServerSideProps: GetServerSideProps<{
+export const getStaticProps: GetStaticProps<{
   url: string;
   topVotedStationsWorldWide: TStation[];
   topClickedStationsWorldWide: TStation[];
-}> = async ({ req, res }) => {
+}> = async () => {
   try {
     const url = await getRadioServerUrl();
 
@@ -104,10 +117,6 @@ export const getServerSideProps: GetServerSideProps<{
     const topVotedStationsWorldWide = playableStations(topVotedStation.data);
     const topClickedStationsWorldWide = playableStations(
       topClickedStations.data
-    );
-    res.setHeader(
-      'Cache-Control',
-      'public, s-maxage=10, stale-while-revalidate=59'
     );
 
     return {
