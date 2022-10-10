@@ -1,7 +1,8 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
 
-import { ReactElement, useContext, useEffect } from 'react';
+import { ReactElement, useContext } from 'react';
 import AppLayout from '../../components/Layout/AppLayout';
+import Spinner from '../../components/Spinner/Spinner';
 import StationCard from '../../components/Station/StationCard';
 import { useStationState } from '../../Context/AudioContext';
 import { SearchContext } from '../../Context/SearchContext';
@@ -12,7 +13,7 @@ import { TStation } from '../../util/playableStation';
 import { NextPageWithLayout } from '../_app';
 
 const SearchPage: NextPageWithLayout<
-  InferGetServerSidePropsType<typeof getServerSideProps>
+  InferGetStaticPropsType<typeof getStaticProps>
 > = ({ url }) => {
   const { state } = useContext(SearchContext);
   const fullUrl = getStationsUrl(url, state.searchValues, state.filter);
@@ -34,7 +35,7 @@ const SearchPage: NextPageWithLayout<
     );
   }
   if (isLoading) {
-    return <div className='text-CustomWhite text-center'>Loading ....</div>;
+    return <Spinner message='Loading ...' className='text-CustomWhite' />;
   }
 
   return (
@@ -56,7 +57,7 @@ const SearchPage: NextPageWithLayout<
   );
 };
 
-export const getServerSideProps: GetServerSideProps<{
+export const getStaticProps: GetStaticProps<{
   url: string;
 }> = async () => {
   try {
