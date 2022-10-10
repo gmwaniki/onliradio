@@ -3,7 +3,7 @@ const withPlugins = require('next-compose-plugins');
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  images: { domains: ['localhost'] },
+  images: { domains: ['localhost'], unoptimized: true },
 };
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
