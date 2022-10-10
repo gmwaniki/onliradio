@@ -6,11 +6,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import Search from '../Search/Search';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import dynamic from 'next/dynamic';
 
-const DynamicPlayer = dynamic(() => import('../Player/Player'), {
-  suspense: true,
-});
+import Player from '../Player/Player';
 
 const AppLayout = ({
   children,
@@ -36,9 +33,7 @@ const AppLayout = ({
               <Search />
               <StationContextProvider>
                 <main className='xl:container mx-auto pb-32'>{children}</main>
-                <Suspense fallback={<div></div>}>
-                  <DynamicPlayer />
-                </Suspense>
+                <Player />
               </StationContextProvider>
             </SearchContextProvider>
           </div>
