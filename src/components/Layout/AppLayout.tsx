@@ -1,24 +1,24 @@
 import Head from 'next/head';
-import { ReactElement, Suspense } from 'react';
-import StationContextProvider from '../../Context/AudioContext';
 import SearchContextProvider from '../../Context/SearchContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import Search from '../Search/Search';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import Player from '../Player/Player';
+import PlayerContainer from '../Player/PlayerContainer';
+import dynamic from 'next/dynamic';
 
-const AppLayout = ({
-  children,
-}: {
-  children: ReactElement | ReactElement[];
-}) => {
+const StationContextProvider = dynamic(import('../../Context/AudioContext'), {
+  ssr: false,
+});
+
+const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const queryClient = new QueryClient();
+
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools />
+        <ReactQueryDevtools position='top-right' initialIsOpen={false} />
         <Head>
           <title>Onliradio</title>
           <meta
@@ -33,7 +33,7 @@ const AppLayout = ({
               <Search />
               <StationContextProvider>
                 <main className='xl:container mx-auto pb-32'>{children}</main>
-                <Player />
+                <PlayerContainer />
               </StationContextProvider>
             </SearchContextProvider>
           </div>
