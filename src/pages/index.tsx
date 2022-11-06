@@ -16,11 +16,12 @@ const Home: NextPage = () => {
             Onliradio gives you access to over 30,000 radio stations from over
             200+ countries.
           </p>
-          <Link href='/app'>
-            <a className='bg-gradient mx-auto text-CustomWhite max-w-xs grid grid-cols-[auto,1fr] gap-4 items-center px-7 py-5 mt-10 mb-16 rounded-md cursor-pointer hover:opacity-90 hover:-translate-y-[0.10rem]  duration-300 transition-transform sm:max-w-[13.6rem] sm:mx-0 sm:mb-0'>
-              <MdOutlineRadio className='text-3xl' />
-              <span className='text-lg'>Listen to radio</span>
-            </a>
+          <Link
+            href='/app'
+            className='bg-gradient mx-auto text-CustomWhite max-w-xs grid grid-cols-[auto,1fr] gap-4 items-center px-7 py-5 mt-10 mb-16 rounded-md cursor-pointer hover:opacity-90 hover:-translate-y-[0.10rem]  duration-300 transition-transform sm:max-w-[13.6rem] sm:mx-0 sm:mb-0'
+          >
+            <MdOutlineRadio className='text-3xl' />
+            <span className='text-lg'>Listen to radio</span>
           </Link>
         </div>
 
@@ -65,8 +66,8 @@ const Home: NextPage = () => {
           <Image
             src='/images/heroop.svg'
             alt='Astronaut sitting on a radio'
-            width='618px'
-            height='617px'
+            width='618'
+            height='617'
             priority
           />
         </div>
