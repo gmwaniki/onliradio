@@ -4,7 +4,7 @@ import { ReactElement, useContext } from 'react';
 import AppLayout from '../../components/Layout/AppLayout';
 import Spinner from '../../components/Spinner/Spinner';
 import StationCard from '../../components/Station/StationCard';
-import { useStationState } from '../../Context/AudioContext';
+import { StationContext } from '../../Context/AudioContext';
 import { SearchContext } from '../../Context/SearchContext';
 import useGetStations from '../../hooks/useGetStations';
 import { getStationsUrl } from '../../util/getStationsUrl';
@@ -16,18 +16,10 @@ const SearchPage: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ url }) => {
   const { state } = useContext(SearchContext);
+  const { state: currentStation } = useContext(StationContext);
+  const { station: current } = currentStation;
   const fullUrl = getStationsUrl(url, state.searchValues, state.filter);
   const { isError, isLoading, data } = useGetStations(fullUrl);
-  const { state: currentStation } = useStationState();
-
-  const isplaying = (station: TStation) => {
-    if (currentStation === null || currentStation.isPlaying === undefined)
-      return null;
-    if (currentStation.stationuuid !== station.stationuuid) {
-      return null;
-    }
-    return currentStation.isPlaying;
-  };
 
   if (isError) {
     return (
@@ -46,7 +38,7 @@ const SearchPage: NextPageWithLayout<
             <StationCard
               station={station}
               key={station.stationuuid}
-              isPlaying={isplaying(station)}
+              isPlaying={station.stationuuid === current.stationId}
             />
           );
         })
