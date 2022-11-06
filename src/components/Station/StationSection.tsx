@@ -1,4 +1,5 @@
-import { useStationState } from '../../Context/AudioContext';
+import { useContext } from 'react';
+import { StationContext } from '../../Context/AudioContext';
 import { TStation } from '../../util/playableStation';
 import StationCard from './StationCard';
 
@@ -9,15 +10,8 @@ const StationSection = ({
   stations: TStation[];
   title: string;
 }) => {
-  const { state } = useStationState();
-
-  const isplaying = (station: TStation) => {
-    if (state === null || state.isPlaying === undefined) return null;
-    if (state.stationuuid !== station.stationuuid) {
-      return null;
-    }
-    return state.isPlaying;
-  };
+  const { state } = useContext(StationContext);
+  const { isPlaying, station: currentStation } = state;
 
   return (
     <section className='col-start-1 col-span-full overflow-x-auto '>
@@ -32,7 +26,9 @@ const StationSection = ({
             <StationCard
               station={station}
               key={station.stationuuid}
-              isPlaying={isplaying(station)}
+              isPlaying={
+                station.stationuuid === currentStation.stationId && isPlaying
+              }
             />
           );
         })}
