@@ -11,7 +11,7 @@ import {
 } from 'react-icons/hi';
 import { MdTranslate } from 'react-icons/md';
 import {
-  stationContext,
+  StationContext,
   StationReducerActionType,
 } from '../../Context/AudioContext';
 import getFlagEmoji from '../../util/getFlagEmoji';
@@ -21,16 +21,16 @@ import { shimmer, toBase64 } from '../../util/shimmer';
 const StationCard = ({
   station,
   className,
-  isPlaying = null,
+  isPlaying,
 }: {
   station: TStation;
   className?: string;
-  isPlaying: boolean | null;
+  isPlaying: boolean;
 }): JSX.Element => {
   const { homepage, name, favicon, language, countrycode, country, votes } =
     station;
   const [src, setSrc] = useState(`/api/image?url=${favicon}`);
-  const { dispatch } = useContext(stationContext);
+  const { dispatch } = useContext(StationContext);
 
   return (
     <section
@@ -52,31 +52,36 @@ const StationCard = ({
 
           <button
             onClick={() => {
-              if (isPlaying === null) {
+              if (isPlaying === false) {
                 dispatch({
                   type: StationReducerActionType.PLAY,
-                  payload: station,
+                  payload: {
+                    countryCode: station.countrycode,
+                    name: station.name,
+                    stationId: station.stationuuid,
+                    stationurl: station.url_resolved,
+                    votes: station.votes,
+                    favicon: station.favicon,
+                  },
                 });
                 return;
               }
               dispatch({
                 type: StationReducerActionType.TOGGLE,
-                payload: { ...station, isPlaying },
               });
+              return;
             }}
-            onKeyDown={(e) => {
-              if (e.code === 'Space' && isPlaying !== undefined) {
-                e.preventDefault();
-              }
-            }}
+            // onKeyDown={(e) => {
+            //   if (e.code === 'Space' && isPlaying !== undefined) {
+            //     e.preventDefault();
+            //   }
+            // }}
           >
             <span className='sr-only'>Play station</span>
-            {isPlaying !== null && isPlaying === false ? (
-              <HiPlay className='text-6xl mt-1 fill-CustomActivePurple' />
-            ) : isPlaying === true ? (
-              <HiPause className=' text-6xl mt-1 fill-CustomActivePurple ' />
-            ) : (
+            {isPlaying === false ? (
               <HiOutlinePlay className='svgthin  text-6xl mt-1 hover:stroke-CustomActivePurple ' />
+            ) : (
+              <HiPause className=' text-6xl mt-1 fill-CustomActivePurple ' />
             )}
           </button>
         </div>

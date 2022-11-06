@@ -10,7 +10,7 @@ import {
   HiPlay,
 } from 'react-icons/hi';
 import {
-  stationContext,
+  StationContext,
   StationReducerActionType,
 } from '../../Context/AudioContext';
 import getFlagEmoji from '../../util/getFlagEmoji';
@@ -20,27 +20,33 @@ import { shimmer, toBase64 } from '../../util/shimmer';
 const StationHeaderCard = ({
   station,
   className,
-  isPlaying = null,
+  isPlaying,
 }: {
   station: TStation;
   className?: string;
-  isPlaying: boolean | null;
+  isPlaying: boolean;
 }): JSX.Element => {
   const { homepage, name, favicon, language, countrycode, country, votes } =
     station;
   const [src, setSrc] = useState(`/api/image?url=${favicon}`);
-  const { dispatch } = useContext(stationContext);
+  const { dispatch, state } = useContext(StationContext);
   const handlePlayPauseButton = () => {
-    if (isPlaying === null) {
+    if (isPlaying === false) {
       dispatch({
         type: StationReducerActionType.PLAY,
-        payload: station,
+        payload: {
+          countryCode: station.countrycode,
+          name: station.name,
+          stationId: station.stationuuid,
+          stationurl: station.url_resolved,
+          votes: station.votes,
+          favicon: station.favicon,
+        },
       });
       return;
     }
     dispatch({
       type: StationReducerActionType.TOGGLE,
-      payload: { ...station, isPlaying },
     });
   };
 
@@ -102,12 +108,10 @@ const StationHeaderCard = ({
             className='text-6xl sm:text-7xl'
           >
             <span className='sr-only'>Play station</span>
-            {isPlaying !== null && isPlaying === false ? (
-              <HiPlay className=' mt-1 fill-CustomActivePurple' />
-            ) : isPlaying === true ? (
-              <HiPause className='mt-1 fill-CustomActivePurple ' />
-            ) : (
+            {isPlaying === false ? (
               <HiOutlinePlay className='svgthin mt-1 hover:stroke-CustomActivePurple ' />
+            ) : (
+              <HiPause className='mt-1 fill-CustomActivePurple ' />
             )}
           </button>
         </div>
