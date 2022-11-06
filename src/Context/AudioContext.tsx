@@ -1,113 +1,167 @@
-import React, {
-  createContext,
-  ReactNode,
-  useCallback,
-  useReducer,
-} from 'react';
+import React, { createContext, ReactNode, useReducer, useState } from 'react';
 import { TStation, TstationApp } from '../util/playableStation';
 
-type TstationReducer<T extends TStation> = (
-  state: T,
-  action: { type: StationReducerActionType; payload: T }
-) => any;
+export type TActiveStation = {
+  stationId: string;
+  stationurl: string;
+  name: string;
+  votes: number;
+  countryCode: string;
+  favicon: string;
+};
+export type TStationStatus = {
+  station: TActiveStation;
+  isPlaying: boolean;
+};
+export type TStationAction =
+  | {
+      type: StationReducerActionType.PLAY;
+      payload: TActiveStation;
+    }
+  | {
+      type: StationReducerActionType.PAUSE;
+    }
+  | {
+      type: StationReducerActionType.TOGGLE;
+    };
 
 export enum StationReducerActionType {
   PLAY = 'play',
   PAUSE = 'pause',
   TOGGLE = 'TOGGLE',
 }
-const stationReducer: TstationReducer<TstationApp> = (state, action) => {
+
+type TStorePlayedStationReducer<T> = (
+  state: T[],
+  action: { type: 'storeStation'; payload: T }
+) => T[];
+
+type TstationReducer = (
+  state: TStationStatus,
+  action: TStationAction
+) => TStationStatus;
+
+const storePlayedStationReducer: TStorePlayedStationReducer<string> = (
+  state,
+  action
+) => {
+  switch (action.type) {
+    case 'storeStation': {
+      const playedStations = localStorage.getItem('playedStations');
+      if (playedStations !== null) {
+        const stationsNoDuplicate = new Set<string>(JSON.parse(playedStations));
+        if (stationsNoDuplicate.has(action.payload)) {
+          stationsNoDuplicate.delete(action.payload);
+          stationsNoDuplicate.add(action.payload);
+        } else {
+          stationsNoDuplicate.add(action.payload);
+        }
+        localStorage.setItem(
+          'playedStations',
+          JSON.stringify([...stationsNoDuplicate])
+        );
+        return JSON.parse(localStorage.getItem('playedStations')!!) as string[];
+      }
+      localStorage.setItem('playedStations', JSON.stringify([action.payload]));
+      return JSON.parse(localStorage.getItem('playedStations')!!) as string[];
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
+const stationReducer: TstationReducer = (state, action) => {
   switch (action.type) {
     case StationReducerActionType.PLAY: {
-      const addStationToStorage = () => {
-        const recentlyPlayedStationsString = localStorage.getItem(
-          'recentlyPlayedStations'
-        );
-        const currentTime = new Date().getTime();
-        const stationsFromStorage: { id: string; date: number }[] | null =
-          recentlyPlayedStationsString
-            ? JSON.parse(recentlyPlayedStationsString)
-            : null;
-        const recetlyPlayedStation = {
-          id: action.payload.stationuuid,
-          date: currentTime,
-        };
-        if (!Array.isArray(stationsFromStorage)) {
-          localStorage.setItem(
-            'recentlyPlayedStations',
-            JSON.stringify([recetlyPlayedStation])
-          );
-        } else {
-          //  Check if there is station with similar id
-          // if true update array and
-          const isStationInStorage = stationsFromStorage.some((station)=>{
-            if (station.id ===recetlyPlayedStation.id ) {
-              return true;
-            }
-            return false
-          })
-          if (isStationInStorage) {
-            
-          }
-          const newStations = stationsFromStorage
-            .map((station) => {
-              if (station.id === action.payload.stationuuid) {
-                return { ...station, date: currentTime };
-              }
-              return station;
-            })
-            .sort((recentStation, nextStation) => {
-              return recentStation.date - nextStation.date;
-            });
-          localStorage.removeItem('recentlyPlayedStations');
-          console.log(newStations);
-          localStorage.setItem(
-            'recentlyPlayedStations',
-            JSON.stringify(newStations)
-          );
-        }
-      };
-      addStationToStorage()
-
-      return { ...state, ...action.payload, isPlaying: true };
+      const {} = action.payload;
+      return { isPlaying: true, station: { ...action.payload } };
     }
     case StationReducerActionType.PAUSE: {
       return { ...state, isPlaying: false };
     }
     case StationReducerActionType.TOGGLE: {
+      console.log('toggled');
       return { ...state, isPlaying: !state.isPlaying };
     }
     default: {
-      throw new Error(`Unknown action ${action.type}`);
+      return state;
     }
   }
 };
-export const stationContext = createContext<{
-  dispatch: React.Dispatch<{
-    type: StationReducerActionType;
-    payload: TStation | TstationApp;
+export const StationContext = createContext<{
+  dispatch: React.Dispatch<TStationAction>;
+  state: TStationStatus;
+  storedStations: string[];
+  dispatchStoreStation: React.Dispatch<{
+    type: 'storeStation';
+    payload: string;
   }>;
-}>({ dispatch: () => {} });
-const StationStateContext = createContext<{ state: null | TstationApp }>({
-  state: null,
+  url: string;
+  changeUrl: (url: string) => void;
+}>({
+  dispatch: () => {},
+  state: {
+    station: {
+      countryCode: '',
+      name: '',
+      stationId: '',
+      stationurl: '',
+      votes: 0,
+      favicon: '',
+    },
+    isPlaying: false,
+  },
+  storedStations: [],
+  dispatchStoreStation: () => {},
+  changeUrl: () => {},
+  url: '',
 });
 
 const StationContextProvider = ({ children }: { children: ReactNode }) => {
-  const [state, dispatch] = useReducer(stationReducer, null);
-  const dispatchCallback = useCallback<typeof dispatch>((arg) => {
-    dispatch({ ...arg });
-  }, []);
-
-  return (
-    <stationContext.Provider value={{ dispatch: dispatchCallback }}>
-      <StationStateContext.Provider value={{ state }}>
-        {children}
-      </StationStateContext.Provider>
-    </stationContext.Provider>
+  const [state, dispatch] = useReducer(stationReducer, {
+    isPlaying: false,
+    station: {
+      countryCode: '',
+      name: '',
+      stationId: '',
+      stationurl: '',
+      votes: 0,
+      favicon: '',
+    },
+  });
+  const [storedStations, dispatchStoreStation] = useReducer(
+    storePlayedStationReducer,
+    [],
+    () => {
+      const playedStations = localStorage.getItem('playedStations');
+      if (
+        playedStations === null ||
+        !Array.isArray(JSON.parse(playedStations))
+      ) {
+        return [];
+      }
+      return JSON.parse(playedStations) as string[];
+    }
   );
-};
-export const useStationState = () => {
-  return React.useContext(StationStateContext);
+  const [url, setUrl] = useState('');
+  const changeUrl = (url: string) => {
+    setUrl(url);
+  };
+  return (
+    <StationContext.Provider
+      value={{
+        dispatch,
+        state,
+        dispatchStoreStation,
+        storedStations,
+        url,
+        changeUrl,
+      }}
+    >
+      {children}
+    </StationContext.Provider>
+  );
 };
 
 export default StationContextProvider;
