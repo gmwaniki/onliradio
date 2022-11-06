@@ -1,5 +1,6 @@
 import type { GetStaticProps, InferGetStaticPropsType } from 'next';
-import { ReactElement, Suspense, useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { ReactElement, Suspense, useContext, useState } from 'react';
 import type { NextPageWithLayout } from '../_app';
 import axios, { AxiosError } from 'axios';
 import AppLayout from '../../components/Layout/AppLayout';
@@ -7,68 +8,61 @@ import { getRadioServerUrl } from '../../util/getUrl';
 import { playableStations, TStation } from '../../util/playableStation';
 import StationHeaderCard from '../../components/Station/StationHeaderCard';
 
-import { useStationState } from '../../Context/AudioContext';
+import { StationContext } from '../../Context/AudioContext';
 import { useRouter } from 'next/router';
 
 import StationSection from '../../components/Station/StationSection';
 import LocalStation from '../../components/Station/LocalStations';
 import Spinner from '../../components/Spinner/Spinner';
 import { Sign } from 'crypto';
-import StationsPlayed from '../../components/Station/StationsPlayed';
+import { useRef } from 'react';
+import { useEffect } from 'react';
+// import StationsPlayed from '../../components/Station/StationsPlayed';
+
+const DynamicStationsPlayed = dynamic(
+  () => import('../../components/Station/StationsPlayed'),
+  { ssr: false }
+);
 
 const App: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ topVotedStationsWorldWide, topClickedStationsWorldWide, url }) => {
-  const [recentlyPlayedStations, setRecentlyPlayedStations] = useState<
-    string | null
-  >(null);
-  const { state } = useStationState();
+  const { state, changeUrl } = useContext(StationContext);
+  const { isPlaying, station: currentStation } = state;
   const router = useRouter();
 
   const localCountry = router.query?.country as string | undefined;
-  const isplaying = (station: TStation) => {
-    if (state === null || state.isPlaying === undefined) return null;
-    if (state.stationuuid !== station.stationuuid) {
-      return null;
-    }
-    return state.isPlaying;
-  };
+
   useEffect(() => {
-    const stationsRecentlyPlayed = localStorage.getItem(
-      'recentlyPlayedStations'
-    );
-
-    setRecentlyPlayedStations(stationsRecentlyPlayed);
-  }, []);
-
+    changeUrl(url);
+  }, [changeUrl, url]);
   return (
-    <div className='text-CustomTextGrey  sm:overflow-hidden grid sm:grid-cols-[1fr_.4fr] sm:grid-flow-row sm:gap-6 pt-5'>
-      <section className='overflow-x-auto '>
-        <div className=''>
-          <h1 className='font-semibold text-lg sm:text-xl '>
-            Top Voted Stations Worldwide
-          </h1>
-        </div>
+    <div className='text-CustomTextGrey  sm:overflow-hidden grid sm:grid-cols-[1fr_.4fr] sm:grid-flow-row  sm:gap-6 pt-5'>
+      <section className='overflow-x-auto h-min'>
+        <h1 className='font-semibold text-lg sm:text-xl '>
+          Top Voted Stations Worldwide
+        </h1>
+
         <div className=' flex overflow-x-scroll scroll-smooth snap-x snap-mandatory [&>*+*]:ml-[.85rem] scrollbar sm:px-0 '>
           {topVotedStationsWorldWide.map((station) => {
             return (
               <StationHeaderCard
                 station={station}
                 key={station.stationuuid}
-                isPlaying={isplaying(station)}
+                isPlaying={
+                  station.stationuuid === currentStation?.stationId && isPlaying
+                }
               />
             );
           })}
         </div>
       </section>
-      <section className='hidden sm:block sm:bg-CustomBackgroundBlack sm:mt-7 sm:rounded-md sm:text-center sm:p-2'>
+      <section
+        className={`hidden sm:bg-CustomBackgroundBlack sm:mt-7 sm:rounded-md sm:text-center sm:p-2 sm:flex sm:flex-col sm:max-h-[400px] 2xl:max-h-[450px]`}
+      >
         <h2 className='text-2xl'>Recently played</h2>
-        <div>
-          {recentlyPlayedStations !== null ? (
-            <StationsPlayed />
-          ) : (
-            <div>No Stations played yet</div>
-          )}
+        <div className='h-[100%] overflow-y-scroll scrollbar'>
+          <DynamicStationsPlayed url={url} />
         </div>
       </section>
       {localCountry ? (
