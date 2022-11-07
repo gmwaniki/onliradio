@@ -40,14 +40,17 @@ const StationCard = ({
     >
       <div className='grid grid-cols-[repeat(3,100px)] grid-rows-[64px_125px_52px] gap-y-2'>
         <div className='col-start-1 col-end-4 flex justify-between items-center'>
-          <Link href={homepage} prefetch={false}>
-            <a target='_blank' rel='nofollow noreferrer'>
-              <span className='sr-only'>Go to radio station website</span>
-              <HiOutlineInformationCircle
-                className='text-3xl hover:stroke-CustomActivePurple '
-                aria-hidden='true'
-              />
-            </a>
+          <Link
+            href={homepage}
+            prefetch={false}
+            rel='nofollow noreferrer'
+            target={'_blank'}
+          >
+            <span className='sr-only'>Go to radio station website</span>
+            <HiOutlineInformationCircle
+              className='text-3xl hover:stroke-CustomActivePurple '
+              aria-hidden='true'
+            />
           </Link>
 
           <button
