@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { HiMenuAlt3, HiX } from 'react-icons/hi';
+import logo from '../../asssets/logo.svg';
 
 const Header = () => {
   const [menu, setMenu] = useState<boolean>(false);
@@ -13,14 +14,7 @@ const Header = () => {
       <header className=' grid grid-cols-2 sm:text-lg sm:grid-cols-[.5fr_2.5fr]  '>
         <Link href='/'>
           <span className='sr-only'>Homepage</span>
-          <Image
-            src='/images/logo/vector/default-monochrome.svg'
-            alt='onliradio logo'
-            height='47'
-            width='256'
-            layout='responsive'
-            priority
-          />
+          <Image src={logo} alt='onliradio logo' />
         </Link>
         <div className='justify-self-end grid place-items-center sm:hidden'>
           <button onClick={handleMenuClick} className='text-3xl '>
