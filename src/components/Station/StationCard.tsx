@@ -90,8 +90,8 @@ const StationCard = ({
             <Image
               src={src}
               alt={name}
-              width='300px'
-              height='300px'
+              width={300}
+              height={300}
               placeholder='blur'
               blurDataURL={`data:image/svg+xml;base64,${toBase64(
                 shimmer(300, 300)
