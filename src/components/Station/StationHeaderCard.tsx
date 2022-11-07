@@ -55,14 +55,17 @@ const StationHeaderCard = ({
       className={`bg-CustomBackgroundBlack grid grid-flow-col p-2 sm:p-5 rounded-md w-full snap-center flex-shrink-0  sm:max-w-full ${className} `}
     >
       <div className='grid grid-cols-3 grid-rows-[auto_200px_auto] sm:grid-rows-[auto_auto_auto] gap-y-6 items-center'>
-        <Link href={homepage} prefetch={false}>
-          <a target='_blank' rel='nofollow noreferrer'>
-            <span className='sr-only'>Go to radio station website</span>
-            <HiOutlineInformationCircle
-              className='text-3xl hover:stroke-CustomActivePurple sm:text-4xl'
-              aria-hidden='true'
-            />
-          </a>
+        <Link
+          href={homepage}
+          prefetch={false}
+          target='_blank'
+          rel='nofollow noreferrer'
+        >
+          <span className='sr-only'>Go to radio station website</span>
+          <HiOutlineInformationCircle
+            className='text-3xl hover:stroke-CustomActivePurple sm:text-4xl'
+            aria-hidden='true'
+          />
         </Link>
         <div className=' row-start-2 row-end-3 col-span-3 '>
           <div className='flex relative w-[40%] sm:w-[25%] max-w-[200px] 2xl:max-w-[640px]  mx-auto'>
