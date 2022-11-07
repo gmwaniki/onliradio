@@ -1,8 +1,9 @@
+'use client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { HiMenuAlt3, HiX } from 'react-icons/hi';
-import logo from '../../asssets/logo.svg';
+import logo from '../../assets/logo.svg';
 
 const Header = () => {
   const [menu, setMenu] = useState<boolean>(false);
@@ -64,7 +65,7 @@ const Header = () => {
             </li>
             <li>
               <Link
-                href='/w'
+                href='/'
                 className='relative transition-all hover:text-black text-slate-500 after:absolute after:h-1 after:w-0 after:bg-gradient after:left-0 after:-bottom-1 after:z-10  after:transition-[width] after:duration-300 hover:after:w-full'
               >
                 Sign up
