@@ -5,8 +5,13 @@ import type { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
   const { nextUrl, geo } = request;
   // const country = geo?.count
-  nextUrl.searchParams.set('country', `${geo?.country || 'KE'}`);
-  return NextResponse.rewrite(nextUrl);
+  if (nextUrl.searchParams.has('country')) {
+    return NextResponse.next();
+  } else {
+    nextUrl.searchParams.set('country', `${geo?.country || 'KE'}`);
+
+    return NextResponse.redirect(nextUrl);
+  }
 }
 
 // See "Matching Paths" below to learn more
