@@ -62,16 +62,12 @@ const Search = ({}: {}) => {
         onFocus={() => router.prefetch('/app/search')}
         onSubmit={handleFormSubmit}
       >
-        <Link href={'/app'}>
-          <a
-            className='bg-CustomBlack text-CustomWhite p-4 rounded-md grid grid-flow-col gap-2 items-start w-min justify-start hover:bg-CustomBlack/70 focus:bg-CustomBlack/70 focus:ring-CustomActivePurple focus:ring-4 focus:outline-none'
-            onClick={() => {
-              router.replace('/app');
-            }}
-          >
-            <HiHome className='fill-CustomWhite text-2xl' />
-            <span>Home</span>
-          </a>
+        <Link
+          href={'/app'}
+          className='bg-CustomBlack text-CustomWhite p-4 rounded-md grid grid-flow-col gap-2 items-start w-min justify-start hover:bg-CustomBlack/70 focus:bg-CustomBlack/70 focus:ring-CustomActivePurple focus:ring-4 focus:outline-none'
+        >
+          <HiHome className='fill-CustomWhite text-2xl' />
+          <span>Home</span>
         </Link>
         <div className='grid grid-flow-row gap-y-2 sm:grid-flow-col sm:gap-x-2'>
           {activeCheckboxes.length <= 0 ? (
