@@ -3,6 +3,7 @@ import HomeLayout from '../components/Layout/HomeLayout';
 import { MdOutlineRadio, MdLanguage, MdTranslate } from 'react-icons/md';
 import Image from 'next/image';
 import Link from 'next/link';
+import hero from '../asssets/hero.svg';
 
 const Home: NextPage = () => {
   return (
@@ -63,13 +64,7 @@ const Home: NextPage = () => {
         </div>
 
         <div className='relative justify-self-end row-start-1 sm:row-start-1 sm:col-start-2 lg:row-end-3'>
-          <Image
-            src='/images/heroop.svg'
-            alt='Astronaut sitting on a radio'
-            width='618'
-            height='617'
-            priority
-          />
+          <Image src={hero} alt='Astronaut sitting on a radio' priority />
         </div>
       </section>
     </HomeLayout>
