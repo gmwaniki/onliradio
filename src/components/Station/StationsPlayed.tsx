@@ -29,8 +29,8 @@ const RecentStation = ({ station, isPlaying }: TRecentStation) => {
           <Image
             src={src}
             alt={station.name}
-            width='100'
-            height='100'
+            width={100}
+            height={100}
             placeholder='blur'
             blurDataURL={`data:image/svg+xml;base64,${toBase64(
               shimmer(100, 100)
