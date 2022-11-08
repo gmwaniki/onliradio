@@ -22,30 +22,30 @@ export default async function handler(
     const imageSize = imageResponse.headers['content-length'];
 
     if (!imageType) {
-      res.status(500);
-      res.end();
-      return;
+      return res.status(500);
     }
     if (!imageType.includes('image')) {
-      res.status(400);
-      res.end();
-      return;
+      return res.status(400);
     }
 
     if (imageSize && parseInt(imageSize) <= 1000) {
       res.setHeader('Content-Type', imageType);
-      imageResponse.pipe(res);
-      return;
+      return imageResponse.pipe(res);
     }
 
     const smallerimage = sharp()
-      .resize(100, 100, { fit: 'outside', width: 100, height: 100 })
+      .resize(100, 100, {
+        fit: 'outside',
+        width: 100,
+        height: 100,
+        background: { r: 0, g: 0, b: 0, alpha: 0 },
+      })
       .png({ quality: 5, compressionLevel: 9 });
 
     res.setHeader('Content-Type', 'image/png');
     res.setHeader('Cache-Control', 'max-age=31536000, immutable');
 
-    imageResponse
+    return imageResponse
       .pipe(smallerimage)
       .on('error', (error) => {
         console.log(error);
@@ -55,9 +55,7 @@ export default async function handler(
       .pipe(res);
   } catch (error) {
     console.log(error);
-    res.status(500);
-    res.end();
-    return;
+    return res.status(500);
   }
 
   //   res.status(200).json({ name: 'John Doe' });
