@@ -39,5 +39,9 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addVariant }) {
+      addVariant('childPath', '& > path');
+    },
+  ],
 };
