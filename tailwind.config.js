@@ -10,18 +10,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        CustomPurple: '#D1D9FF',
-        CustomActivePurple: '#BA78FC',
-        CustomVeryPurple: '#482284',
-        CustomLightPurple: '#B6C3FF',
-
-        CustomWhite: '#F2F4FF',
-        CustomBlack: '#100F0F',
-        // CustomBlack: '#040404',
-        // Custom
-        CustomBackgroundBlack: '#262626',
-        CustomLightGrey: '#6C6C6C',
-        CustomTextGrey: '#9A9A9A',
+        CustomBlack: '#040404',
+        CustomWhite: '#E3E3E3',
+        CustomLightBlack: '#262626',
+        CustomActive: '#A852FF',
       },
       backgroundImage: {
         gradient: 'linear-gradient(to right, #4B1E7A, #2E47E6)',
