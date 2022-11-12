@@ -19,7 +19,7 @@ module.exports = {
         gradient: 'linear-gradient(to right, #4B1E7A, #2E47E6)',
       },
       fontFamily: {
-        sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+        sans: ['var(--font-nunito)', ...defaultTheme.fontFamily.sans],
       },
       keyframes: {
         marqueetext: {
