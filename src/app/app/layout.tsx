@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { cookies } from 'next/headers';
 import React from 'react';
 import {
   HiOutlineHome,
@@ -8,8 +9,6 @@ import {
   HiHome,
   HiClock,
   HiHeart,
-  HiCollection,
-  HiOutlineCollection,
   HiOutlineGlobe,
   HiGlobe,
 } from 'react-icons/hi';
@@ -17,9 +16,10 @@ import NavLink from '../../components/NavLink/NavLink';
 import Player from '../../components/Player/Player';
 import AudioContextProvider from '../AudioContext';
 import logo from '../../assets/logo.svg';
-import { MdSafetyDivider } from 'react-icons/md';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
+  const cookie = cookies();
+
   return (
     <div className='bg-CustomBlack min-h-screen mb-40 sm:mb-0 sm:grid sm:grid-cols-[minmax(0,.25fr),minmax(0,.75fr)] lg:grid-cols-[minmax(0,.15fr),minmax(0,.85fr)]'>
       <AudioContextProvider>
@@ -39,7 +39,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           </li>
           <li className='flex-1'>
             <NavLink
-              path='/app'
+              path={`/app/${cookie.get('code')?.value}`}
               className='flex flex-col items-center pb-1 pt-2 rounded data-[active=true]:text-white sm:flex-row sm:mx-4 sm:px-4 sm:data-[active=true]:bg-[#151515] sm:gap-2 sm:items-center'
             >
               <div className='sm:group-data-[active=true]:bg-CustomActive sm:text-CustomWhite sm:rounded sm:p-1'>
