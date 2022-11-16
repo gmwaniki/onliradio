@@ -1,12 +1,10 @@
 import Image from 'next/image';
-import { cookies } from 'next/headers';
-import React from 'react';
+
+import React, { Suspense, useEffect } from 'react';
 import {
-  HiOutlineHome,
   HiOutlineSearch,
   HiOutlineHeart,
   HiOutlineClock,
-  HiHome,
   HiClock,
   HiHeart,
   HiOutlineGlobe,
@@ -16,10 +14,9 @@ import NavLink from '../../components/NavLink/NavLink';
 import Player from '../../components/Player/Player';
 import AudioContextProvider from '../AudioContext';
 import logo from '../../assets/logo.svg';
+import IndexLInk from '../../components/NavLink/IndexLInk';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  const cookie = cookies();
-
   return (
     <div className='bg-CustomBlack min-h-screen mb-40 sm:mb-0 sm:grid sm:grid-cols-[minmax(0,.25fr),minmax(0,.75fr)] lg:grid-cols-[minmax(0,.15fr),minmax(0,.85fr)]'>
       <AudioContextProvider>
@@ -38,19 +35,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             </div>
           </li>
           <li className='flex-1'>
-            <NavLink
-              path={`/app/${cookie.get('code')?.value}`}
-              className='flex flex-col items-center pb-1 pt-2 rounded data-[active=true]:text-white sm:flex-row sm:mx-4 sm:px-4 sm:data-[active=true]:bg-[#151515] sm:gap-2 sm:items-center'
-            >
-              <div className='sm:group-data-[active=true]:bg-CustomActive sm:text-CustomWhite sm:rounded sm:p-1'>
-                <HiOutlineHome className='text-3xl w-8 h-8 childPath:stroke-1 group-data-[active=true]:hidden' />
-                <HiHome className='text-3xl w-8 h-8 group-data-[active=false]:hidden' />
-              </div>
-
-              <span className='group-data-[active=true]:bg-CustomBlack rounded px-4 mx-auto text-center sm:group-data-[active=true]:bg-transparent sm:group-data-[active=true]:text-CustomActive sm:px-0 sm:mx-0'>
-                Home
-              </span>
-            </NavLink>
+            <Suspense fallback='Home'>
+              <IndexLInk />
+            </Suspense>
           </li>
           <li className='flex-1'>
             <NavLink
