@@ -8,11 +8,11 @@ export type TCheckBoxes = {
 } & Record<string, boolean>;
 
 export type TInputValues = {
-  name: string;
-  language: string;
-  genre: string;
-  country: string;
-} & Record<string, string>;
+  name?: string;
+  language?: string;
+  genre?: string;
+  country?: string;
+};
 
 export type TSearch = {
   searchValues: TInputValues;
