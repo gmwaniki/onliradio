@@ -1,15 +1,17 @@
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import React from 'react';
 import { HiHome, HiOutlineHome } from 'react-icons/hi';
 import NavLink from './NavLink';
 
 export default function IndexLInk() {
-  const cookie = cookies();
+  const header = headers();
+  //   console.log(header.get('x-code'));
+
   //   console.log(cookie.get('code')?.value);
   return (
     <>
       <NavLink
-        path={`/app/${cookie.get('code')?.value}`}
+        path={`/app/${header.get('x-code')}`}
         className='flex flex-col items-center pb-1 pt-2 rounded data-[active=true]:text-white sm:flex-row sm:mx-4 sm:px-4 sm:data-[active=true]:bg-[#151515] sm:gap-2 sm:items-center'
       >
         <div className='sm:group-data-[active=true]:bg-CustomActive sm:text-CustomWhite sm:rounded sm:p-1'>

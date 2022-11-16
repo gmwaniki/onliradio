@@ -5,10 +5,14 @@ import { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
   const { geo, headers } = request;
 
+  const requestHeaders = new Headers(headers);
+  requestHeaders.set('x-code', geo?.country || 'KE');
+
   const response = NextResponse.rewrite(
-    `${request.nextUrl.href}/${geo?.country || 'KE'}`
+    `${request.nextUrl.href}/${geo?.country || 'KE'}`,
+    { request: { headers: requestHeaders } }
   );
-  response.cookies.set('code', geo?.country || 'KE');
+
   return response;
 }
 
