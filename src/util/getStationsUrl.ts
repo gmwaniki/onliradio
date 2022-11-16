@@ -3,7 +3,7 @@ import { TCheckBoxes, TInputValues } from '../Context/SearchContext';
 type TgetStation = (
   url: string,
   searchValues: TInputValues,
-  filters: TCheckBoxes
+  filters?: TCheckBoxes
 ) => string;
 export const getStationsUrl: TgetStation = (url, searchValues, filters) => {
   const getUrl = new URL(`${url}/stations/search`);
@@ -12,22 +12,22 @@ export const getStationsUrl: TgetStation = (url, searchValues, filters) => {
   getUrl.searchParams.set('reverse', 'true');
   getUrl.searchParams.set('is_https', 'true');
   getUrl.searchParams.set('hidebroken', 'true');
-  if (filters.name && searchValues.name) {
+  if (searchValues.name) {
     getUrl.searchParams.set('name', stringCapitalize(searchValues.name));
   }
-  if (filters.country && searchValues.country) {
+  if (searchValues.country) {
     getUrl.searchParams.set('country', stringCapitalize(searchValues.country));
   }
-  if (filters.language && searchValues.language) {
+  if (searchValues.language) {
     getUrl.searchParams.set('language', searchValues.language);
   }
-  if (filters.genre && searchValues.genre) {
+  if (searchValues.genre) {
     getUrl.searchParams.set('tag', searchValues.genre);
   }
 
   return getUrl.href;
 };
-const stringCapitalize = (value: string): string => {
+export const stringCapitalize = (value: string): string => {
   return value
     .trim()
     .split(' ')
