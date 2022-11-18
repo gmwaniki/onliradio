@@ -3,15 +3,12 @@ import Image from 'next/image';
 import { MdLanguage, MdOutlineRadio, MdTranslate } from 'react-icons/md';
 import hero from '../assets/hero.webp';
 import Header from '../components/Header/Header';
-import { headers } from 'next/headers';
 
 export default function Page() {
-  const countryCode: string = headers().get('x-code') || 'KE';
-
   return (
     <div className='min-h-screen bg-[#F2F2F2] relative'>
       <div className='container mx-auto pt-5 px-6 sm:px-0 md:px-6 md:pt-7 grid grid-flow-row sm:gap-10 '>
-        <Header countryCode={countryCode} />
+        <Header />
 
         <main className='sm:px-6 justify-self-end'>
           <section className='grid sm:grid-cols-2 justify-center items-center pb-12'>
@@ -25,7 +22,7 @@ export default function Page() {
               </p>
 
               <Link
-                href={`/app/${countryCode}`}
+                href={`/app`}
                 className='bg-gradient text-CustomWhite p-4 rounded flex items-center gap-x-2 self-center justify-self-center sm:self-end sm:justify-self-start '
               >
                 <MdOutlineRadio className='text-2xl' />
