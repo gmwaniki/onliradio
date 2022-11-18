@@ -8,15 +8,16 @@ export function middleware(request: NextRequest) {
   const requestHeaders = new Headers(headers);
   requestHeaders.set('x-code', geo?.country || 'KE');
 
-  const response = NextResponse.rewrite(
-    `${request.nextUrl.href}/${geo?.country || 'KE'}`,
-    { request: { headers: requestHeaders } }
-  );
+  // const response = NextResponse.rewrite(
+  //   `${request.nextUrl.href}/${geo?.country || 'KE'}`,
+  //   { request: { headers: requestHeaders } }
+  // );
 
-  return response;
+  // return response;
+  return NextResponse.next({ request: { headers: requestHeaders } });
 }
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: '/app',
+  matcher: ['/app/:path*', '/'],
 };
