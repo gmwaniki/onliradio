@@ -1,8 +1,3 @@
-/* 
-  /search?name=Kiss&genre=pop&country=kenya&language=engish
-
-*/
-
 import SearchPage from '../../../components/Search/SearchPage';
 import { getStationsUrl } from '../../../util/getStationsUrl';
 import { getUrl } from '../../../util/getUrl';

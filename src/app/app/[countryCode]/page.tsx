@@ -36,7 +36,6 @@ export default async function Page({
   const url = await getUrl();
   const stations = await getMostVotedStations(url);
   const countryCode = params?.countryCode || 'UG';
-
   const localStations = await getLocalStations(url, countryCode || 'US');
   const mostPlayedStations = await getMostPlayedStations(url);
 

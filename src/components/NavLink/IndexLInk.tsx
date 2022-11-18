@@ -5,9 +5,7 @@ import NavLink from './NavLink';
 
 export default function IndexLInk() {
   const header = headers();
-  //   console.log(header.get('x-code'));
 
-  //   console.log(cookie.get('code')?.value);
   return (
     <>
       <NavLink
