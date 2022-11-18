@@ -13,7 +13,8 @@ export default function Loading() {
         <div className='h-4 w-1/3 bg-CustomLightBlack/70 rounded'></div>
         <div className='h-4 w-1/6 bg-CustomLightBlack/70 rounded'></div>
       </div>
-      <div className='mt-4 animate-pulse flex gap-x-4 justify-between'>
+      <div className='mt-4 animate-pulse flex gap-4 justify-between flex-wrap'>
+        <div className='w-[150px] h-[160px] bg-CustomLightBlack/70 rounded'></div>
         <div className='w-[150px] h-[160px] bg-CustomLightBlack/70 rounded'></div>
         <div className='w-[150px] h-[160px] bg-CustomLightBlack/70 rounded'></div>
         <div className='w-[150px] h-[160px] bg-CustomLightBlack/70 rounded'></div>
