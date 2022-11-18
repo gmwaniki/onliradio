@@ -12,7 +12,7 @@ export default function IndexLInk() {
     <>
       <NavLink
         path={`/app/${header.get('x-code')}`}
-        className='flex flex-col items-center pb-1 pt-2 rounded data-[active=true]:text-white sm:flex-row sm:mx-4 sm:px-4 sm:data-[active=true]:bg-[#151515] sm:gap-2 sm:items-center'
+        className='flex flex-col items-center pb-1 pt-2 rounded data-[active=true]:text-white sm:flex-row sm:mx-3 sm:px-4 sm:data-[active=true]:bg-[#151515] sm:gap-2 sm:items-center'
       >
         <div className='sm:group-data-[active=true]:bg-CustomActive sm:text-CustomWhite sm:rounded sm:p-1'>
           <HiOutlineHome className='text-3xl w-8 h-8 childPath:stroke-1 group-data-[active=true]:hidden' />
