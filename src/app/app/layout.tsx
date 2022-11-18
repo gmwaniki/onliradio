@@ -18,9 +18,9 @@ import IndexLInk from '../../components/NavLink/IndexLInk';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className='bg-CustomBlack min-h-screen mb-40 sm:mb-0 sm:grid sm:grid-cols-[minmax(0,.25fr),minmax(0,.75fr)] lg:grid-cols-[minmax(0,.15fr),minmax(0,.85fr)]'>
+    <div className='bg-CustomBlack min-h-screen mb-40 sm:mb-0 sm:grid sm:grid-cols-[minmax(0,200px),minmax(0,1fr)] lg:grid-cols-[minmax(0,250px),minmax(0,1fr)] 2xl:container'>
       <AudioContextProvider>
-        <div className='isolate grid grid-rows-[1fr,auto]  sm:max-w-[1200px]'>
+        <div className='isolate grid grid-rows-[1fr,auto]  '>
           <main className='p-[10px] '>{children}</main>
           <Player />
         </div>
@@ -29,7 +29,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       {/* player */}
       <nav className='fixed bottom-0 bg-CustomLightBlack w-full text-CustomWhite border border-transparent border-t-2 border-t-CustomLightBlack sm:left-0 sm:top-0 sm:bottom-auto  sm:sticky  sm:max-h-screen sm:col-start-1 sm:row-start-1 sm:pt-[10px]'>
         <ul className='flex sm:flex-col sm:gap-4 sm:rounded-tr sm:relative sm:z-20 sm:text-xl'>
-          <li className='hidden sm:block w-[90%] mx-auto relative isolate -z-10'>
+          <li className='hidden sm:block mx-3 relative isolate -z-10'>
             <div className='  bg-CustomBlack py-7 px-1  rounded-l relative -z-10 rounded'>
               <Image src={logo} alt='onliradio logo' />
             </div>
@@ -42,7 +42,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <li className='flex-1'>
             <NavLink
               path='/app/search'
-              className='flex flex-col items-center pb-1 pt-2 rounded data-[active=true]:text-white sm:flex-row sm:mx-4 sm:px-4 sm:data-[active=true]:bg-[#151515] sm:gap-2 sm:items-center'
+              className='flex flex-col items-center pb-1 pt-2 rounded data-[active=true]:text-white sm:flex-row sm:mx-3 sm:px-4 sm:data-[active=true]:bg-[#151515] sm:gap-2 sm:items-center'
             >
               <div className='sm:group-data-[active=true]:bg-CustomActive sm:text-CustomWhite sm:rounded sm:p-1'>
                 <HiOutlineSearch className='text-3xl childPath:stroke-1 group-data-[active=true]:childPath:stroke-2' />
@@ -56,7 +56,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <li className='flex-1 hidden sm:block'>
             <NavLink
               path='/app/countries'
-              className='flex flex-col items-center pb-1 pt-2 rounded data-[active=true]:text-white sm:flex-row sm:mx-4 sm:px-4 sm:data-[active=true]:bg-[#151515] sm:gap-2 sm:items-center'
+              className='flex flex-col items-center pb-1 pt-2 rounded data-[active=true]:text-white sm:flex-row sm:mx-3 sm:px-4 sm:data-[active=true]:bg-[#151515] sm:gap-2 sm:items-center'
             >
               <div className='sm:group-data-[active=true]:bg-CustomActive sm:text-CustomWhite sm:rounded sm:p-1'>
                 <HiOutlineGlobe className='text-3xl childPath:stroke-1 group-data-[active=true]:hidden' />
@@ -72,7 +72,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <li className='flex-1'>
             <NavLink
               path='/app/history'
-              className='flex flex-col items-center pb-1 pt-2 rounded data-[active=true]:text-white sm:flex-row sm:mx-4 sm:px-4 sm:data-[active=true]:bg-[#151515] sm:gap-2 sm:items-center'
+              className='flex flex-col items-center pb-1 pt-2 rounded data-[active=true]:text-white sm:flex-row sm:mx-3 sm:px-4 sm:data-[active=true]:bg-[#151515] sm:gap-2 sm:items-center'
             >
               <div className='sm:group-data-[active=true]:bg-CustomActive sm:text-CustomWhite sm:rounded sm:p-1'>
                 <HiOutlineClock className='text-3xl childPath:stroke-1 group-data-[active=true]:hidden' />
@@ -87,7 +87,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <li className='flex-1'>
             <NavLink
               path='/app/favourites'
-              className='flex flex-col items-center pb-1 pt-2 rounded data-[active=true]:text-white sm:flex-row sm:mx-4 sm:px-4 sm:data-[active=true]:bg-[#151515] sm:gap-2 sm:items-center'
+              className='flex flex-col items-center pb-1 pt-2 rounded data-[active=true]:text-white sm:flex-row sm:mx-3 sm:px-4 sm:data-[active=true]:bg-[#151515] sm:gap-2 sm:items-center'
             >
               <div className='sm:group-data-[active=true]:bg-CustomActive sm:text-CustomWhite sm:rounded sm:p-1'>
                 <HiOutlineHeart className='text-3xl childPath:stroke-1 group-data-[active=true]:hidden' />
