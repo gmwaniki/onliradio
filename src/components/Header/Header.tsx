@@ -5,11 +5,7 @@ import { useState } from 'react';
 import { HiMenuAlt3, HiX } from 'react-icons/hi';
 import logo from '../../assets/logo.svg';
 
-type TProps = {
-  countryCode: string;
-};
-
-const Header = ({ countryCode }: TProps) => {
+const Header = () => {
   const [menu, setMenu] = useState<boolean>(false);
   function handleMenuClick() {
     setMenu(!menu);
@@ -61,7 +57,7 @@ const Header = ({ countryCode }: TProps) => {
           <ul className='grid grid-flow-col items-center gap-8'>
             <li>
               <Link
-                href={`/app/${countryCode}`}
+                href={`/app`}
                 className='bg-gradient text-white py-[10px] px-[30px] rounded-md transition-transform duration-300 hover:opacity-90 '
               >
                 Listen
