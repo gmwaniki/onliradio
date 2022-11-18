@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense } from 'react';
 import {
   HiOutlineSearch,
   HiOutlineHeart,
@@ -12,19 +12,17 @@ import {
 } from 'react-icons/hi';
 import NavLink from '../../components/NavLink/NavLink';
 import Player from '../../components/Player/Player';
-import AudioContextProvider from '../AudioContext';
+
 import logo from '../../assets/logo.svg';
 import IndexLInk from '../../components/NavLink/IndexLInk';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className='bg-CustomBlack min-h-screen mb-40 sm:mb-0 sm:grid sm:grid-cols-[minmax(0,200px),minmax(0,1fr)] lg:grid-cols-[minmax(0,250px),minmax(0,1fr)] 2xl:container'>
-      <AudioContextProvider>
-        <div className='isolate grid grid-rows-[1fr,auto]  '>
-          <main className='p-[10px] '>{children}</main>
-          <Player />
-        </div>
-      </AudioContextProvider>
+      <div className='isolate grid grid-rows-[1fr,auto]  '>
+        <main className='p-[10px] '>{children}</main>
+        <Player />
+      </div>
 
       {/* player */}
       <nav className='fixed bottom-0 bg-CustomLightBlack w-full text-CustomWhite border border-transparent border-t-2 border-t-CustomLightBlack sm:left-0 sm:top-0 sm:bottom-auto  sm:sticky  sm:max-h-screen sm:col-start-1 sm:row-start-1 sm:pt-[10px]'>
