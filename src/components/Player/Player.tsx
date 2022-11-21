@@ -29,10 +29,22 @@ export default function Player() {
   }, [station.stationId, isPlaying, dispatch]);
 
   useEffect(() => {
-    const storage = localStorage.getItem('likes');
-    if (storage !== null) {
-      const likes: Array<string> = JSON.parse(storage);
+    const localLikes = localStorage.getItem('likes');
+
+    if (localLikes !== null) {
+      const likes: Array<string> = JSON.parse(localLikes);
       likes.indexOf(station.stationId) === -1 ? setLike(false) : setLike(true);
+    }
+    if (station.stationId) {
+      const localHistory = localStorage.getItem('history');
+      if (localHistory === null) {
+        localStorage.setItem('history', JSON.stringify([station.stationId]));
+      } else {
+        const stationsHistory: string[] = JSON.parse(localHistory);
+        const historySet = new Set([...stationsHistory]);
+        historySet.add(station.stationId);
+        localStorage.setItem('history', JSON.stringify([...historySet]));
+      }
     }
   }, [station.stationId]);
 
