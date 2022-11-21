@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import FavouritesPage from '../../../components/Favourites/FavouritesPage';
 import { getUrl } from '../../../util/getUrl';
 
