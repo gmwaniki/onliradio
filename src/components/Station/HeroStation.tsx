@@ -102,7 +102,7 @@ export default function HeroStation({ stations }: TProps) {
         <Image
           src={
             station.favicon
-              ? `/api/image?url=${station.favicon}`
+              ? `/api/image?url=${encodeURIComponent(station.favicon)}`
               : '/musicnote.svg'
           }
           alt={station.name}

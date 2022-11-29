@@ -56,7 +56,6 @@ export default function Player() {
       if (!like && stationIndex) {
         const likeSet = new Set([...likes]);
         likeSet.delete(station.stationId);
-        console.log(likeSet);
         localStorage.setItem('likes', JSON.stringify([...likeSet]));
       }
       if (like && !stationIndex) {
@@ -82,7 +81,7 @@ export default function Player() {
         <Image
           src={
             station.favicon
-              ? `/api/image?url=${station.favicon}`
+              ? `/api/image?url=${encodeURIComponent(station.favicon)}`
               : '/musicnote.svg'
           }
           alt='music note'

@@ -32,7 +32,7 @@ export default function Station({ station }: TProps) {
         <Image
           src={
             station.favicon
-              ? `/api/image?url=${station.favicon}`
+              ? `/api/image?url=${encodeURIComponent(station.favicon)}`
               : '/musicnote.svg'
           }
           alt={'musicnote'}
