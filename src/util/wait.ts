@@ -1,5 +1,5 @@
 export const wait = (time: number, fun: () => void) =>
-  new Promise((resolve, reject) => {
+  new Promise(() => {
     setTimeout(() => {
       fun();
     }, time);
