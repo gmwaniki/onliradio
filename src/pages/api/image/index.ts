@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import sharp from 'sharp';
+
 import { requestImage } from '../../../util/getImage';
 
 export default async function handler(
