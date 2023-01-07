@@ -2,7 +2,11 @@
 import Image from 'next/image';
 import React, { useContext, useMemo } from 'react';
 import { HiOutlinePause, HiOutlinePlay } from 'react-icons/hi';
-import { AudioContext, StationReducerActionType } from '../../app/AudioContext';
+
+import {
+  AudioContext,
+  StationReducerActionType,
+} from '../../app/providers/AudioContext';
 import getFlagEmoji from '../../util/getFlagEmoji';
 import { TStation } from '../../util/playableStation';
 
