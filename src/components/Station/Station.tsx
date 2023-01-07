@@ -47,6 +47,7 @@ export default function Station({ station }: TProps) {
             e.currentTarget.src = '/musicnote.svg';
           }}
           className='object-contain min-w-[70px] min-h-[70px] rounded'
+          priority={false}
         />
         <span className='absolute w-6 h-6 text-center  -top-1 -right-1 bg-CustomLightBlack  rounded-full  ring-1 ring-CustomActive'>
           {getFlagEmoji(station.countrycode) || '🤷'}
@@ -71,6 +72,7 @@ export default function Station({ station }: TProps) {
               stationId: station.stationuuid,
               stationurl: station.url_resolved,
               votes: station.votes,
+              hls: station.hls,
             },
           });
         }}
