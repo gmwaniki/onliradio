@@ -1,4 +1,4 @@
-type TInputValues = {
+export type TInputValues = {
   name: string;
   country: string;
   language: string;
