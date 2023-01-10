@@ -1,5 +1,6 @@
 import './globals.css';
-import React from 'react';
+
+import { Metadata } from 'next';
 import { Nunito } from 'next/font/google';
 import AudioContextProvider from './AudioContext';
 import { Metadata } from 'next';
