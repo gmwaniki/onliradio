@@ -7,8 +7,7 @@ import { Metadata } from 'next';
 
 const nunito = Nunito({
   variable: '--font-nunito',
-  subsets: ['latin', 'latin-ext'],
-  weight: ['400', '500', '600', '700'],
+  subsets: ['latin'],
 });
 
 export default function RootLayout({
@@ -17,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en' className={nunito.variable}>
+    <html lang='en' className={`${nunito.variable} `}>
       <head />
       <body className='relative bg-CustomBlack'>
         <AudioContextProvider>{children}</AudioContextProvider>
