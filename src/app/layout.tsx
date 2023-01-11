@@ -2,8 +2,9 @@ import './globals.css';
 
 import { Metadata } from 'next';
 import { Nunito } from 'next/font/google';
-import AudioContextProvider from './AudioContext';
-import { Metadata } from 'next';
+import React from 'react';
+
+import Providers from './providers';
 
 const nunito = Nunito({
   variable: '--font-nunito',
@@ -18,8 +19,8 @@ export default function RootLayout({
   return (
     <html lang='en' className={`${nunito.variable} `}>
       <head />
-      <body className='relative bg-CustomBlack'>
-        <AudioContextProvider>{children}</AudioContextProvider>
+      <body className='relative'>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
