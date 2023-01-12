@@ -46,19 +46,7 @@ export default function HeroStation({ stations }: TProps) {
   };
   const station = stations[index];
   const tags = useMemo(() => {
-    return station.tags.split(',').map((tag, index) => {
-      if (tag) {
-        if (index < 2) {
-          return (
-            <li className='bg-CustomBlack rounded-3xl px-2' key={index}>
-              {tag}
-            </li>
-          );
-        }
-      }
-
-      return;
-    });
+    return station.tags.split(",").slice(0, 2);
   }, [station.tags]);
 
   return (
