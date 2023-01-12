@@ -135,6 +135,7 @@ export default function HeroStation({ stations }: TProps) {
                 stationId: station.stationuuid,
                 stationurl: station.url_resolved,
                 votes: station.votes,
+                hls: station.hls,
               },
             });
           }}
