@@ -4,15 +4,10 @@ import Search from '../../../components/Search/Search';
 import getFlagEmoji from '../../../util/getFlagEmoji';
 import { getUrl } from '../../../util/getUrl';
 
-type TCountries = {
+export type TCountry = {
   name: string;
   iso_3166_1: string;
   stationcount: number;
-};
-
-const getCountries = async (url: string) => {
-  const result = await fetch(`${url}/countries?order=name`);
-  return result.json() as Promise<TCountries[]>;
 };
 
 export default async function Page() {
