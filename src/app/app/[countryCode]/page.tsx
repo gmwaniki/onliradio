@@ -5,7 +5,7 @@ import { HiOutlineArrowRight } from 'react-icons/hi';
 import { TStation } from '../../../util/playableStation';
 import { getUrl } from '../../../util/getUrl';
 import Search from '../../../components/Search/Search';
-import HeroStation from '../../../components/Station/HeroStation';
+import HeroCarousel from '../../../components/Station/HeroCarousel';
 import Station from '../../../components/Station/Station';
 
 const getMostVotedStations = async (url: string) => {
@@ -42,7 +42,7 @@ export default async function Page({
   return (
     <>
       <Search />
-      <HeroStation stations={stations} />
+      <HeroCarousel stations={stations} />
       <div className='text-CustomWhite'>
         <div className='flex justify-between items-center py-2'>
           <p className='text-lg font-medium'>Top Stations in your Area</p>
