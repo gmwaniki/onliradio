@@ -1,12 +1,11 @@
 import Link from 'next/link';
-
 import { HiOutlineArrowRight } from 'react-icons/hi';
 
-import { TStation } from '../../../util/playableStation';
-import { getUrl } from '../../../util/getUrl';
 import Search from '../../../components/Search/Search';
 import HeroCarousel from '../../../components/Station/HeroCarousel';
 import Station from '../../../components/Station/Station';
+import { getUrl } from '../../../util/getUrl';
+import { TStation } from '../../../util/playableStation';
 
 const getMostVotedStations = async (url: string) => {
   const stations = await fetch(
@@ -36,7 +35,7 @@ export default async function Page({
   const url = await getUrl();
   const stations = await getMostVotedStations(url);
   const countryCode = params?.countryCode || 'UG';
-  const localStations = await getLocalStations(url, countryCode || 'US');
+  const localStations = await getLocalStations(url, countryCode);
   const mostPlayedStations = await getMostPlayedStations(url);
 
   return (
@@ -54,10 +53,10 @@ export default async function Page({
             <HiOutlineArrowRight />
           </Link>
         </div>
-        <ul className='grid grid-flow-row grid-cols-[repeat(auto-fit,150px)]  items-center justify-center  gap-4   sm:pl-3 2xl:justify-start'>
+        <ul className='flex flex-wrap   items-center justify-start  gap-4 sm:pl-3 2xl:justify-start'>
           {localStations.map((station) => {
             return (
-              <li key={station.stationuuid}>
+              <li key={station.stationuuid} className='h-full'>
                 <Station station={station} />
               </li>
             );
