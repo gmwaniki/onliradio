@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname, useSelectedLayoutSegment } from 'next/navigation';
+import Link from "next/link";
+import { usePathname, useSelectedLayoutSegment } from "next/navigation";
 
 type Tprops = {
   path: string;
