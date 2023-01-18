@@ -1,4 +1,3 @@
-import Search from '../../../../../components/Search/Search';
 import Station from '../../../../../components/Station/Station';
 import { getUrl } from '../../../../../util/getUrl';
 import { TStation } from '../../../../../util/playableStation';
@@ -29,8 +28,6 @@ export default async function Page({
 
   return (
     <section className='text-CustomWhite'>
-      <Search />
-
       <ul className='grid grid-flow-row grid-cols-[repeat(auto-fit,150px)] items-center justify-center gap-y-5 gap-x-3 py-5'>
         {stations.map((station) => {
           return (
