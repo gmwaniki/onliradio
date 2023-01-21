@@ -1,4 +1,3 @@
-import Search from '../../../../../components/Search/Search';
 import Station from '../../../../../components/Station/Station';
 import { getUrl } from '../../../../../util/getUrl';
 import { TStation } from '../../../../../util/playableStation';
@@ -29,7 +28,6 @@ export default async function Page({
 
   return (
     <section className='text-CustomWhite'>
-      <Search />
       <h1 className='text-center font-semibold text-2xl py-2'>
         Stations in {params.language}
       </h1>
