@@ -7,7 +7,7 @@ import Header from '../components/Header/Header';
 
 export default function Page() {
   return (
-    <div className='min-h-screen  relative'>
+    <div className='min-h-screen  relative text-base '>
       <div className='container mx-auto pt-5 px-6 sm:px-0 md:px-6 md:pt-7 grid grid-flow-row sm:gap-10 '>
         <Header />
 
