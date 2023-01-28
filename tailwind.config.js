@@ -1,5 +1,8 @@
 /** @type {import('tailwindcss').Config} */
-import { fontFamily as _fontFamily } from 'tailwindcss/defaultTheme';
+import {
+  fontFamily as _fontFamily,
+  fontSize as _fontSize,
+} from 'tailwindcss/defaultTheme';
 
 export const content = [
   './src/app/**/*.{js,ts,jsx,tsx}',
@@ -20,6 +23,12 @@ export const theme = {
     fontFamily: {
       sans: ['var(--font-nunito)', ..._fontFamily.sans],
     },
+    fontSize: {
+      ..._fontSize,
+      base: ['clamp(16px,5vw,20px)', _fontSize.base[1]],
+      stationTitle: ['clamp(1.125rem,1.75vw,2.125rem)', _fontSize['2xl'][1]],
+    },
+
     keyframes: {
       marqueetext: {
         '0%,100%': {
