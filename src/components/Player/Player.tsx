@@ -69,7 +69,7 @@ export default function Player() {
   }
 
   return (
-    <div className='fixed bottom-[82px] z-20 w-full  text-CustomWhite   sm:sticky sm:bottom-0  place-self-end'>
+    <div className='fixed bottom-[90px] z-20 w-full  text-CustomWhite   sm:sticky sm:bottom-2  place-self-end'>
       <div className='mx-2 bg-CustomLightBlack/80 backdrop-blur-sm p-3 rounded grid grid-cols-[auto_repeat(2,minmax(0,1fr))] gap-x-2 sm:mx-3'>
         <Image
           src={`/api/image?url=${encodeURIComponent(station.favicon)}`}
