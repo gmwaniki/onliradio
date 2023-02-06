@@ -15,6 +15,7 @@ export const AudioContext = createContext<{
       stationurl: '',
       votes: 0,
       favicon: '',
+      hls: 0,
     },
     isPlaying: false,
   },
@@ -27,6 +28,7 @@ export type TActiveStation = {
   votes: number;
   countryCode: string;
   favicon: string;
+  hls: number;
 };
 
 export type TStationStatus = {
@@ -59,7 +61,6 @@ type TstationReducer = (
 const stationReducer: TstationReducer = (state, action) => {
   switch (action.type) {
     case StationReducerActionType.PLAY: {
-      const {} = action.payload;
       return { isPlaying: true, station: { ...action.payload } };
     }
     case StationReducerActionType.PAUSE: {
@@ -88,6 +89,7 @@ export default function AudioContextProvider({
       stationurl: '',
       votes: 0,
       favicon: '',
+      hls: 0,
     },
   });
   return (
