@@ -48,7 +48,7 @@ export type TStationAction =
 export enum StationReducerActionType {
   PLAY = 'play',
   PAUSE = 'pause',
-  TOGGLE = 'TOGGLE',
+  TOGGLE = 'toggle',
 }
 
 type TstationReducer = (
