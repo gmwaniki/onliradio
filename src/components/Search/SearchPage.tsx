@@ -1,7 +1,12 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { getStationsUrl, stringCapitalize } from '../../util/getStationsUrl';
+
+import {
+  TInputValues,
+  getStationsUrl,
+  stringCapitalize,
+} from '../../util/getStationsUrl';
 import { TStation } from '../../util/playableStation';
 import Station from '../Station/Station';
 import AdvancedSearch from './AdvancedSearch';
@@ -27,9 +32,9 @@ export default function SearchPage({ url, stations, searchParams }: TProps) {
     );
     const stationsUrl = getStationsUrl(
       url,
-      Object.fromEntries(formData.entries())
+      Object.fromEntries(formData.entries()) as TInputValues
     );
-    // console.log(stationsUrl);
+
     const urlParams = new URLSearchParams();
     if (searchValues.name) {
       urlParams.set('name', stringCapitalize(searchValues.name));
@@ -43,12 +48,8 @@ export default function SearchPage({ url, stations, searchParams }: TProps) {
     if (searchValues.genre) {
       urlParams.set('tag', searchValues.genre);
     }
-    // console.log(urlParams.toString());
-    // console.log(`${pathname}?${urlParams.toString()}`);
     router.push(`${pathname}?${urlParams.toString()}`);
   };
-
-  // console.log(stations);
 
   return (
     <section className='text-CustomWhite min-h-full'>
