@@ -53,7 +53,7 @@ export default async function Page({
             <HiOutlineArrowRight />
           </Link>
         </div>
-        <ul className='flex flex-wrap   items-center justify-start  gap-4 sm:pl-3 2xl:justify-start'>
+        <ul className='grid grid-flow-row grid-cols-[repeat(auto-fit,150px)] items-center justify-center  gap-4   sm:pl-3 2xl:justify-start'>
           {localStations.map((station) => {
             return (
               <li key={station.stationuuid} className='h-full'>
