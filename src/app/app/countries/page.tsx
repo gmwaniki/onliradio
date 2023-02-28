@@ -1,5 +1,4 @@
 import Countries from '../../../components/Country/Countries';
-import Search from '../../../components/Search/Search';
 import { getCountries } from '../../../util/getCountries';
 import { getUrl } from '../../../util/getUrl';
 
@@ -15,7 +14,6 @@ export default async function Page() {
 
   return (
     <section className='text-CustomWhite'>
-      <Search />
       <Countries initCountries={countries} url={url} />
     </section>
   );
