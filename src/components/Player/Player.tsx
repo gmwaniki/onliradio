@@ -1,17 +1,17 @@
-"use client";
-import Image from "next/image";
-import React, { useContext, useRef } from "react";
-import { HiHeart, HiOutlineHeart } from "react-icons/hi";
-import { MdOutlinePause, MdOutlinePlayArrow } from "react-icons/md";
+'use client';
+import Image from 'next/image';
+import React, { useContext, useEffect, useRef } from 'react';
+import { HiHeart, HiOutlineHeart } from 'react-icons/hi';
+import { MdOutlinePause, MdOutlinePlayArrow } from 'react-icons/md';
 
-import useAudio from "../../app/hooks/useAudio";
-import useLikes from "../../app/hooks/useLikes";
+import useAudio from '../../app/hooks/useAudio';
+import useLikes from '../../app/hooks/useLikes';
 import {
   AudioContext,
   StationReducerActionType,
-} from "../../app/providers/AudioContext";
-import getFlagEmoji from "../../util/getFlagEmoji";
-import Button from "./Button";
+} from '../../app/providers/AudioContext';
+import getFlagEmoji from '../../util/getFlagEmoji';
+import Button from './Button';
 
 export default function Player() {
   const { state, dispatch } = useContext(AudioContext);
@@ -75,57 +75,57 @@ export default function Player() {
   //   }
   // }, [like, station.stationId]);
 
-  if (station.stationId === "") {
+  if (station.stationId === '') {
     return null;
   }
 
   return (
-    <div className="fixed bottom-[82px] z-20 w-full  text-CustomWhite  sm:sticky sm:bottom-1">
-      <div className="mx-[10px] bg-CustomLightBlack/80 backdrop-blur-sm p-3 rounded grid grid-cols-[auto_repeat(2,minmax(0,1fr))] gap-x-2 sm:mx-3">
+    <div className='fixed bottom-[82px] z-20 w-full  text-CustomWhite  sm:sticky sm:bottom-1'>
+      <div className='mx-[10px] bg-CustomLightBlack/80 backdrop-blur-sm p-3 rounded grid grid-cols-[auto_repeat(2,minmax(0,1fr))] gap-x-2 sm:mx-3'>
         <Image
           src={
             station.favicon
               ? `/api/image?url=${encodeURIComponent(station.favicon)}`
-              : "/musicnote.svg"
+              : '/musicnote.svg'
           }
-          alt="music note"
+          alt='music note'
           width={55}
           height={55}
-          className="object-contain min-w-[55px] min-h-[55px] rounded"
+          className='object-contain min-w-[55px] min-h-[55px] rounded'
           onError={(e) => {
-            e.currentTarget.src = "/musicnote.svg";
+            e.currentTarget.src = '/musicnote.svg';
           }}
         />
-        <div className="flex flex-col">
+        <div className='flex flex-col'>
           <p>{station.name}</p>
           <p>{getFlagEmoji(station.countryCode)}</p>
         </div>
-        <div className="flex justify-end items-center gap-x-2">
+        <div className='flex justify-end items-center gap-x-2'>
           <button
-            type="button"
-            aria-label="like Channel"
+            type='button'
+            aria-label='like Channel'
             onClick={() => {
               isliked ? unlike(station.stationId) : like(station.stationId);
             }}
           >
             {isliked ? (
-              <HiHeart className="w-12 h-12 text-CustomActive " />
+              <HiHeart className='w-12 h-12 text-CustomActive ' />
             ) : (
-              <HiOutlineHeart className="w-12 h-12  " />
+              <HiOutlineHeart className='w-12 h-12  ' />
             )}
           </button>
           {isPlaying ? (
             <Button
-              status="Pause"
+              status='Pause'
               func={() => {
                 dispatch({ type: StationReducerActionType.PAUSE });
               }}
             >
-              <MdOutlinePause className="w-12 h-12 fill-CustomActive" />
+              <MdOutlinePause className='w-12 h-12 fill-CustomActive' />
             </Button>
           ) : (
             <Button
-              status="Play"
+              status='Play'
               func={() => {
                 dispatch({
                   type: StationReducerActionType.PLAY,
@@ -133,7 +133,7 @@ export default function Player() {
                 });
               }}
             >
-              <MdOutlinePlayArrow className="w-12 h-12" />
+              <MdOutlinePlayArrow className='w-12 h-12' />
             </Button>
           )}
           {/* <button
@@ -152,7 +152,7 @@ export default function Player() {
           <audio
             src={upgradeToHTTps(station.stationurl)}
             ref={audioRef}
-            className="hidden"
+            className='hidden'
           ></audio>
         </div>
       </div>
