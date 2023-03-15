@@ -40,7 +40,7 @@ export default function AdvancedSearch() {
     router.push(`${pathname}?${urlParams.toString()}`);
   };
   return (
-    <div className='bg-CustomLightBlack rounded sticky top-1 z-20 sm:bg-CustomLightBlack/80 sm:backdrop-blur-sm sm:top-[10px] sm:mx-3'>
+    <div className='bg-CustomLightBlack rounded sticky top-1 z-20 bg-CustomLightBlack/80 backdrop-blur-sm sm:top-[10px] mx-2 sm:mx-3'>
       <form
         className='grid grid-flow-col grid-cols-1 px-3 pt-2 '
         onSubmit={(e) => {
