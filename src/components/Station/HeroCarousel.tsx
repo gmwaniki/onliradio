@@ -29,9 +29,6 @@ export default function HeroCarousel({ stations }: TProps) {
     const nextStation = stations[index - 1];
     if (nextStation === undefined) {
       setIndex(stations.length - 1);
-      // wait(30, function () {
-      //   setisDisabled((prev) => false);
-      // });
       return;
     }
 
