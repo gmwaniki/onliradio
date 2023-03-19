@@ -4,10 +4,21 @@ export type TInputValues = {
   language: string;
   genre: string;
 };
-type TgetStation = (url: string, searchValues: TInputValues) => string;
-export const getStationsUrl: TgetStation = (url, searchValues) => {
+type TgetStation = (
+  url: string,
+  searchValues: TInputValues,
+  limit?: number,
+  offset?: number
+) => string;
+export const getStationsUrl: TgetStation = (
+  url,
+  searchValues,
+  limit = 15,
+  offset = 0
+) => {
   const getUrl = new URL(`${url}/stations/search`);
-  getUrl.searchParams.set('limit', '15');
+  getUrl.searchParams.set('limit', limit.toString());
+  getUrl.searchParams.set('offset', offset.toString());
   getUrl.searchParams.set('order', 'votes');
   getUrl.searchParams.set('reverse', 'true');
   getUrl.searchParams.set('ishttps', 'true');
