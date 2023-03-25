@@ -30,11 +30,8 @@ export default async function Page({
   return (
     <section className='text-CustomWhite'>
       <Search />
-      <h1 className='text-center font-semibold text-2xl py-2'>
-        Stations in {stations[0].country}
-      </h1>
 
-      <ul className='grid grid-flow-row grid-cols-[repeat(auto-fit,150px)] items-center justify-center gap-y-5 gap-x-3'>
+      <ul className='grid grid-flow-row grid-cols-[repeat(auto-fit,150px)] items-center justify-center gap-y-5 gap-x-3 py-5'>
         {stations.map((station) => {
           return (
             <li key={station.stationuuid}>
