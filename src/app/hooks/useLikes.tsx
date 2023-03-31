@@ -1,5 +1,5 @@
 'use client';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 type T1 = {
   isliked: boolean;
@@ -12,16 +12,25 @@ type T2 = {
 
 type TLikes<T extends string | null> = T extends string ? T1 : T2;
 
-const getLikes = () => {
-  const likes = localStorage.getItem('likes');
-  if (!likes) return null;
-  const likedStations: Record<string, string> = JSON.parse(likes);
-  return likedStations;
-};
 function useLikes<T extends string | null>(stationId?: T): TLikes<T> {
-  const [likes, setLikes] = useState(() => {
-    return getLikes() || null;
-  });
+  const getLikes = () => {
+    if (!localStorage) return {};
+    const likes = localStorage.getItem('likes');
+    if (!likes) return null;
+    const likedStations: Record<string, string> = JSON.parse(likes);
+    return likedStations;
+  };
+
+  const [likes, setLikes] = useState<Record<string, string>>({});
+  useEffect(() => {
+    setLikes(() => {
+      const storedLikes = getLikes();
+      if (!storedLikes) {
+        return {};
+      }
+      return storedLikes;
+    });
+  }, []);
 
   const isliked = useMemo(() => {
     if (stationId && likes && likes[stationId] === '1') return true;
@@ -60,6 +69,7 @@ function useLikes<T extends string | null>(stationId?: T): TLikes<T> {
   };
 
   return { likes, like, unlike, isliked } as TLikes<T>;
+  // return {} as TLikes<T>;
 }
 
 export default useLikes;
