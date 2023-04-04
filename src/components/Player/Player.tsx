@@ -69,17 +69,14 @@ export default function Player() {
   }
 
   return (
-    <div className='fixed bottom-[82px] z-20 w-full  text-CustomWhite  sm:sticky sm:bottom-1'>
-      <div className='mx-[10px] bg-CustomLightBlack/80 backdrop-blur-sm p-3 rounded grid grid-cols-[auto_repeat(2,minmax(0,1fr))] gap-x-2 sm:mx-3'>
+    <div className='fixed bottom-[82px] z-20 w-full  text-CustomWhite   sm:sticky sm:bottom-0  place-self-end'>
+      <div className='mx-2 bg-CustomLightBlack/80 backdrop-blur-sm p-3 rounded grid grid-cols-[auto_repeat(2,minmax(0,1fr))] gap-x-2 sm:mx-3'>
         <Image
-          src={
-            station.favicon
-              ? `/api/image?url=${encodeURIComponent(station.favicon)}`
-              : '/musicnote.svg'
-          }
+          src={`/api/image?url=${encodeURIComponent(station.favicon)}`}
           alt='music note'
           width={55}
           height={55}
+          priority={true}
           className='object-contain min-w-[55px] min-h-[55px] rounded'
           onError={(e) => {
             e.currentTarget.src = '/musicnote.svg';
