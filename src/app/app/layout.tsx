@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { Suspense } from 'react';
+import React from 'react';
 import {
   HiOutlineClock,
   HiOutlineGlobe,
@@ -9,7 +9,6 @@ import {
 } from 'react-icons/hi';
 
 import logo from '../../assets/logo.svg';
-import IndexLink from '../../components/NavLink/IndexLink';
 import NavLink from '../../components/NavLink/NavLink';
 import Player from '../../components/Player/Player';
 
