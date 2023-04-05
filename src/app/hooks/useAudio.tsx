@@ -10,13 +10,13 @@ const useAudio = (audioRef: React.RefObject<HTMLAudioElement>) => {
 
   useEffect(() => {
     const audioElement = audioRef.current;
-    const { isPlaying, station } = state;
+    const { station } = state;
     const play = () => {
       if (!audioElement) return;
 
       if (station.hls === 0) {
         audioElement.load();
-        audioElement.play().catch((error) => {
+        audioElement.play().catch(() => {
           setError('Unable to play track');
         });
       } else {
