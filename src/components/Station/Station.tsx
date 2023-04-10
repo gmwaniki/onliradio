@@ -34,18 +34,11 @@ export default function Station({ station }: TProps) {
       </p>
       <div className='justify-self-center relative'>
         <Image
-          src={
-            station.favicon
-              ? `/api/image?url=${encodeURIComponent(station.favicon)}`
-              : '/musicnote.svg'
-          }
+          src={`/api/image?url=${encodeURIComponent(station.favicon)}`}
           alt={'musicnote'}
           width={70}
           height={70}
           quality={50}
-          onError={(e) => {
-            e.currentTarget.src = '/musicnote.svg';
-          }}
           className='object-contain min-w-[70px] min-h-[70px] rounded'
           priority={false}
         />
