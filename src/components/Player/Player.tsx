@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { HiHeart, HiOutlineHeart } from 'react-icons/hi';
 import { MdOutlinePause, MdOutlinePlayArrow } from 'react-icons/md';
 
@@ -18,7 +18,7 @@ export default function Player() {
   const { station, isPlaying } = state;
   const audioRef = useRef<HTMLAudioElement>(null);
   // const [like, setLike] = useState<boolean>(false);
-  const { isAudioPlaying, error } = useAudio(audioRef);
+  const {} = useAudio(audioRef);
   const { like, unlike, isliked } = useLikes(station.stationId);
 
   // useEffect(() => {
@@ -139,7 +139,7 @@ export default function Player() {
             )}
           </button> */}
           <audio
-            src={station.stationurl}
+            src={`/api/audio?audiolink=${station.stationurl}`}
             ref={audioRef}
             className='hidden'
           ></audio>
