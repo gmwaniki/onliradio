@@ -10,7 +10,7 @@ export const getStationsUrl: TgetStation = (url, searchValues) => {
   getUrl.searchParams.set('limit', '15');
   getUrl.searchParams.set('order', 'votes');
   getUrl.searchParams.set('reverse', 'true');
-
+  getUrl.searchParams.set('ishttps', 'true');
   getUrl.searchParams.set('hidebroken', 'true');
   if (searchValues.name) {
     getUrl.searchParams.set('name', stringCapitalize(searchValues.name));
@@ -24,7 +24,7 @@ export const getStationsUrl: TgetStation = (url, searchValues) => {
   if (searchValues.genre) {
     getUrl.searchParams.set('tag', searchValues.genre);
   }
-
+  console.log(getUrl.href);
   return getUrl.href;
 };
 export const stringCapitalize = (value: string): string => {
