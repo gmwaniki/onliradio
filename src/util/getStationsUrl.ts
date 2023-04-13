@@ -24,7 +24,7 @@ export const getStationsUrl: TgetStation = (url, searchValues) => {
   if (searchValues.genre) {
     getUrl.searchParams.set('tag', searchValues.genre);
   }
-  console.log(getUrl.href);
+
   return getUrl.href;
 };
 export const stringCapitalize = (value: string): string => {
