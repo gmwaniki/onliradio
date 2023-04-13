@@ -36,4 +36,3 @@ export default async function handler(
     defaultImage.pipe(res);
   }
 }
-export const runtime = 'nodejs';
