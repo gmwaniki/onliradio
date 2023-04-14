@@ -1,7 +1,7 @@
-"use client";
-import React, { useEffect, useRef } from "react";
+'use client';
+import React, { useEffect, useRef } from 'react';
 
-import { wait } from "../../util/wait";
+import { wait } from '../../util/wait';
 
 type LoadCountriesProps = {
   getNext: () => void;
@@ -9,17 +9,13 @@ type LoadCountriesProps = {
   isFetched: boolean;
 };
 
-const LoadCountries = ({
-  getNext,
-  isFetching,
-  isFetched,
-}: LoadCountriesProps) => {
+const LoadCountries = ({ getNext, isFetching }: LoadCountriesProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const refIntersecting = useRef<boolean>(false);
   useEffect(() => {
-    let options = {
+    const options = {
       root: null,
-      rootMargin: "0px",
+      rootMargin: '0px',
       threshold: 0.1,
     };
     const observer = new IntersectionObserver((entries) => {
@@ -29,15 +25,15 @@ const LoadCountries = ({
         wait(1000, () => (refIntersecting.current = false));
       }
     }, options);
-    observer.observe(ref.current!!);
+    ref.current && observer.observe(ref.current);
     return () => {
-      observer.disconnect;
+      observer.disconnect();
     };
   }, [getNext, isFetching]);
 
   return (
-    <div ref={ref} className="text-center">
-      {isFetching ? "Loading..." : null}
+    <div ref={ref} className='text-center'>
+      {isFetching ? 'Loading...' : null}
     </div>
   );
 };
