@@ -24,23 +24,22 @@ const Countries = ({ initCountries, url }: CountriesProps) => {
     });
   };
 
-  const { data, fetchNextPage, isFetched, isFetching, isLoading } =
-    useInfiniteQuery({
-      queryKey: ['countries'],
-      queryFn: getCountriesNext,
-      getNextPageParam: (lastpage, allpages) => {
-        if (lastpage.length == 0) {
-          return undefined;
-        }
-        return allpages.length * getCountriesParams.offset;
-      },
-      staleTime: Infinity,
-      refetchOnWindowFocus: false,
-      initialData: {
-        pages: [[...initCountries]],
-        pageParams: [0],
-      },
-    });
+  const { data, fetchNextPage, isFetched, isFetching } = useInfiniteQuery({
+    queryKey: ['countries'],
+    queryFn: getCountriesNext,
+    getNextPageParam: (lastpage, allpages) => {
+      if (lastpage.length == 0) {
+        return undefined;
+      }
+      return allpages.length * getCountriesParams.offset;
+    },
+    staleTime: Infinity,
+    refetchOnWindowFocus: false,
+    initialData: {
+      pages: [[...initCountries]],
+      pageParams: [0],
+    },
+  });
 
   return (
     <>
