@@ -2,11 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 
-import {
-  TInputValues,
-  getStationsUrl,
-  stringCapitalize,
-} from '../../util/getStationsUrl';
+import { stringCapitalize } from '../../util/getStationsUrl';
 import { TStation } from '../../util/playableStation';
 import Station from '../Station/Station';
 import AdvancedSearch from './AdvancedSearch';
@@ -22,7 +18,7 @@ type TProps = {
   };
 };
 
-export default function SearchPage({ url, stations, searchParams }: TProps) {
+export default function SearchPage({ stations }: TProps) {
   const router = useRouter();
   const pathname = usePathname();
   const onFormSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
@@ -30,10 +26,10 @@ export default function SearchPage({ url, stations, searchParams }: TProps) {
     const searchValues: TProps['searchParams'] = Object.fromEntries(
       formData.entries()
     );
-    const stationsUrl = getStationsUrl(
-      url,
-      Object.fromEntries(formData.entries()) as TInputValues
-    );
+    // const stationsUrl = getStationsUrl(
+    //   url,
+    //   Object.fromEntries(formData.entries()) as TInputValues
+    // );
 
     const urlParams = new URLSearchParams();
     if (searchValues.name) {
