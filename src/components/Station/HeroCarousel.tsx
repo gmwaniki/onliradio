@@ -11,7 +11,7 @@ export default function HeroCarousel({ stations }: TProps) {
   const [index, setIndex] = useState(0);
 
   const incrementIndex = () => {
-    let nextStation = stations[index + 1];
+    const nextStation = stations[index + 1];
     if (nextStation === undefined) {
       setIndex(0);
       return;
@@ -20,7 +20,7 @@ export default function HeroCarousel({ stations }: TProps) {
     setIndex((index) => index + 1);
   };
   const decrementIndex = () => {
-    let nextStation = stations[index - 1];
+    const nextStation = stations[index - 1];
     if (nextStation === undefined) {
       setIndex(stations.length - 1);
       return;
