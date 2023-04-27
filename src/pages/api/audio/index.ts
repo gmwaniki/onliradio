@@ -1,9 +1,9 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest } from 'next';
 import { NextResponse } from 'next/server';
 
 export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
+  req: NextApiRequest
+  //   _res: NextApiResponse
 ) {
   //   const { audiolink } = req.query;
 
