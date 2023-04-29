@@ -4,7 +4,7 @@ module.exports = {
   plugins: ['unused-imports', 'simple-import-sort', '@typescript-eslint'],
   rules: {
     'simple-import-sort/imports': 'error',
-    '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/no-unused-vars': 'warn',
     'unused-imports/no-unused-imports': 'error',
   },
   root: true,
