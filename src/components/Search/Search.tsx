@@ -1,18 +1,24 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { HiOutlineSearch } from 'react-icons/hi';
 
+import AdvancedSearch from './AdvancedSearch';
+
 export default function Search({}: { children?: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
   const [searchValue, setSearchValue] = useState('');
-
+  const isSearch: boolean = pathname?.includes('search') ? true : false;
   const onSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     router.push(`/app/search?name=${searchValue}`);
   };
+  if (isSearch) {
+    return <AdvancedSearch />;
+  }
   return (
-    <div className='bg-CustomLightBlack rounded sticky top-1 z-10 sm:bg-CustomLightBlack/80 sm:backdrop-blur-sm sm:top-[10px]'>
+    <div className='bg-CustomLightBlack rounded sticky top-1 z-20 sm:bg-CustomLightBlack/80 sm:backdrop-blur-sm sm:top-[10px] sm:mx-3'>
       <form className='flex px-3 pb-3 pt-2' onSubmit={onSubmit}>
         <div className='grid grid-cols-[auto,min-content] auto-rows-auto flex-1'>
           <label
