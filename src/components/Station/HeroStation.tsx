@@ -1,6 +1,4 @@
-import Image from "next/image";
-import React, { useContext, useMemo } from "react";
-import { HiOutlinePause, HiOutlinePlay, HiOutlineStar } from "react-icons/hi";
+import { motion } from 'framer-motion';
 
 import {
   AudioContext,
@@ -27,8 +25,16 @@ const HeroStation = ({ station }: HeroStationProps) => {
   }, [station.tags]);
 
   return (
-    <div className="bg-CustomLightBlack p-4 sm:p-8 w-full rounded-sm  flex flex-col gap-2 ">
-      <ul className="flex gap-4 items-start justify-start">
+    <motion.div
+      className='bg-CustomLightBlack p-4  h-full w-full rounded-sm   grid grid-flow-row auto-rows-min gap-2 lg:p-8 lg:grid-cols-2 lg:grid-rows-2 gap-x-8'
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ type: 'spring', duration: 0.25 }}
+      exit={{ opacity: 0 }}
+      drag='x'
+      dragConstraints={{ left: 0, right: 0 }}
+      dragElastic={0.2}
+    >
         {tags.map((tag, index) => {
           return tag ? (
             <Tag tag={tag} key={index} />
@@ -95,7 +101,7 @@ const HeroStation = ({ station }: HeroStationProps) => {
           )}
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
