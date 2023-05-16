@@ -1,16 +1,18 @@
 import { motion } from 'framer-motion';
+import Image from 'next/image';
+import React, { useContext, useMemo } from 'react';
+import { HiOutlinePause, HiOutlinePlay, HiOutlineStar } from 'react-icons/hi';
 
 import {
   AudioContext,
   StationReducerActionType,
-} from "../../app/providers/AudioContext";
-import { TStation } from "../../util/playableStation";
-import Tag from "./Tag";
+} from '../../app/providers/AudioContext';
+import { TStation } from '../../util/playableStation';
+import Tag from './Tag';
 
 type HeroStationProps = {
   station: TStation;
 };
-
 const HeroStation = ({ station }: HeroStationProps) => {
   const { dispatch, state } = useContext(AudioContext);
   const isCurrentStation = useMemo((): boolean => {
@@ -21,7 +23,7 @@ const HeroStation = ({ station }: HeroStationProps) => {
     }
   }, [state.station.stationId, station, state.isPlaying]);
   const tags = useMemo(() => {
-    return station.tags.split(",").slice(0, 2);
+    return station.tags.split(',').slice(0, 2);
   }, [station.tags]);
 
   return (
@@ -35,11 +37,12 @@ const HeroStation = ({ station }: HeroStationProps) => {
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={0.2}
     >
+      <ul className='flex gap-4 items-start justify-start'>
         {tags.map((tag, index) => {
           return tag ? (
             <Tag tag={tag} key={index} />
           ) : (
-            <Tag tag="music" key={index} />
+            <Tag tag='music' key={index} />
           );
         })}
       </ul>
@@ -50,29 +53,31 @@ const HeroStation = ({ station }: HeroStationProps) => {
         width={130}
         height={130}
         onError={(e) => {
-          e.currentTarget.src = "/musicnote.svg";
+          e.currentTarget.src = '/musicnote.svg';
         }}
-        priority
-        className="rounded-md aspect-square"
+        priority={true}
+        className='rounded-md aspect-square justify-self-center lg:row-span-full  lg:self-center md:w-60 2xl:w-96'
       />
 
-      <div className="flex">
-        <div className="w-9/12 sm:text-xl">
-          <p className="text-2xl text-ellipsis overflow-hidden whitespace-nowrap">
+      <div className='grid grid-cols-[minmax(0,1fr),minmax(0,.5fr)] lg:col-start-2 justify-center items-center'>
+        <div className=' lg:text-xl'>
+          <p className='text-2xl text-ellipsis overflow-hidden whitespace-nowrap'>
             {station.name}
           </p>
           <p>
-            Language: <span className="capitalize">{station.language}</span>
+            Language:{' '}
+            <span className='capitalize'>{station.language || 'English'}</span>
           </p>
-          <span className="flex items-center ">
+
+          <span className='flex items-center '>
             <HiOutlineStar />
-            {station.votes}
+            {station.votes.toLocaleString()}
           </span>
         </div>
         <button
-          type="button"
+          type='button'
           aria-label={`Play ${station.name}`}
-          className="w-3/12 aspect-square"
+          className=' aspect-square max-w-[140px]'
           onClick={() => {
             if (isCurrentStation && state.isPlaying) {
               dispatch({
@@ -95,9 +100,9 @@ const HeroStation = ({ station }: HeroStationProps) => {
           }}
         >
           {isCurrentStation ? (
-            <HiOutlinePause className="w-full h-full aspect-square childPath:stroke-1  sm:childPath:stroke-[0.5]" />
+            <HiOutlinePause className='w-full h-full aspect-square childPath:stroke-1  sm:childPath:stroke-[0.5]' />
           ) : (
-            <HiOutlinePlay className="w-full h-full aspect-square childPath:stroke-1  sm:childPath:stroke-[0.5]  " />
+            <HiOutlinePlay className='w-full h-full aspect-square childPath:stroke-1  sm:childPath:stroke-[0.5]  ' />
           )}
         </button>
       </div>
