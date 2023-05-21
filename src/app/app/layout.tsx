@@ -11,14 +11,12 @@ import {
 import logo from '../../assets/logo.svg';
 import NavLink from '../../components/NavLink/NavLink';
 import Player from '../../components/Player/Player';
-import Search from '../../components/Search/Search';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className='text-base bg-CustomBlack min-h-screen pb-40 sm:pb-0 sm:grid sm:grid-cols-[minmax(0,clamp(200px,14%,250px)),minmax(0,1fr)] scrollbar'>
       <div className='relative grid grid-rows-[min-content,minmax(0,1fr),min-content]'>
-        <Search />
-        <main className='px-2 py-2 mb-4 container mx-auto '>{children}</main>
+        <main className='px-2 py-2 mb-4 container mx-auto'>{children}</main>
         <Player />
       </div>
 
