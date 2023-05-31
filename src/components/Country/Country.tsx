@@ -16,7 +16,6 @@ const Country = (prop: TCountryProps) => {
     <Link
       href={`/app/search?country=${getCountryName.of(country.iso_3166_1)}`}
       className='group grid grid-cols-[1fr,auto] items-center pr-4 pl-2 py-2 mb-4 rounded bg-CustomLightBlack/50  relative isolate sm:mb-0 h-full'
-      // prefetch={false}
     >
       <div className=' flex flex-col flex-grow'>
         <p className='grid grid-cols-[auto,1fr] items-center gap-x-1 '>
