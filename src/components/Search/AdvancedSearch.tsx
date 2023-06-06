@@ -7,22 +7,38 @@ type TProps = {
   genre?: string;
   country?: string;
   language?: string;
-  submit: (e: React.SyntheticEvent<HTMLFormElement>) => void;
-};
+  const router = useRouter();
+  const pathname = usePathname();
+  const onFormSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
+    const formData = new FormData(e.currentTarget);
+    const searchValues: TProps = Object.fromEntries(formData.entries());
+    // const stationsUrl = getStationsUrl(
+    //   url,
+    //   Object.fromEntries(formData.entries()) as TInputValues
+    // );
 
-export default function AdvancedSearch({ submit }: TProps) {
+    const urlParams = new URLSearchParams();
+    if (searchValues.name) {
+      urlParams.set('name', stringCapitalize(searchValues.name));
+    }
+    if (searchValues.country) {
+      urlParams.set('country', stringCapitalize(searchValues.country));
+    }
+    if (searchValues.language) {
+      urlParams.set('language', searchValues.language);
+    }
+    if (searchValues.genre) {
+      urlParams.set('tag', searchValues.genre);
+    }
+    router.push(`${pathname}?${urlParams.toString()}`);
+  };
   return (
     <div className="bg-CustomLightBlack rounded sticky top-1 z-10">
       <form
         className="grid grid-flow-col grid-cols-1 px-3 pt-2 "
         onSubmit={(e) => {
           e.preventDefault();
-          // const formData = new FormData(e.currentTarget);
-          // console.log(Object.fromEntries(formData.entries()));
-          // for (const iterator of formData.entries()) {
-          //   console.log(iterator);
-          // }
-          submit(e);
+          onFormSubmit(e);
         }}
       >
         <label
