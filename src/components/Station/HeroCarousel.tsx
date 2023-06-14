@@ -36,7 +36,7 @@ export default function HeroCarousel({ stations }: TProps) {
   };
 
   return (
-    <div className='text-CustomWhite mt-4'>
+    <div className='text-CustomWhite'>
       <div className='relative scrollbar grid grid-rows-[min-content,1fr]  grid-cols-[.2fr,minmax(0,1fr),.2fr] lg:grid-rows-1  lg:gap-5'>
         <m.button
           onClick={decrementIndex}
