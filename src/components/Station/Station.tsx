@@ -46,8 +46,8 @@ export default function Station({ station }: TProps) {
         >
           <HiOutlineHeart
             className={` ${
-              isliked ? 'fill-CustomActive stroke-CustomActive' : ''
-            }`}
+              isliked ? 'fill-CustomActive ' : ''
+            } stroke-CustomActive hover:fill-CustomActive`}
           />
         </button>
       </div>
