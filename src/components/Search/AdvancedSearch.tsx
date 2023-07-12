@@ -7,15 +7,16 @@ import { HiOutlineSearch } from 'react-icons/hi';
 import { stringCapitalize } from '../../util/getStationsUrl';
 
 type TProps = {
-  name?: string;
-  genre?: string;
-  country?: string;
-  language?: string;
+  name?: string | '';
+  genre?: string | '';
+  country?: string | '';
+  language?: string | '';
 };
 
-export default function AdvancedSearch() {
+export default function AdvancedSearch(searchparams: TProps) {
   const router = useRouter();
   const pathname = usePathname();
+  const { country, genre, language, name } = searchparams;
   const onFormSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     const formData = new FormData(e.currentTarget);
     const searchValues: TProps = Object.fromEntries(formData.entries());
@@ -35,12 +36,12 @@ export default function AdvancedSearch() {
       urlParams.set('language', searchValues.language);
     }
     if (searchValues.genre) {
-      urlParams.set('tag', searchValues.genre);
+      urlParams.set('genre', searchValues.genre);
     }
     router.push(`${pathname}?${urlParams.toString()}`);
   };
   return (
-    <div className='bg-CustomLightBlack rounded sticky top-1 z-20 bg-CustomLightBlack/80 backdrop-blur-sm sm:top-[10px] mx-2 sm:mx-3'>
+    <div className='bg-CustomLightBlack rounded sticky top-1 z-20 bg-CustomLightBlack/80 backdrop-blur-sm sm:top-[10px] '>
       <form
         className='grid grid-flow-col grid-cols-1 px-3 pt-2 '
         onSubmit={(e) => {
@@ -58,6 +59,7 @@ export default function AdvancedSearch() {
           type='text'
           name='name'
           id='name'
+          value={name}
           placeholder='Enter a name,country,genre.....'
           className='w-full py-3 pl-2 rounded-l text-lg text-white bg-[#6C6C6C] focus:outline-none focus:ring-2 focus:ring-CustomActive  focus:ring-inset row-start-2 '
         />
@@ -75,6 +77,7 @@ export default function AdvancedSearch() {
               type='text'
               name='genre'
               id='genre'
+              value={genre}
               placeholder='Genre'
               className='w-full py-3 pl-2 rounded text-lg text-white bg-[#6C6C6C] focus:outline-none focus:ring-2 focus:ring-CustomActive  focus:ring-inset '
             />
@@ -90,6 +93,7 @@ export default function AdvancedSearch() {
               type='text'
               name='country'
               id='country'
+              value={country}
               placeholder='Country'
               className='w-full py-3 pl-2 rounded text-lg text-white bg-[#6C6C6C] focus:outline-none focus:ring-2 focus:ring-CustomActive  focus:ring-inset '
             />
@@ -106,6 +110,7 @@ export default function AdvancedSearch() {
               name='language'
               id='language'
               placeholder='Language'
+              value={language}
               className='w-full py-3 pl-2 rounded text-lg text-white bg-[#6C6C6C] focus:outline-none focus:ring-2 focus:ring-CustomActive  focus:ring-inset '
             />
           </div>
