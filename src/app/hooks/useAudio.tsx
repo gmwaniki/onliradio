@@ -17,9 +17,9 @@ const useAudio = () => {
   // },[])
 
   useEffect(() => {
-    const audioElement = new Audio();
+    const audioElement = new Audio(state.station.stationurl);
     const hlsPlayback = new Hls();
-    audioElement.src = state.station.stationurl;
+    audioElement.preload = 'auto';
 
     const trackplaytime = () => {
       setPlaytime(parseInt(audioElement.currentTime.toFixed(0)));
