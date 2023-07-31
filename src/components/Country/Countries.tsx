@@ -39,6 +39,7 @@ const Countries = ({ initCountries, url }: CountriesProps) => {
       pages: [[...initCountries]],
       pageParams: [0],
     },
+    initialPageParam: 0,
   });
 
   return (
