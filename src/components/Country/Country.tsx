@@ -3,6 +3,7 @@ import React from 'react';
 import { HiOutlineChevronRight } from 'react-icons/hi';
 
 import { TCountry } from '../../app/app/countries/page';
+import { getCountryName } from '../../util/getCountries';
 import getFlagEmoji from '../../util/getFlagEmoji';
 
 type TCountryProps = {
@@ -13,8 +14,9 @@ const Country = (prop: TCountryProps) => {
   const { country } = prop;
   return (
     <Link
-      href={`/app/search/country/${country.iso_3166_1}`}
+      href={`/app/search?country=${getCountryName.of(country.iso_3166_1)}`}
       className='group grid grid-cols-[1fr,auto] items-center pr-4 pl-2 py-2 mb-4 rounded bg-CustomLightBlack/50  relative isolate sm:mb-0 h-full'
+      // prefetch={false}
     >
       <div className=' flex flex-col flex-grow'>
         <p className='grid grid-cols-[auto,1fr] items-center gap-x-1 '>
