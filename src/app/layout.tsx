@@ -1,7 +1,8 @@
 import './globals.css';
 import React from 'react';
-import { Nunito } from '@next/font/google';
+import { Nunito } from 'next/font/google';
 import AudioContextProvider from './AudioContext';
+import { Metadata } from 'next';
 
 const nunito = Nunito({
   variable: '--font-nunito',
@@ -23,3 +24,8 @@ export default function RootLayout({
     </html>
   );
 }
+
+export const metadata: Metadata = {
+  title: 'Onliradio',
+  description: 'Listen to over 30,000 radio station from over 200 countries',
+};
