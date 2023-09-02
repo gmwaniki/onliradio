@@ -11,7 +11,7 @@ type TCountries = {
 };
 
 const getCountries = async (url: string) => {
-  const result = await fetch(`${url}/countries?limit=15`);
+  const result = await fetch(`${url}/countries?order=name`);
   return result.json() as Promise<TCountries[]>;
 };
 
