@@ -5,10 +5,7 @@ import {
   HiOutlineSearch,
   HiOutlineHeart,
   HiOutlineClock,
-  HiClock,
-  HiHeart,
   HiOutlineGlobe,
-  HiGlobe,
 } from 'react-icons/hi';
 import NavLink from '../../components/NavLink/NavLink';
 import Player from '../../components/Player/Player';
@@ -57,8 +54,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               className='flex flex-col items-center pb-1 pt-2 rounded data-[active=true]:text-white sm:flex-row sm:mx-3 sm:px-4 sm:data-[active=true]:bg-[#151515] sm:gap-2 sm:items-center'
             >
               <div className='sm:group-data-[active=true]:bg-CustomActive sm:text-CustomWhite sm:rounded sm:p-1'>
-                <HiOutlineGlobe className='text-3xl childPath:stroke-1 group-data-[active=true]:hidden' />
-                <HiGlobe className='text-3xl w-8 h-8 group-data-[active=false]:hidden childPath:stroke-1' />
+                <HiOutlineGlobe className='text-3xl childPath:stroke-1 group-data-[active=true]:childPath:stroke-2' />
               </div>
 
               <span className='group-data-[active=true]:bg-CustomBlack rounded px-4 mx-auto text-center sm:group-data-[active=true]:bg-transparent sm:group-data-[active=true]:text-CustomActive sm:px-0 sm:mx-0'>
@@ -73,8 +69,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               className='flex flex-col items-center pb-1 pt-2 rounded data-[active=true]:text-white sm:flex-row sm:mx-3 sm:px-4 sm:data-[active=true]:bg-[#151515] sm:gap-2 sm:items-center'
             >
               <div className='sm:group-data-[active=true]:bg-CustomActive sm:text-CustomWhite sm:rounded sm:p-1'>
-                <HiOutlineClock className='text-3xl childPath:stroke-1 group-data-[active=true]:hidden' />
-                <HiClock className='text-3xl w-8 h-8 group-data-[active=false]:hidden childPath:stroke-1' />
+                <HiOutlineClock className='text-3xl childPath:stroke-1 group-data-[active=true]:childPath:stroke-2' />
               </div>
 
               <span className='group-data-[active=true]:bg-CustomBlack rounded px-4 mx-auto text-center sm:group-data-[active=true]:bg-transparent sm:group-data-[active=true]:text-CustomActive sm:px-0 sm:mx-0'>
@@ -88,10 +83,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               className='flex flex-col items-center pb-1 pt-2 rounded data-[active=true]:text-white sm:flex-row sm:mx-3 sm:px-4 sm:data-[active=true]:bg-[#151515] sm:gap-2 sm:items-center'
             >
               <div className='sm:group-data-[active=true]:bg-CustomActive sm:text-CustomWhite sm:rounded sm:p-1'>
-                <HiOutlineHeart className='text-3xl childPath:stroke-1 group-data-[active=true]:hidden' />
-                <HiHeart className='text-3xl w-8 h-8 group-data-[active=false]:hidden' />
+                <HiOutlineHeart className='text-3xl childPath:stroke-1 group-data-[active=true]:childPath:stroke-2' />
               </div>
-
               <span className='group-data-[active=true]:bg-CustomBlack rounded px-3 mx-auto text-center sm:group-data-[active=true]:bg-transparent sm:group-data-[active=true]:text-CustomActive sm:px-0 sm:mx-0'>
                 Favourites
               </span>
