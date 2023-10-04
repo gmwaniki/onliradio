@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useReducer } from 'react';
+import { sethttps } from '../../util/playableStation';
 
 export const AudioContext = createContext<{
   dispatch: React.Dispatch<TStationAction>;
@@ -61,7 +62,13 @@ type TstationReducer = (
 const stationReducer: TstationReducer = (state, action) => {
   switch (action.type) {
     case StationReducerActionType.PLAY: {
-      return { isPlaying: true, station: { ...action.payload } };
+      return {
+        isPlaying: true,
+        station: {
+          ...action.payload,
+          stationurl: sethttps(action.payload.stationurl),
+        },
+      };
     }
     case StationReducerActionType.PAUSE: {
       return { ...state, isPlaying: false };
