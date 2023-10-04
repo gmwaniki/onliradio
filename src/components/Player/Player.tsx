@@ -21,17 +21,6 @@ export default function Player() {
   const { isAudioPlaying, error } = useAudio(audioRef);
   const { like, unlike, isliked } = useLikes(station.stationId);
 
-  const upgradeToHTTps = (stationUrl: string) => {
-    if (stationUrl) {
-      const station = new URL(stationUrl);
-      if (station.protocol === 'http:') {
-        station.protocol = 'https:';
-      }
-      return station.toString();
-    }
-    return '';
-  };
-
   // useEffect(() => {
   //   const localLikes = localStorage.getItem('likes');
 
@@ -150,7 +139,7 @@ export default function Player() {
             )}
           </button> */}
           <audio
-            src={upgradeToHTTps(station.stationurl)}
+            src={station.stationurl}
             ref={audioRef}
             className='hidden'
           ></audio>
