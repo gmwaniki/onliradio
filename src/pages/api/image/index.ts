@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 
 import { NextApiRequest, NextApiResponse } from 'next';
+import getConfig from 'next/config';
 import sharp from 'verysharp';
 
 export default async function handler(
@@ -8,7 +9,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { url } = req.query;
-
+  const { publicRuntimeConfig } = getConfig();
   try {
     if (!url || Array.isArray(url)) {
       throw new Error('Invalid url');
@@ -31,7 +32,7 @@ export default async function handler(
     res.setHeader('Content-Type', 'image/png');
     res.send(newImage);
   } catch (error) {
-    const defaultImage = fs.createReadStream('public/musicnote.svg');
+    const defaultImage = fs.createReadStream(publicRuntimeConfig.imageUrl);
     res.setHeader('Content-Type', 'image/svg+xml');
     defaultImage.pipe(res);
   }
