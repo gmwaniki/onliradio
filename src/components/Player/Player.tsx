@@ -139,7 +139,7 @@ export default function Player() {
             )}
           </button> */}
           <audio
-            src={`/api/audio?audiolink=${station.stationurl}`}
+            src={station.stationurl}
             ref={audioRef}
             className='hidden'
           ></audio>
