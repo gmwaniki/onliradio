@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 
 import { NextApiRequest, NextApiResponse } from 'next';
-import sharp from 'sharp';
+import sharp from 'verysharp';
 
 export default async function handler(
   req: NextApiRequest,
