@@ -26,19 +26,20 @@ const useAudio = (audioRef: React.RefObject<HTMLAudioElement>) => {
             audioElement.play();
           };
         }
-        hlsPlayback.loadSource(`/api/audio?audiolink=${station.stationurl}`);
+        hlsPlayback.loadSource(station.stationurl);
 
         hlsPlayback.attachMedia(audioElement);
-        hlsPlayback.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
-          data.levels.map((level) => {
-            return { ...level, url: `/api/audio?audiolink=${level.url}` };
-          });
-          console.log(event, data.levels);
-        });
+        // hlsPlayback.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
+        //   data.levels.map((level) => {
+        //     return { ...level, url: `/api/audio?audiolink=${level.url}` };
+        //   });
+        //   console.log(event, data.levels);
+        // });
         hlsPlayback.on(Hls.Events.MANIFEST_PARSED, () => {
           audioElement.play();
         });
       }
+
       setIsAudioPlaying(true);
     };
     const pause = () => {
