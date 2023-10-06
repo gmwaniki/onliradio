@@ -22,7 +22,7 @@ export default async function handler(
     const sharpPipe = sharp(responseImageBuffer);
     const newImage = await sharpPipe
       .resize(100, 100, {
-        fit: 'outside',
+        fit: 'contain',
         width: 100,
         height: 100,
         background: { r: 0, g: 0, b: 0, alpha: 0 },
