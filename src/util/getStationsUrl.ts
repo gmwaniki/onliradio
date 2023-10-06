@@ -1,16 +1,16 @@
-import { TCheckBoxes, TInputValues } from '../Context/SearchContext';
-
-type TgetStation = (
-  url: string,
-  searchValues: TInputValues,
-  filters?: TCheckBoxes
-) => string;
-export const getStationsUrl: TgetStation = (url, searchValues, filters) => {
+export type TInputValues = {
+  name: string;
+  country: string;
+  language: string;
+  genre: string;
+};
+type TgetStation = (url: string, searchValues: TInputValues) => string;
+export const getStationsUrl: TgetStation = (url, searchValues) => {
   const getUrl = new URL(`${url}/stations/search`);
   getUrl.searchParams.set('limit', '15');
   getUrl.searchParams.set('order', 'votes');
   getUrl.searchParams.set('reverse', 'true');
-  getUrl.searchParams.set('is_https', 'true');
+  getUrl.searchParams.set('ishttps', 'true');
   getUrl.searchParams.set('hidebroken', 'true');
   if (searchValues.name) {
     getUrl.searchParams.set('name', stringCapitalize(searchValues.name));

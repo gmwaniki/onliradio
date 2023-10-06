@@ -2,6 +2,8 @@
 
 import React, { createContext, useReducer } from 'react';
 
+import { sethttps } from '../../util/playableStation';
+
 export const AudioContext = createContext<{
   dispatch: React.Dispatch<TStationAction>;
   state: TStationStatus;
@@ -15,6 +17,7 @@ export const AudioContext = createContext<{
       stationurl: '',
       votes: 0,
       favicon: '',
+      hls: 0,
     },
     isPlaying: false,
   },
@@ -27,6 +30,7 @@ export type TActiveStation = {
   votes: number;
   countryCode: string;
   favicon: string;
+  hls: number;
 };
 
 export type TStationStatus = {
@@ -48,7 +52,7 @@ export type TStationAction =
 export enum StationReducerActionType {
   PLAY = 'play',
   PAUSE = 'pause',
-  TOGGLE = 'TOGGLE',
+  TOGGLE = 'toggle',
 }
 
 type TstationReducer = (
@@ -59,8 +63,13 @@ type TstationReducer = (
 const stationReducer: TstationReducer = (state, action) => {
   switch (action.type) {
     case StationReducerActionType.PLAY: {
-      const {} = action.payload;
-      return { isPlaying: true, station: { ...action.payload } };
+      return {
+        isPlaying: true,
+        station: {
+          ...action.payload,
+          stationurl: sethttps(action.payload.stationurl),
+        },
+      };
     }
     case StationReducerActionType.PAUSE: {
       return { ...state, isPlaying: false };
@@ -88,6 +97,7 @@ export default function AudioContextProvider({
       stationurl: '',
       votes: 0,
       favicon: '',
+      hls: 0,
     },
   });
   return (

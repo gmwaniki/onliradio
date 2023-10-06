@@ -2,7 +2,11 @@
 import Image from 'next/image';
 import React, { useContext, useMemo } from 'react';
 import { HiOutlinePause, HiOutlinePlay } from 'react-icons/hi';
-import { AudioContext, StationReducerActionType } from '../../app/AudioContext';
+
+import {
+  AudioContext,
+  StationReducerActionType,
+} from '../../app/providers/AudioContext';
 import getFlagEmoji from '../../util/getFlagEmoji';
 import { TStation } from '../../util/playableStation';
 
@@ -22,7 +26,7 @@ export default function Station({ station }: TProps) {
 
   return (
     <div
-      className=' w-full max-w-[150px] bg-CustomLightBlack grid gap-y-2 py-2 rounded group data-[playing=true]:shadow-[0_0_10px_0px_#A852FF,0_1px_1px_0px_#A852FF,1px_0_1px_0px_#A852FF]'
+      className=' w-full h-full bg-CustomLightBlack grid gap-y-2 py-2 rounded group '
       data-playing={isCurrentStation && state.isPlaying}
     >
       <p className='justify-self-center text-center whitespace-nowrap w-10/12 overflow-hidden text-ellipsis'>
@@ -30,27 +34,21 @@ export default function Station({ station }: TProps) {
       </p>
       <div className='justify-self-center relative'>
         <Image
-          src={
-            station.favicon
-              ? `/api/image?url=${encodeURIComponent(station.favicon)}`
-              : '/musicnote.svg'
-          }
+          src={`/api/image?url=${encodeURIComponent(station.favicon)}`}
           alt={'musicnote'}
           width={70}
           height={70}
           quality={50}
-          onError={(e) => {
-            e.currentTarget.src = '/musicnote.svg';
-          }}
           className='object-contain min-w-[70px] min-h-[70px] rounded'
+          priority={false}
         />
         <span className='absolute w-6 h-6 text-center  -top-1 -right-1 bg-CustomLightBlack  rounded-full  ring-1 ring-CustomActive'>
           {getFlagEmoji(station.countrycode) || '🤷'}
         </span>
       </div>
       <button
-        type='submit'
-        className=' text-lg flex w-5/6 justify-self-center items-center justify-center shadow-[0_0_10px_0px_#040404,0_1px_1px_0px_#040404,1px_0_1px_0px_#040404]  py-1 px-3 rounded gap-x-2 group-data-[playing=true]:text-CustomActive group-data-[playing=true]:bg-CustomBlack group-data-[playing=true]:shadow-[0_0_10px_0px_#A852FF,0_1px_1px_0px_#A852FF,1px_0_1px_0px_#A852FF]'
+        type='button'
+        className=' text-lg flex w-5/6 justify-self-center items-center justify-center border-2 border-CustomActive  py-1 px-3 rounded gap-x-2 transition-colors duration-300 group-hover:transition-colors group-hover:duration-300 group-hover:bg-CustomActive group-data-[playing=true]:text-CustomActive group-data-[playing=true]:bg-CustomBlack group-data-[playing=true]:shadow-[0_0_10px_0px_#A852FF,0_1px_1px_0px_#A852FF,1px_0_1px_0px_#A852FF]'
         onClick={() => {
           if (isCurrentStation && state.isPlaying) {
             dispatch({
@@ -67,6 +65,7 @@ export default function Station({ station }: TProps) {
               stationId: station.stationuuid,
               stationurl: station.url_resolved,
               votes: station.votes,
+              hls: station.hls,
             },
           });
         }}

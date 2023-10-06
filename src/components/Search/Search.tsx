@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { HiOutlineSearch } from 'react-icons/hi';
 
-export default function Search({ children }: { children?: React.ReactNode }) {
+export default function Search({}: { children?: React.ReactNode }) {
   const router = useRouter();
   const [searchValue, setSearchValue] = useState('');
 

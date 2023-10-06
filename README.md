@@ -19,8 +19,8 @@ You can view the final app on [Onliradio](https://onliradio.vercel.app/).
 - [x] Search through Stations using filters e.g Country,Genre,Name and Language
 - [ ] Increase/Reduce volume
 - [x] View Local Station on app homepage
-- [ ] View recently played stations
-- [ ] Setup Like functionality
+- [x] View recently played stations
+- [x] Setup Like functionality
 
 ## Requirements
 

@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname, useSelectedLayoutSegment } from 'next/navigation';
+import Link from "next/link";
+import { usePathname, useSelectedLayoutSegment } from "next/navigation";
 
 type Tprops = {
   path: string;
@@ -30,7 +30,7 @@ export default function NavLink({ path, children, className }: Tprops) {
   return (
     <Link
       href={path}
-      className={`${className} group`}
+      className={` sm:text-xl flex flex-col items-center py-3 data-[active=true]:text-CustomActive sm:data-[active=true]:text-CustomWhite  sm:flex-row  sm:px-3 sm:data-[active=true]:bg-CustomActive sm:gap-2 sm:items-center ${className} group`}
       data-active={isPathActive()}
       replace
     >

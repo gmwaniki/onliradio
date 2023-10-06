@@ -1,28 +1,29 @@
 import Image from 'next/image';
-
-import React, { Suspense } from 'react';
+import React from 'react';
 import {
-  HiOutlineSearch,
-  HiOutlineHeart,
   HiOutlineClock,
   HiOutlineGlobe,
+  HiOutlineHeart,
+  HiOutlineHome,
+  HiOutlineSearch,
 } from 'react-icons/hi';
+
+import logo from '../../assets/logo.svg';
 import NavLink from '../../components/NavLink/NavLink';
 import Player from '../../components/Player/Player';
 
-import logo from '../../assets/logo.svg';
-import IndexLInk from '../../components/NavLink/IndexLInk';
-
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className='bg-CustomBlack min-h-screen mb-40 sm:mb-0 sm:grid sm:grid-cols-[minmax(0,200px),minmax(0,1fr)] lg:grid-cols-[minmax(0,250px),minmax(0,1fr)] 2xl:container'>
-      <div className='isolate grid grid-rows-[1fr,auto]  '>
+    <div className='bg-CustomBlack min-h-screen pb-40 sm:pb-0 sm:grid sm:grid-cols-[minmax(0,clamp(200px,14%,250px)),minmax(0,1fr)] '>
+      <div className='relative flex flex-col justify-between'>
         <main className='p-[10px] '>{children}</main>
         <Player />
       </div>
 
-      {/* player */}
-      <nav className='fixed bottom-0 bg-CustomLightBlack w-full text-CustomWhite border border-transparent border-t-2 border-t-CustomLightBlack sm:left-0 sm:top-0 sm:bottom-auto  sm:sticky  sm:max-h-screen sm:col-start-1 sm:row-start-1 sm:pt-[10px]'>
+      <nav
+        className=' fixed bottom-0 w-full bg-CustomLightBlack  text-CustomWhite border border-transparent border-t-2 border-t-CustomLightBlack sm:left-0 sm:top-0 sm:bottom-auto  sm:sticky
+        sm:max-h-screen sm:col-start-1 sm:row-start-1 sm:pt-[10px] overflow-y-auto'
+      >
         <ul className='flex sm:flex-col sm:gap-4 sm:rounded-tr sm:relative sm:z-20 sm:text-xl'>
           <li className='hidden sm:block mx-3 relative isolate -z-10'>
             <div className='  bg-CustomBlack py-7 px-1  rounded-l relative -z-10 rounded'>
@@ -30,64 +31,47 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             </div>
           </li>
           <li className='flex-1'>
-            <Suspense fallback='Home'>
-              <IndexLInk />
-            </Suspense>
+            <NavLink path={'/app'} className=''>
+              <HiOutlineHome className='text-3xl childPath:stroke-1 group-data-[active=true]:childPath:stroke-2' />
+
+              <span className=' sm:group-data-[active=true]:bg-transparent sm:group-data-[active=true]:text-CustomWhite sm:px-0 sm:mx-0'>
+                Home
+              </span>
+            </NavLink>
           </li>
           <li className='flex-1'>
-            <NavLink
-              path='/app/search'
-              className='flex flex-col items-center pb-1 pt-2 rounded data-[active=true]:text-white sm:flex-row sm:mx-3 sm:px-4 sm:data-[active=true]:bg-[#151515] sm:gap-2 sm:items-center'
-            >
-              <div className='sm:group-data-[active=true]:bg-CustomActive sm:text-CustomWhite sm:rounded sm:p-1'>
+            <NavLink path='/app/search' className=''>
+              <div className='sm:group-data-[active=true]:bg-CustomActive sm:text-CustomWhite '>
                 <HiOutlineSearch className='text-3xl childPath:stroke-1 group-data-[active=true]:childPath:stroke-2' />
               </div>
-
-              <span className='group-data-[active=true]:bg-CustomBlack rounded px-4 mx-auto text-center sm:group-data-[active=true]:bg-transparent sm:group-data-[active=true]:text-CustomActive sm:px-0 sm:mx-0'>
-                Search
-              </span>
+              <span>Search</span>
             </NavLink>
           </li>
           <li className='flex-1 hidden sm:block'>
-            <NavLink
-              path='/app/countries'
-              className='flex flex-col items-center pb-1 pt-2 rounded data-[active=true]:text-white sm:flex-row sm:mx-3 sm:px-4 sm:data-[active=true]:bg-[#151515] sm:gap-2 sm:items-center'
-            >
-              <div className='sm:group-data-[active=true]:bg-CustomActive sm:text-CustomWhite sm:rounded sm:p-1'>
+            <NavLink path='/app/countries' className=''>
+              <div className='sm:group-data-[active=true]:bg-CustomActive sm:text-CustomWhite '>
                 <HiOutlineGlobe className='text-3xl childPath:stroke-1 group-data-[active=true]:childPath:stroke-2' />
               </div>
 
-              <span className='group-data-[active=true]:bg-CustomBlack rounded px-4 mx-auto text-center sm:group-data-[active=true]:bg-transparent sm:group-data-[active=true]:text-CustomActive sm:px-0 sm:mx-0'>
-                Countries
-              </span>
+              <span className=''>Countries</span>
             </NavLink>
           </li>
 
           <li className='flex-1'>
-            <NavLink
-              path='/app/history'
-              className='flex flex-col items-center pb-1 pt-2 rounded data-[active=true]:text-white sm:flex-row sm:mx-3 sm:px-4 sm:data-[active=true]:bg-[#151515] sm:gap-2 sm:items-center'
-            >
-              <div className='sm:group-data-[active=true]:bg-CustomActive sm:text-CustomWhite sm:rounded sm:p-1'>
+            <NavLink path='/app/history'>
+              <div className='sm:group-data-[active=true]:bg-CustomActive sm:text-CustomWhite '>
                 <HiOutlineClock className='text-3xl childPath:stroke-1 group-data-[active=true]:childPath:stroke-2' />
               </div>
 
-              <span className='group-data-[active=true]:bg-CustomBlack rounded px-4 mx-auto text-center sm:group-data-[active=true]:bg-transparent sm:group-data-[active=true]:text-CustomActive sm:px-0 sm:mx-0'>
-                History
-              </span>
+              <span>History</span>
             </NavLink>
           </li>
           <li className='flex-1'>
-            <NavLink
-              path='/app/favourites'
-              className='flex flex-col items-center pb-1 pt-2 rounded data-[active=true]:text-white sm:flex-row sm:mx-3 sm:px-4 sm:data-[active=true]:bg-[#151515] sm:gap-2 sm:items-center'
-            >
-              <div className='sm:group-data-[active=true]:bg-CustomActive sm:text-CustomWhite sm:rounded sm:p-1'>
+            <NavLink path='/app/favourites'>
+              <div className='sm:group-data-[active=true]:bg-CustomActive sm:text-CustomWhite '>
                 <HiOutlineHeart className='text-3xl childPath:stroke-1 group-data-[active=true]:childPath:stroke-2' />
               </div>
-              <span className='group-data-[active=true]:bg-CustomBlack rounded px-3 mx-auto text-center sm:group-data-[active=true]:bg-transparent sm:group-data-[active=true]:text-CustomActive sm:px-0 sm:mx-0'>
-                Favourites
-              </span>
+              <span>Favourites</span>
             </NavLink>
           </li>
         </ul>

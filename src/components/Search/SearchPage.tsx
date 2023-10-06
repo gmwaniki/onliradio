@@ -1,7 +1,8 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { getStationsUrl, stringCapitalize } from '../../util/getStationsUrl';
+
+import { stringCapitalize } from '../../util/getStationsUrl';
 import { TStation } from '../../util/playableStation';
 import Station from '../Station/Station';
 import AdvancedSearch from './AdvancedSearch';
@@ -17,7 +18,7 @@ type TProps = {
   };
 };
 
-export default function SearchPage({ url, stations, searchParams }: TProps) {
+export default function SearchPage({ stations }: TProps) {
   const router = useRouter();
   const pathname = usePathname();
   const onFormSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
@@ -25,11 +26,11 @@ export default function SearchPage({ url, stations, searchParams }: TProps) {
     const searchValues: TProps['searchParams'] = Object.fromEntries(
       formData.entries()
     );
-    const stationsUrl = getStationsUrl(
-      url,
-      Object.fromEntries(formData.entries())
-    );
-    // console.log(stationsUrl);
+    // const stationsUrl = getStationsUrl(
+    //   url,
+    //   Object.fromEntries(formData.entries()) as TInputValues
+    // );
+
     const urlParams = new URLSearchParams();
     if (searchValues.name) {
       urlParams.set('name', stringCapitalize(searchValues.name));
@@ -43,12 +44,8 @@ export default function SearchPage({ url, stations, searchParams }: TProps) {
     if (searchValues.genre) {
       urlParams.set('tag', searchValues.genre);
     }
-    // console.log(urlParams.toString());
-    // console.log(`${pathname}?${urlParams.toString()}`);
     router.push(`${pathname}?${urlParams.toString()}`);
   };
-
-  // console.log(stations);
 
   return (
     <section className='text-CustomWhite min-h-full'>

@@ -53,10 +53,10 @@ export const playableStations: TplayableStations = function (stations) {
   return stationsNoHls;
 };
 
-const sethttps = (url: string): string => {
+export const sethttps = (url: string): string => {
   try {
     const urlObject = new URL(url);
-    if (urlObject.protocol !== 'https:') {
+    if (urlObject.protocol === 'http:') {
       urlObject.protocol = 'https:';
       url = urlObject.toString();
     }

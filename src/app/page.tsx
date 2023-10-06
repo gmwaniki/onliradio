@@ -1,12 +1,13 @@
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 import { MdLanguage, MdOutlineRadio, MdTranslate } from 'react-icons/md';
+
 import hero from '../assets/hero.webp';
 import Header from '../components/Header/Header';
 
 export default function Page() {
   return (
-    <div className='min-h-screen bg-[#F2F2F2] relative'>
+    <div className='min-h-screen  relative'>
       <div className='container mx-auto pt-5 px-6 sm:px-0 md:px-6 md:pt-7 grid grid-flow-row sm:gap-10 '>
         <Header />
 
@@ -23,7 +24,7 @@ export default function Page() {
 
               <Link
                 href={`/app`}
-                className='bg-gradient text-CustomWhite p-4 rounded flex items-center gap-x-2 self-center justify-self-center sm:self-end sm:justify-self-start '
+                className='bg-gradient text-white p-4 rounded flex items-center gap-x-2 self-center justify-self-center transition-transform duration-300 sm:self-end sm:justify-self-start hover:scale-105 hover:transition-transform hover:duration-300'
               >
                 <MdOutlineRadio className='text-2xl' />
                 <span className=''>Listen to radio</span>
@@ -32,10 +33,10 @@ export default function Page() {
 
             <div className='mt-10 grid grid-rows-3 gap-y-12 px-12 sm:px-0  sm:grid-rows-1 sm:grid-cols-3 sm:col-span-2 sm:gap-6 lg:col-span-1'>
               <div className='relative bg-CustomWhite grid place-items-center rounded-md'>
-                <div className='absolute  bg-CustomBlack  p-4 rounded-full top-0 right-1/2 translate-x-1/2 -translate-y-1/2 '>
-                  <MdOutlineRadio className='text-CustomWhite text-3xl' />
+                <div className='absolute  bg-CustomBlack  p-4 rounded-full top-0 right-1/2 translate-x-1/2 -translate-y-1/2  '>
+                  <MdOutlineRadio className='text-white text-3xl' />
                 </div>
-                <div className=' py-8  text-left'>
+                <div className=' py-8 text-left'>
                   <p className='text-CustomBlack text-xl'>Stations</p>
                   <span className='font-semibold text-3xl'>+30,000</span>
                 </div>
@@ -43,7 +44,7 @@ export default function Page() {
 
               <div className='relative bg-CustomWhite grid place-items-center rounded-md'>
                 <div className='absolute bg-CustomBlack  p-4 rounded-full top-0 right-1/2 translate-x-1/2 -translate-y-1/2 '>
-                  <MdLanguage className='text-CustomWhite text-3xl' />
+                  <MdLanguage className='text-white text-3xl' />
                 </div>
                 <div className='py-10 text-left'>
                   <p className='text-CustomBlack  text-xl'>Countries</p>
@@ -53,7 +54,7 @@ export default function Page() {
 
               <div className='relative bg-CustomWhite  grid place-items-center rounded-md'>
                 <div className='absolute bg-CustomBlack  p-4 rounded-full top-0 right-1/2 translate-x-1/2 -translate-y-1/2 '>
-                  <MdTranslate className='text-CustomWhite text-3xl' />
+                  <MdTranslate className='text-white text-3xl' />
                 </div>
                 <div className=' py-8 text-left'>
                   <p className='text-CustomBlack  text-xl'>Languages</p>

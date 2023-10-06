@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { HiMenuAlt3, HiX } from 'react-icons/hi';
+
 import logo from '../../assets/logo.svg';
 
 const Header = () => {
