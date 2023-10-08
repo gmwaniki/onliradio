@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { HiOutlineArrowRight } from 'react-icons/hi';
 
-import Search from '../../../components/Search/Search';
 import HeroCarousel from '../../../components/Station/HeroCarousel';
 import Station from '../../../components/Station/Station';
 import { getUrl } from '../../../util/getUrl';
@@ -16,13 +15,13 @@ const getMostVotedStations = async (url: string) => {
 
 const getLocalStations = async (url: string, countryCode: string) => {
   const results = await fetch(
-    `${url}/stations/search?order=votes&countrycode=${countryCode}&hidebroken=true&is_https=true&limit=6&reverse=true`
+    `${url}/stations/search?order=votes&countrycode=${countryCode}&hidebroken=true&is_https=true&limit=9&reverse=true`
   );
   return results.json() as Promise<TStation[]>;
 };
 const getMostPlayedStations = async (url: string) => {
   const results = await fetch(
-    `${url}/stations/search?order=clickcount&hidebroken=true&is_https=true&limit=6&reverse=true`
+    `${url}/stations/search?order=clickcount&hidebroken=true&is_https=true&limit=9&reverse=true`
   );
   return results.json() as Promise<TStation[]>;
 };
@@ -40,7 +39,6 @@ export default async function Page({
 
   return (
     <>
-      <Search />
       <HeroCarousel stations={stations} />
       <div className='text-CustomWhite'>
         <div className='flex justify-between items-center py-2'>

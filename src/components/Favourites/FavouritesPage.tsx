@@ -11,10 +11,7 @@ type TProps = {
 };
 
 export default function FavouritesPage({ url }: TProps) {
-  // const [stations, setStations] = useState<TStation[]>([]);
-
   const { likes } = useLikes(null);
-  console.log(likes);
 
   const stationIds = likes
     ? Object.entries(likes)
