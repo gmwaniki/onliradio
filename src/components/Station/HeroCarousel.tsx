@@ -1,5 +1,7 @@
 'use client';
-import { useMemo, useState } from 'react';
+import { AnimatePresence, m } from 'framer-motion';
+import { useState } from 'react';
+import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
 
 import { TStation } from '../../util/playableStation';
 import HeroStation from './HeroStation';
@@ -9,6 +11,7 @@ type TProps = {
 };
 export default function HeroCarousel({ stations }: TProps) {
   const [index, setIndex] = useState(0);
+  const station = stations[index];
 
   const incrementIndex = () => {
     const nextStation = stations[index + 1];
@@ -28,27 +31,29 @@ export default function HeroCarousel({ stations }: TProps) {
 
     setIndex((index) => index - 1);
   };
-  const leftStyle = useMemo(() => {
-    return `left-${index}00`;
-  }, [index]);
-  // const station = stations[index];
 
   return (
-    <div className='text-CustomWhite pt-6'>
-      <div className='relative scrollbar flex justify-center'>
-        <ul className='grid grid-flow-col auto-cols-[min(500px,83%)] snap-x snap-mandatory snap- h-full gap-5  sm:gap-12 overflow-x-auto  scrollbar max-w-7xl rounded-md'>
-          {stations.map((station) => {
-            return (
-              <li
-                key={station.stationuuid}
-                className={`inline-flex snap-center flex-1 max-h-[350px] `}
-                id={station.stationuuid}
-              >
-                <HeroStation station={station} key={station.stationuuid} />
-              </li>
-            );
-          })}
-        </ul>
+    <div className='text-CustomWhite pt-2'>
+      <div className='relative scrollbar grid grid-rows-[min-content,1fr]  grid-cols-[.3fr,1fr,.3fr] lg:grid-rows-1  lg:gap-5'>
+        <m.button
+          onClick={decrementIndex}
+          className=' absolute left-5 z-10 self-center justify-self-center bg-CustomBlack border border-CustomWhite rounded-full p-2 lg:static lg:bg-CustomLightBlack lg:p-5 lg:justify-self-end lg:border-0'
+          whileHover={{ scale: 1.25 }}
+        >
+          <HiChevronLeft className='text-3xl' />
+        </m.button>
+        <div className='col-span-full col-start-1 row-start-2 lg:col-span-1 lg:col-start-2 lg:row-start-1 '>
+          <AnimatePresence initial={false} mode='wait'>
+            <HeroStation station={station} key={station.stationuuid} />
+          </AnimatePresence>
+        </div>
+        <m.button
+          onClick={incrementIndex}
+          className='absolute right-5 z-10 col-start-3 self-center justify-self-center bg-CustomBlack border border-CustomWhite  rounded-full p-2 lg:static lg:bg-CustomLightBlack lg:p-5 lg:justify-self-start lg:border-0'
+          whileHover={{ scale: 1.25 }}
+        >
+          <HiChevronRight className='text-3xl ' />
+        </m.button>
       </div>
     </div>
   );
