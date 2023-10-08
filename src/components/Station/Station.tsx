@@ -40,7 +40,7 @@ export default function Station({ station }: TProps) {
           height={70}
           quality={50}
           className='object-contain min-w-[70px] min-h-[70px] rounded'
-          priority={false}
+          priority={true}
         />
         <span className='absolute w-6 h-6 text-center  -top-1 -right-1 bg-CustomLightBlack  rounded-full  ring-1 ring-CustomActive'>
           {getFlagEmoji(station.countrycode) || '🤷'}
