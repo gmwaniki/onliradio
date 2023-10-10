@@ -25,7 +25,7 @@ const Country = (prop: TCountryProps) => {
         </p>
       </div>
       <HiOutlineChevronRight className='text-7xl childPath:stroke-1' />
-      <span className='absolute -z-10 top-1/2 -translate-y-1/2 right-0 blur-lg text-7xl transition-transform duration-500 group-hover:scale-150 group-hover:transition-transform group-hover:duration-200'>
+      <span className='absolute -z-10 top-1/3 -translate-y-1/2 right-5 blur-lg text-7xl transition-transform duration-500 group-hover:scale-150 group-hover:transition-transform group-hover:duration-200'>
         {getFlagEmoji(country.iso_3166_1) || ''}
       </span>
     </Link>
