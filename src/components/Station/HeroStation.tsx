@@ -7,6 +7,7 @@ import {
   AudioContext,
   StationReducerActionType,
 } from '../../app/providers/AudioContext';
+import getFlagEmoji from '../../util/getFlagEmoji';
 import { TStation } from '../../util/playableStation';
 import Tag from './Tag';
 
@@ -26,9 +27,18 @@ const HeroStation = ({ station }: HeroStationProps) => {
     return station.tags.split(',').slice(0, 2);
   }, [station.tags]);
 
+  const date = useMemo(() => {
+    const newDate = new Date(station.lastcheckoktime_iso8601);
+    const month = new Intl.DateTimeFormat(undefined, { month: 'short' }).format(
+      newDate
+    );
+
+    return `${month}, ${newDate.getDate()} ${newDate.getFullYear()}`;
+  }, [station.lastcheckoktime_iso8601]);
+
   return (
     <motion.div
-      className='bg-CustomLightBlack p-4  h-full w-full rounded-sm   grid grid-flow-row auto-rows-min gap-2 lg:p-8 lg:grid-cols-2 lg:grid-rows-2 gap-x-8'
+      className='bg-CustomLightBlack p-4  h-full w-full rounded-sm   grid grid-flow-row auto-rows-min gap-2 lg:p-8 lg:grid-cols-3 lg:grid-rows-[auto,1fr,1.5fr] gap-x-8'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ type: 'spring', duration: 0.25 }}
@@ -37,7 +47,7 @@ const HeroStation = ({ station }: HeroStationProps) => {
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={0.2}
     >
-      <ul className='flex gap-4 items-start justify-start'>
+      <ul className='flex gap-4 items-start justify-start lg:col-start-2 lg:col-span-full'>
         {tags.map((tag, index) => {
           return tag ? (
             <Tag tag={tag} key={index} />
@@ -59,20 +69,32 @@ const HeroStation = ({ station }: HeroStationProps) => {
         className='rounded-md aspect-square justify-self-center lg:row-span-full  lg:self-center md:w-60 2xl:w-96'
       />
 
-      <div className='grid grid-cols-[minmax(0,1fr),minmax(0,.5fr)] lg:col-start-2 justify-center items-center'>
+      <div className='grid grid-cols-[minmax(0,1fr),minmax(0,.5fr)] lg:col-start-2 lg:col-span-full lg:row-start-2 lg:row-span-full justify-center items-center'>
         <div className=' lg:text-xl'>
-          <p className='text-2xl text-ellipsis overflow-hidden whitespace-nowrap'>
+          <p
+            className='text-stationTitle font-bold text-ellipsis overflow-x-hidden whitespace-nowrap overflow-y-clip '
+            title={station.name}
+          >
             {station.name}
           </p>
           <p>
             Language:{' '}
             <span className='capitalize'>{station.language || 'English'}</span>
           </p>
+          <p className='hidden sm:block'>
+            Country:{' '}
+            {station.countrycode ? getFlagEmoji(station.countrycode) : ' N/A'}
+          </p>
 
-          <span className='flex items-center '>
+          <span className='flex items-center gap-x-1'>
             <HiOutlineStar />
             {station.votes.toLocaleString()}
           </span>
+          <p className='hidden sm:block'>
+            Codec: {station.codec}{' '}
+            {station.bitrate ? `${station.bitrate} kbps` : null}
+          </p>
+          <p className='hidden sm:block'>Last Check: {date}</p>
         </div>
         <button
           type='button'

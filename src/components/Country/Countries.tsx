@@ -48,7 +48,14 @@ const Countries = ({ initCountries, url }: CountriesProps) => {
           return (
             <React.Fragment key={index}>
               {countries.map((country) => {
-                return <Country country={country} key={country.iso_3166_1} />;
+                return (
+                  <li
+                    className='sm:aspect-[2/.5] 2xl:aspect-[4/2]'
+                    key={country.iso_3166_1}
+                  >
+                    <Country country={country} />
+                  </li>
+                );
               })}
             </React.Fragment>
           );

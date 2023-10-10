@@ -16,7 +16,7 @@ type TProps = {
 
 export default function SearchPage({ stations }: TProps) {
   return (
-    <section className='text-CustomWhite min-h-full'>
+    <section className='text-CustomWhite '>
       <ul className='mt-4 grid grid-flow-row grid-cols-[repeat(auto-fit,150px)] items-center justify-center gap-y-5 gap-x-3'>
         {stations.map((station) => {
           return (
