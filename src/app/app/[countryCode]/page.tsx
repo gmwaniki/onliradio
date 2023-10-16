@@ -100,7 +100,7 @@ export default async function Page({
               <HiOutlineArrowRight />
             </Link>
           </div>
-          <ul className='grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))]  gap-4    sm:pl-3'>
+          <ul className='grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] auto-rows-[minmax(125px,1fr)]  gap-4 sm:pl-3'>
             {countries.map((country) => {
               return (
                 <li key={country.iso_3166_1}>
