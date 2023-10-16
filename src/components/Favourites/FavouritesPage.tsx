@@ -11,8 +11,7 @@ type TProps = {
 };
 
 export default function FavouritesPage({ url }: TProps) {
-  const { likes } = useLikes(null);
-
+  const [_isLiked, likes, _like, _unlike] = useLikes();
   const stationIds = likes
     ? Object.entries(likes)
         .filter((value) => value[1] === '1')
