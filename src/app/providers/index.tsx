@@ -2,6 +2,8 @@
 import React from 'react';
 
 import AudioContextProvider from './AudioContext';
+import HistoryProvider from './HistoryContextProvider';
+import LikesContextProvider from './LikesContextProvider';
 import ReactQueryProvider from './ReactQueryProvider';
 
 type ProviderProps = {
@@ -11,7 +13,11 @@ type ProviderProps = {
 const Providers = ({ children }: ProviderProps) => {
   return (
     <ReactQueryProvider>
-      <AudioContextProvider>{children}</AudioContextProvider>
+      <AudioContextProvider>
+        <HistoryProvider>
+          <LikesContextProvider>{children}</LikesContextProvider>
+        </HistoryProvider>
+      </AudioContextProvider>
     </ReactQueryProvider>
   );
 };

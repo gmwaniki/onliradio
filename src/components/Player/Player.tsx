@@ -19,8 +19,9 @@ export default function Player() {
   const audioRef = useRef<HTMLAudioElement>(null);
   // const [like, setLike] = useState<boolean>(false);
   const {} = useAudio(audioRef);
-  const { like, unlike, isliked } = useLikes(station.stationId);
+  const [isliked, _stations, like, unlike] = useLikes(station.stationId);
 
+  // console.log(isliked);
   // useEffect(() => {
   //   const localLikes = localStorage.getItem('likes');
 
@@ -41,28 +42,14 @@ export default function Player() {
   //   }
   // }, [station.stationId]);
 
-  // useEffect(() => {
-  //   const storage = localStorage.getItem('likes');
-  //   if (storage !== null) {
-  //     const likes: Array<string> = JSON.parse(storage);
-  //     const stationIndex = likes.includes(station.stationId);
-  //     if (!like && stationIndex) {
-  //       const likeSet = new Set([...likes]);
-  //       likeSet.delete(station.stationId);
-  //       localStorage.setItem('likes', JSON.stringify([...likeSet]));
-  //     }
-  //     if (like && !stationIndex) {
-  //       localStorage.setItem(
-  //         'likes',
-  //         JSON.stringify([...likes, station.stationId])
-  //       );
-  //     }
-  //   } else {
-  //     if (station.stationId && like) {
-  //       localStorage.setItem('likes', JSON.stringify([station.stationId]));
-  //     }
-  //   }
-  // }, [like, station.stationId]);
+  const handleLikeClick = (_e: React.SyntheticEvent<HTMLButtonElement>) => {
+    if (isliked) {
+      unlike();
+    } else {
+      like();
+    }
+    return;
+  };
 
   if (station.stationId === '') {
     return null;
@@ -90,9 +77,7 @@ export default function Player() {
           <button
             type='button'
             aria-label='like Channel'
-            onClick={() => {
-              isliked ? unlike(station.stationId) : like(station.stationId);
-            }}
+            onClick={handleLikeClick}
           >
             {isliked ? (
               <HiHeart className='w-12 h-12 text-CustomActive ' />
@@ -122,19 +107,6 @@ export default function Player() {
               <MdOutlinePlayArrow className='w-12 h-12' />
             </Button>
           )}
-          {/* <button
-            type='button'
-            aria-label={isPlaying ? 'Pause' : 'Play'}
-            onClick={() => {
-              dispatch({ type: StationReducerActionType.TOGGLE });
-            }}
-          >
-            {isPlaying ? (
-              <HiPause className='text-5xl fill-CustomActive' />
-            ) : (
-              <HiPlay className='text-5xl' />
-            )}
-          </button> */}
           <audio
             src={station.stationurl}
             ref={audioRef}
