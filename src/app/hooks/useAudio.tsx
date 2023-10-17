@@ -1,17 +1,24 @@
+'use client';
 import Hls from 'hls.js';
 import { useContext, useEffect, useState } from 'react';
 
 import { AudioContext } from '../providers/AudioContext';
 
-const audioElement = new Audio();
-const hlsPlayback = new Hls();
 const useAudio = () => {
   const { state } = useContext(AudioContext);
   const [isError, setIsError] = useState<boolean>(false);
   const [status, setStatus] = useState('');
   const [playtime, setPlaytime] = useState(0);
 
+  // let audioRef = useRef<HTMLAudioElement>(null);
+
+  // useEffect(()=>{
+  //   audioRef.current = new Audio()
+  // },[])
+
   useEffect(() => {
+    const audioElement = new Audio();
+    const hlsPlayback = new Hls();
     audioElement.src = state.station.stationurl;
 
     const trackplaytime = () => {
@@ -21,7 +28,10 @@ const useAudio = () => {
 
     const play = () => {
       setIsError(false);
-      audioElement.play();
+      audioElement.play().catch(() => {
+        setIsError(true);
+        setStatus('Unable to play track');
+      });
     };
     const playing = () => {
       setIsError(false);
@@ -45,11 +55,13 @@ const useAudio = () => {
       setStatus('Paused');
     };
     const errored = () => {
+      // console.log(e);
       setStatus('Unable to play Track');
       setIsError(true);
     };
     const stalled = () => {
-      setStatus('Player stalled');
+      setStatus('Reloading...');
+      load();
       setIsError(true);
     };
     const offline = () => {
@@ -58,40 +70,41 @@ const useAudio = () => {
     };
     const online = () => {
       if (audioElement.HAVE_ENOUGH_DATA) {
-        play();
+        load();
         setStatus('playing');
       }
     };
     audioElement.addEventListener('playing', playing);
     audioElement.addEventListener('pause', paused);
-    audioElement.addEventListener('error', errored);
+    // hlsPlayback.on(Hls.Events.)
     audioElement.addEventListener('stalled', stalled);
-    hlsPlayback.on(Hls.Events.ERROR, errored);
-    hlsPlayback.off(Hls.Events.ERROR, playing);
     window.addEventListener('offline', offline);
     window.addEventListener('online', online);
-    if (state.isPlaying) {
-      setStatus('loading');
-      if (state.station.hls) {
-        if (audioElement.canPlayType('application/vnd.apple.mpegurl')) {
-          audioElement.onloadedmetadata = () => {
-            play();
-          };
+    const load = () => {
+      if (state.isPlaying) {
+        setStatus('loading');
+        if (state.station.hls) {
+          if (audioElement.canPlayType('application/vnd.apple.mpegurl')) {
+            audioElement.onloadedmetadata = () => {
+              play();
+            };
+          } else {
+            hlsPlayback.loadSource(state.station.stationurl);
+            hlsPlayback.attachMedia(audioElement);
+            hlsPlayback.on(Hls.Events.MANIFEST_PARSED, () => {
+              play();
+            });
+          }
         } else {
-          hlsPlayback.loadSource(state.station.stationurl);
-          hlsPlayback.attachMedia(audioElement);
-          hlsPlayback.on(Hls.Events.MANIFEST_PARSED, () => {
-            play();
-          });
+          audioElement.load();
+          play();
         }
       } else {
-        audioElement.load();
-        play();
+        audioElement.pause();
+        setStatus('Paused');
       }
-    } else {
-      audioElement.pause();
-      setStatus('Paused');
-    }
+    };
+    load();
 
     return () => {
       audioElement.removeEventListener('playing', playing);
@@ -101,7 +114,7 @@ const useAudio = () => {
       window.removeEventListener('offline', offline);
       window.removeEventListener('online', online);
       clearInterval(intervalFunc);
-      audioElement.remove();
+      audioElement.pause();
     };
   }, [state]);
 
