@@ -115,6 +115,7 @@ const useAudio = () => {
       window.removeEventListener('online', online);
       clearInterval(intervalFunc);
       audioElement.pause();
+      hlsPlayback.stopLoad();
     };
   }, [state]);
 
