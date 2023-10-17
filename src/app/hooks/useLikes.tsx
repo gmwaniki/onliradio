@@ -1,10 +1,10 @@
 'use client';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { LikesContext } from '../providers/LikesContextProvider';
 
-function useLikes<T extends string | null>(
-  stationId?: T
+function useLikes(
+  stationId: string = ''
 ): [
   isliked: boolean,
   likedStations: Record<string, string>,
@@ -12,7 +12,14 @@ function useLikes<T extends string | null>(
   unlike: () => void,
 ] {
   const [likes, setLikes] = useContext(LikesContext);
-  const isliked = stationId && likes[stationId] == '1' ? true : false;
+  const [isliked, setIsLiked] = useState(false);
+
+  useEffect(() => {
+    setIsLiked(stationId && likes[stationId] === '1' ? true : false);
+    return () => {
+      setIsLiked(false);
+    };
+  }, [stationId, likes]);
 
   const like = () => {
     if (!stationId) {
