@@ -1,19 +1,17 @@
 import Hls from 'hls.js';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { AudioContext } from '../providers/AudioContext';
 
+const audioElement = new Audio();
+const hlsPlayback = new Hls();
 const useAudio = () => {
   const { state } = useContext(AudioContext);
   const [isError, setIsError] = useState<boolean>(false);
   const [status, setStatus] = useState('');
   const [playtime, setPlaytime] = useState(0);
 
-  const audioElementRef = useRef(() => new Audio());
-  const hlsPlaybackRef = useRef(() => new Hls());
   useEffect(() => {
-    const audioElement = audioElementRef.current();
-    const hlsPlayback = hlsPlaybackRef.current();
     audioElement.src = state.station.stationurl;
 
     const trackplaytime = () => {
