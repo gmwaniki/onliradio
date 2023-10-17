@@ -18,8 +18,15 @@ export default function Page() {
                 Listen to your favourite radio stations on the go
               </h1>
               <p className='text-lg text-center sm:text-left'>
-                Onliradio gives you access to over 30,000 radio stations from
-                over 200+ countries.
+                {/* Onliradio gives you access to over 30,000 radio stations from
+                over 200+ countries. */}
+                Immerse yourself in the diverse and dynamic world of music,
+                news, and entertainment with OnliRadio.We have an impressive
+                lineup of over 30,000 radio stations at your fingertips,
+                OnliRadio ensures you'll always find something to suit your
+                taste. No matter where you are in the world, our software
+                connects you to a vast array of content from 200 countries and
+                in over 300 languages.
               </p>
 
               <Link
