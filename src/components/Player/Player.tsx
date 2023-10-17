@@ -1,6 +1,7 @@
 'use client';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
-import React, { useContext, useRef } from 'react';
+import React, { useContext } from 'react';
 import { HiHeart, HiOutlineHeart } from 'react-icons/hi';
 import { MdOutlinePause, MdOutlinePlayArrow } from 'react-icons/md';
 
@@ -16,31 +17,15 @@ import Button from './Button';
 export default function Player() {
   const { state, dispatch } = useContext(AudioContext);
   const { station, isPlaying } = state;
-  const audioRef = useRef<HTMLAudioElement>(null);
-  // const [like, setLike] = useState<boolean>(false);
-  const {} = useAudio(audioRef);
+  const { isError, status, playtime } = useAudio();
   const [isliked, _stations, like, unlike] = useLikes(station.stationId);
 
-  // console.log(isliked);
-  // useEffect(() => {
-  //   const localLikes = localStorage.getItem('likes');
-
-  //   if (localLikes !== null) {
-  //     const likes: Array<string> = JSON.parse(localLikes);
-  //     likes.indexOf(station.stationId) === -1 ? setLike(false) : setLike(true);
-  //   }
-  //   if (station.stationId) {
-  //     const localHistory = localStorage.getItem('history');
-  //     if (localHistory === null) {
-  //       localStorage.setItem('history', JSON.stringify([station.stationId]));
-  //     } else {
-  //       const stationsHistory: string[] = JSON.parse(localHistory);
-  //       const historySet = new Set([...stationsHistory]);
-  //       historySet.add(station.stationId);
-  //       localStorage.setItem('history', JSON.stringify([...historySet]));
-  //     }
-  //   }
-  // }, [station.stationId]);
+  // const timepassed = useMemo(() => {
+  //   const minutes = playtime / 60;
+  //   const hours = minutes / 60;
+  //   const seconds = playtime - minutes * 60;
+  //   console.log(hours.toPrecision(3), minutes., seconds.toFixed(2));
+  // }, [playtime]);
 
   const handleLikeClick = (_e: React.SyntheticEvent<HTMLButtonElement>) => {
     if (isliked) {
@@ -56,22 +41,43 @@ export default function Player() {
   }
 
   return (
-    <div className='fixed bottom-[90px] z-20 w-full  text-CustomWhite   sm:sticky sm:bottom-2  place-self-end'>
-      <div className='mx-2 bg-CustomLightBlack/80 backdrop-blur-sm p-3 rounded grid grid-cols-[auto_repeat(2,minmax(0,1fr))] gap-x-2 sm:mx-3'>
-        <Image
-          src={`/api/image?url=${encodeURIComponent(station.favicon)}`}
-          alt='music note'
-          width={55}
-          height={55}
-          priority={true}
-          className='object-contain min-w-[55px] min-h-[55px] rounded'
-          onError={(e) => {
-            e.currentTarget.src = '/musicnote.svg';
-          }}
-        />
-        <div className='flex flex-col'>
-          <p>{station.name}</p>
-          <p>{getFlagEmoji(station.countryCode)}</p>
+    <motion.div
+      className='fixed bottom-[90px] z-20 w-full  text-CustomWhite   sm:sticky sm:bottom-2  place-self-end'
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{}}
+    >
+      <div className='mx-2 bg-CustomLightBlack/80 backdrop-blur-sm p-3 rounded grid grid-cols-2  lg:grid-cols-[minmax(0,1fr),auto,minmax(0,1fr)] auto-cols-min justify-between gap-x-2 sm:mx-3'>
+        <div className='grid grid-flow-col auto-cols-min items-center gap-x-2'>
+          <Image
+            src={`/api/image?url=${encodeURIComponent(station.favicon)}`}
+            alt='music note'
+            width={55}
+            height={55}
+            priority={true}
+            className='object-contain min-w-[55px] min-h-[55px] rounded'
+            onError={(e) => {
+              e.currentTarget.src = '/musicnote.svg';
+            }}
+          />
+          <div className='flex flex-col '>
+            <p className='whitespace-nowrap text-ellipsis overflow-hidden max-w-[150px] sm:max-w-[min(100%,200px)]'>
+              {station.name}
+            </p>
+            <p>
+              {station.countryCode ? getFlagEmoji(station.countryCode) : 'N/A'}
+            </p>
+          </div>
+        </div>
+        <div className='hidden lg:flex lg:flex-col sm:gap-y-2 sm:text-center sm:justify-center sm:items-center '>
+          <p
+            className={`${
+              isError ? 'text-red-500 border-red-500' : ''
+            } uppercase border border-green-500 text-green-500 rounded p-1 text-sm`}
+          >
+            {status}
+          </p>
+          {/* <p className='text-sm'>{playtime}</p> */}
         </div>
         <div className='flex justify-end items-center gap-x-2'>
           <button
@@ -107,13 +113,8 @@ export default function Player() {
               <MdOutlinePlayArrow className='w-12 h-12' />
             </Button>
           )}
-          <audio
-            src={station.stationurl}
-            ref={audioRef}
-            className='hidden'
-          ></audio>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
