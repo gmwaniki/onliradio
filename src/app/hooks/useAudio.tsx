@@ -9,11 +9,11 @@ const useAudio = () => {
   const [status, setStatus] = useState('');
   const [playtime, setPlaytime] = useState(0);
 
-  const audioElementRef = useRef(new Audio());
-  const hlsPlaybackRef = useRef(new Hls());
+  const audioElementRef = useRef(() => new Audio());
+  const hlsPlaybackRef = useRef(() => new Hls());
   useEffect(() => {
-    const audioElement = audioElementRef.current;
-    const hlsPlayback = hlsPlaybackRef.current;
+    const audioElement = audioElementRef.current();
+    const hlsPlayback = hlsPlaybackRef.current();
     audioElement.src = state.station.stationurl;
 
     const trackplaytime = () => {
