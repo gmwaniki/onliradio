@@ -17,13 +17,13 @@ const getMostVotedStations = async (url: string) => {
 
 const getLocalStations = async (url: string, countryCode: string) => {
   const results = await fetch(
-    `${url}/stations/search?order=votes&countrycode=${countryCode}&hidebroken=true&is_https=true&limit=9&reverse=true`
+    `${url}/stations/search?order=votes&countrycode=${countryCode}&hidebroken=true&is_https=true&limit=5&reverse=true`
   );
   return results.json() as Promise<TStation[]>;
 };
 const getMostPlayedStations = async (url: string) => {
   const results = await fetch(
-    `${url}/stations/search?order=clickcount&hidebroken=true&is_https=true&limit=9&reverse=true`
+    `${url}/stations/search?order=clickcount&hidebroken=true&is_https=true&limit=5&reverse=true`
   );
   return results.json() as Promise<TStation[]>;
 };
@@ -61,7 +61,7 @@ export default async function Page({
               <HiOutlineArrowRight />
             </Link>
           </div>
-          <ul className='grid grid-flow-row grid-cols-[repeat(auto-fit,150px)]  gap-4 justify-center  sm:pl-3'>
+          <ul className='grid grid-flow-row grid-cols-[repeat(auto-fit,150px)]  gap-4 justify-center  lg:pl-3 lg:grid-cols-[repeat(auto-fill,minmax(275px,1fr))] lg:justify-between '>
             {localStations.map((station) => {
               return (
                 <li key={station.stationuuid} className='h-full'>
@@ -82,7 +82,7 @@ export default async function Page({
               <HiOutlineArrowRight />
             </Link>
           </div>
-          <ul className='grid grid-flow-row grid-cols-[repeat(auto-fit,150px)]   gap-4 justify-center  sm:pl-3 '>
+          <ul className='grid grid-flow-row grid-cols-[repeat(auto-fit,150px)]  gap-4 justify-center  lg:pl-3 lg:grid-cols-[repeat(auto-fill,minmax(275px,1fr))] lg:justify-between'>
             {mostPlayedStations.map((station) => {
               return (
                 <li key={station.stationuuid}>

@@ -17,7 +17,7 @@ export default async function Page() {
       <h1 className='text-center font-semibold text-2xl py-2'>
         Most Played Stations
       </h1>
-      <ul className='grid grid-flow-row grid-cols-[repeat(auto-fit,150px)] items-center justify-center gap-y-5 gap-x-3'>
+      <ul className='grid grid-flow-row grid-cols-[repeat(auto-fit,150px)] items-center justify-center gap-y-5 gap-x-3 lg:grid-cols-[repeat(3,minmax(275px,1fr))]'>
         {stations.map((station) => {
           return (
             <li key={station.stationuuid}>

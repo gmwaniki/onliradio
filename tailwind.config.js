@@ -13,9 +13,9 @@ export const theme = {
   extend: {
     colors: {
       CustomBlack: '#111618',
-      CustomWhite: '#E3E3E3',
+      CustomWhite: '#FAFAFA',
       CustomLightBlack: '#262626',
-      CustomActive: '#A852FF',
+      CustomActive: '#D886FF',
     },
     backgroundImage: {
       gradient: 'linear-gradient(to right, #4B1E7A, #2E47E6)',
@@ -25,7 +25,7 @@ export const theme = {
     },
     fontSize: {
       ..._fontSize,
-      base: ['clamp(16px,5vw,20px)', _fontSize.base[1]],
+      base: ['clamp(1rem,5vw,1.125rem)', _fontSize.base[1]],
       stationTitle: ['clamp(1.125rem,1.75vw,2.125rem)', _fontSize['2xl'][1]],
     },
 
