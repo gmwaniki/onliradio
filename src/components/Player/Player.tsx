@@ -87,7 +87,7 @@ export default function Player() {
               <p
                 className={`${
                   isError ? 'text-red-500 border-red-500' : ''
-                } uppercase border border-green-500 text-green-500 rounded p-1 text-xs w-min sm:hidden`}
+                } uppercase border border-green-500 text-green-500 rounded p-1 text-xs w-auto sm:hidden`}
               >
                 {status}
               </p>

@@ -17,8 +17,9 @@ export function middleware(request: NextRequest) {
   );
 
   const rewriteUrl = new URL(`/app/${geo?.country || 'no'}`, request.url);
+  const regex = /^\/app$/;
 
-  if (request.nextUrl.pathname === '/app') {
+  if (regex.test(request.nextUrl.pathname)) {
     return NextResponse.rewrite(rewriteUrl, { headers: requestHeaders });
   }
   return NextResponse.next({

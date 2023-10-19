@@ -48,6 +48,17 @@ const useAudio = () => {
             },
           ],
         });
+        navigator.mediaSession.setActionHandler('play', () => {
+          load();
+        });
+        navigator.mediaSession.setActionHandler('pause', () => {
+          audioElement.pause();
+          setStatus('Paused');
+        });
+        navigator.mediaSession.setActionHandler('stop', () => {
+          audioElement.pause();
+          setStatus('Paused');
+        });
       }
       setStatus('playing');
     };
