@@ -21,7 +21,7 @@ export default function Search({}: { children?: React.ReactNode }) {
     return <></>;
   }
   return (
-    <div className='bg-CustomLightBlack rounded sticky top-1 z-20 bg-CustomLightBlack/80 backdrop-blur-sm sm:top-[10px] mx-3'>
+    <div className='bg-CustomLightBlack rounded sticky top-1 z-20 bg-CustomLightBlack/80 backdrop-blur-sm sm:top-[10px] '>
       <form className='flex px-3 pb-3 pt-2' onSubmit={onSubmit}>
         <div className='grid grid-cols-[auto,min-content] auto-rows-auto flex-1'>
           <label

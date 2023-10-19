@@ -38,7 +38,7 @@ const HeroStation = ({ station }: HeroStationProps) => {
 
   return (
     <motion.div
-      className='bg-CustomLightBlack p-4  h-full w-full rounded-sm   grid grid-flow-row auto-rows-min gap-2 lg:p-8 lg:grid-cols-3 lg:grid-rows-[auto,1fr,1.5fr] gap-x-8'
+      className=' bg-CustomLightBlack p-4  h-full w-full rounded-sm   grid grid-rows-[repet(3,auto)] lg:@xs:grid-rows-[repeat(3,auto)]  gap-2 lg:p-8 lg:grid-cols-3 lg:grid-rows-[auto,1fr,1.5fr] gap-x-8 '
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ type: 'spring', duration: 0.25 }}
@@ -47,7 +47,7 @@ const HeroStation = ({ station }: HeroStationProps) => {
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={0.2}
     >
-      <ul className='flex gap-4 items-start justify-start lg:col-start-2 lg:col-span-full'>
+      <ul className='flex gap-4 items-start justify-start col-start-1 row-start-1 lg:@xs:col-span-full  lg:col-start-2 lg:col-span-full'>
         {tags.map((tag, index) => {
           return tag ? (
             <Tag tag={tag} key={index} />
@@ -66,7 +66,7 @@ const HeroStation = ({ station }: HeroStationProps) => {
           e.currentTarget.src = '/musicnote.svg';
         }}
         priority={true}
-        className='rounded-md aspect-square justify-self-center lg:row-span-full  lg:self-center md:w-60 2xl:w-96'
+        className='rounded-md aspect-square justify-self-center lg:@xs:row-start-2 lg:row-span-full  lg:self-center md:w-60 2xl:w-96'
       />
 
       <div className='grid grid-cols-[minmax(0,1fr),minmax(0,.5fr)] lg:col-start-2 lg:col-span-full lg:row-start-2 lg:row-span-full justify-center items-center'>
@@ -90,11 +90,11 @@ const HeroStation = ({ station }: HeroStationProps) => {
             <HiOutlineStar />
             {station.votes.toLocaleString()}
           </span>
-          <p className='hidden sm:block'>
+          <p className='hidden lg:block'>
             Codec: {station.codec}{' '}
             {station.bitrate ? `${station.bitrate} kbps` : null}
           </p>
-          <p className='hidden sm:block'>Last Check: {date}</p>
+          <p className='hidden lg:block'>Last Check: {date}</p>
         </div>
         <button
           type='button'
@@ -122,9 +122,9 @@ const HeroStation = ({ station }: HeroStationProps) => {
           }}
         >
           {isCurrentStation ? (
-            <HiOutlinePause className='w-full h-full aspect-square childPath:stroke-1  sm:childPath:stroke-[0.5]' />
+            <HiOutlinePause className='w-full h-full aspect-square childPath:stroke-1  sm:childPath:stroke-[0.5] stroke-CustomActive ' />
           ) : (
-            <HiOutlinePlay className='w-full h-full aspect-square childPath:stroke-1  sm:childPath:stroke-[0.5]  ' />
+            <HiOutlinePlay className='w-full h-full aspect-square childPath:stroke-1  sm:childPath:stroke-[0.5]  stroke-CustomActive' />
           )}
         </button>
       </div>

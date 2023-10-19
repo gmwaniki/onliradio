@@ -14,6 +14,7 @@ export default async function Page() {
 
   return (
     <section className='text-CustomWhite'>
+      <h2 className='text-center font-bold text-4xl'>Countries</h2>
       <Countries initCountries={countries} url={url} />
     </section>
   );

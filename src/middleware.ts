@@ -4,14 +4,12 @@ import { NextRequest } from 'next/server';
 // // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
   const { geo } = request;
-
-  const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
   const cspHeader = `    
     upgrade-insecure-requests;
 `;
 
   const requestHeaders = new Headers(request.headers);
-  requestHeaders.set('x-nonce', nonce);
+
   requestHeaders.set(
     'Content-Security-Policy',
     // Replace newline characters and spaces
