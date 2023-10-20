@@ -69,28 +69,29 @@ export default function SearchPage({ stations, url }: TProps) {
   return (
     <section className='text-CustomWhite '>
       <AdvancedSearch {...searchparams} />
-
-      {data.pages.map((stations, index) => {
-        return (
-          <React.Fragment key={index}>
-            {stations.length === 0 && searchParams?.size > 0 ? (
-              <p className='text-center text-2xl pt-5 font-semibold'>
-                No result found
-              </p>
-            ) : (
-              <ul className='mt-4 grid grid-flow-row grid-cols-[repeat(auto-fit,150px)] items-center justify-center gap-y-5 gap-x-3 lg:grid-cols-[repeat(3,minmax(275px,1fr))] '>
-                {stations.map((station) => {
-                  return (
-                    <li key={station.stationuuid}>
-                      <Station station={station} />
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-          </React.Fragment>
-        );
-      })}
+      <ul className='mt-4 grid grid-flow-row grid-cols-[repeat(auto-fit,150px)] items-center justify-center gap-y-5 gap-x-3 lg:grid-cols-[repeat(3,minmax(275px,1fr))] '>
+        {data.pages.map((stations, index) => {
+          return (
+            <React.Fragment key={index}>
+              {stations.length === 0 && searchParams?.size > 0 ? (
+                <li className=' col-span-full text-center text-2xl pt-5 font-semibold'>
+                  No result found
+                </li>
+              ) : (
+                <>
+                  {stations.map((station) => {
+                    return (
+                      <li key={station.stationuuid}>
+                        <Station station={station} />
+                      </li>
+                    );
+                  })}
+                </>
+              )}
+            </React.Fragment>
+          );
+        })}
+      </ul>
       {data.pages[data.pages.length - 1].length > 0 ? (
         <div className='flex justify-center items-center'>
           <button
