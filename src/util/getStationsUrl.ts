@@ -14,11 +14,11 @@ export const getStationsUrl: TgetStation = (
   url,
   searchValues,
   limit = 15,
-  offset = 0
+  offset
 ) => {
   const getUrl = new URL(`${url}/stations/search`);
   getUrl.searchParams.set('limit', limit.toString());
-  getUrl.searchParams.set('offset', offset.toString());
+  getUrl.searchParams.set('offset', offset ? offset?.toString() : '0');
   getUrl.searchParams.set('order', 'votes');
   getUrl.searchParams.set('reverse', 'true');
   getUrl.searchParams.set('ishttps', 'true');
