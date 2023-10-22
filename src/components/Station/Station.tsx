@@ -13,6 +13,7 @@ import {
   AudioContext,
   StationReducerActionType,
 } from '../../app/providers/AudioContext';
+import { getCountryName } from '../../util/getCountries';
 import getFlagEmoji from '../../util/getFlagEmoji';
 import { TStation } from '../../util/playableStation';
 
@@ -47,7 +48,7 @@ export default function Station({ station }: TProps) {
           <HiOutlineHeart
             className={` ${
               isliked ? 'fill-CustomActive ' : ''
-            } stroke-CustomActive hover:fill-CustomActive`}
+            } stroke-CustomActive  `}
           />
         </button>
       </div>
@@ -69,9 +70,10 @@ export default function Station({ station }: TProps) {
         <div className=' hidden text-[1rem] lg:grid lg:grid-rows-2  '>
           <p
             className='whitespace-nowrap w-10/12 overflow-hidden text-ellipsis'
-            title={station.country}
+            title={getCountryName.of(station.countrycode)}
           >
-            {getFlagEmoji(station.countrycode)} {station.country}
+            {getFlagEmoji(station.countrycode)}{' '}
+            {getCountryName.of(station.countrycode)}
           </p>
           <span className='flex items-center gap-x-1'>
             <HiOutlineStar />
