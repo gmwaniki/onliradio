@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { cache } from 'react';
 import { HiOutlineArrowRight } from 'react-icons/hi';
 
 import Country from '../../../components/Country/Country';
@@ -11,7 +10,7 @@ import { getUrl } from '../../../util/getUrl';
 import { TStation } from '../../../util/playableStation';
 import { TCountry } from '../countries/page';
 
-const getMostVotedStations = cache(async (url: string) => {
+const getMostVotedStations = async (url: string) => {
   const stations = await fetch(
     `${url}/stations/search?order=votes&hidebroken=true&is_https=true&limit=10&reverse=true`,
     {
@@ -21,7 +20,7 @@ const getMostVotedStations = cache(async (url: string) => {
     }
   );
   return stations.json() as Promise<TStation[]>;
-});
+};
 
 const getLocalStations = async (url: string, countryCode: string) => {
   const results = await fetch(
@@ -29,20 +28,20 @@ const getLocalStations = async (url: string, countryCode: string) => {
   );
   return results.json() as Promise<TStation[]>;
 };
-const getMostPlayedStations = cache(async (url: string) => {
+const getMostPlayedStations = async (url: string) => {
   const results = await fetch(
     `${url}/stations/search?order=clickcount&hidebroken=true&is_https=true&limit=10&reverse=true`,
     { next: { revalidate: 86400 } }
   );
   return results.json() as Promise<TStation[]>;
-});
-const getCountries = cache(async (url: string) => {
+};
+const getCountries = async (url: string) => {
   const results = await fetch(
     `${url}/countries?order=stationcount&reverse=true&limit=10`,
     { next: { revalidate: 86400 } }
   );
   return results.json() as Promise<TCountry[]>;
-});
+};
 
 export default async function Page({
   params,
