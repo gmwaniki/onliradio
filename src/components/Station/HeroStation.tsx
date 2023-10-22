@@ -7,6 +7,7 @@ import {
   AudioContext,
   StationReducerActionType,
 } from '../../app/providers/AudioContext';
+import { getCountryName } from '../../util/getCountries';
 import getFlagEmoji from '../../util/getFlagEmoji';
 import { TStation } from '../../util/playableStation';
 import Tag from './Tag';
@@ -77,13 +78,15 @@ const HeroStation = ({ station }: HeroStationProps) => {
           >
             {station.name}
           </p>
-          <p>
-            Language:{' '}
-            <span className='capitalize'>{station.language || 'English'}</span>
-          </p>
           <p className='hidden sm:block'>
-            Country:{' '}
-            {station.countrycode ? getFlagEmoji(station.countrycode) : ' N/A'}
+            {station.countrycode
+              ? `${getCountryName.of(station.countrycode)}  ${getFlagEmoji(
+                  station.countrycode
+                )}`
+              : ' N/A'}
+          </p>
+          <p>
+            <span className='capitalize'>{station.language || 'English'}</span>
           </p>
 
           <span className='flex items-center gap-x-1'>
