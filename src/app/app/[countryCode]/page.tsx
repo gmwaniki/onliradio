@@ -19,19 +19,19 @@ const getMostVotedStations = async (url: string) => {
 
 const getLocalStations = async (url: string, countryCode: string) => {
   const results = await fetch(
-    `${url}/stations/search?order=votes&countrycode=${countryCode}&hidebroken=true&is_https=true&limit=6&reverse=true`
+    `${url}/stations/search?order=votes&countrycode=${countryCode}&hidebroken=true&is_https=true&limit=10&reverse=true`
   );
   return results.json() as Promise<TStation[]>;
 };
 const getMostPlayedStations = async (url: string) => {
   const results = await fetch(
-    `${url}/stations/search?order=clickcount&hidebroken=true&is_https=true&limit=6&reverse=true`
+    `${url}/stations/search?order=clickcount&hidebroken=true&is_https=true&limit=10&reverse=true`
   );
   return results.json() as Promise<TStation[]>;
 };
 const getCountries = async (url: string) => {
   const results = await fetch(
-    `${url}/countries?order=stationcount&reverse=true&limit=6`
+    `${url}/countries?order=stationcount&reverse=true&limit=10`
   );
   return results.json() as Promise<TCountry[]>;
 };
