@@ -19,7 +19,10 @@ const Country = (prop: TCountryProps) => {
     >
       <div className=' flex flex-col flex-grow'>
         <p className='grid grid-cols-[auto,1fr] items-center gap-x-1 '>
-          <span className='basis-auto'> {country.name}</span>
+          <span className='basis-auto'>
+            {' '}
+            {getCountryName.of(country.iso_3166_1)}
+          </span>
           <span className='justify-self-end'>
             {getFlagEmoji(country.iso_3166_1) || ''}
           </span>
