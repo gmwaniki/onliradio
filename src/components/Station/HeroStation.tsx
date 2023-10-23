@@ -80,7 +80,7 @@ const HeroStation = ({ station }: HeroStationProps) => {
           </p>
           <p className='hidden sm:block'>
             {station.countrycode
-              ? `${getCountryName.of(station.countrycode)}  ${getFlagEmoji(
+              ? `${getCountryName(station.countrycode)}  ${getFlagEmoji(
                   station.countrycode
                 )}`
               : ' N/A'}
