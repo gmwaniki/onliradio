@@ -70,10 +70,10 @@ export default function Station({ station }: TProps) {
         <div className=' hidden text-[1rem] lg:grid lg:grid-rows-2  '>
           <p
             className='whitespace-nowrap w-10/12 overflow-hidden text-ellipsis'
-            title={getCountryName.of(station.countrycode)}
+            title={getCountryName(station.countrycode)}
           >
-            {getFlagEmoji(station.countrycode)}{' '}
-            {getCountryName.of(station.countrycode)}
+            {getFlagEmoji(station.countrycode) || ''}{' '}
+            {getCountryName(station.countrycode)}
           </p>
           <span className='flex items-center gap-x-1'>
             <HiOutlineStar />
