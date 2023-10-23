@@ -14,14 +14,14 @@ const Country = (prop: TCountryProps) => {
   const { country } = prop;
   return (
     <Link
-      href={`/app/search?country=${getCountryName.of(country.iso_3166_1)}`}
+      href={`/app/search?country=${getCountryName(country.iso_3166_1)}`}
       className='group grid grid-cols-[1fr,auto] items-center pr-4 pl-2 py-2 mb-4 rounded bg-CustomLightBlack/50  relative isolate sm:mb-0 h-full'
     >
       <div className=' flex flex-col flex-grow'>
         <p className='grid grid-cols-[auto,1fr] items-center gap-x-1 '>
           <span className='basis-auto'>
             {' '}
-            {getCountryName.of(country.iso_3166_1)}
+            {getCountryName(country.iso_3166_1)}
           </span>
           <span className='justify-self-end'>
             {getFlagEmoji(country.iso_3166_1) || ''}
