@@ -50,7 +50,7 @@ export default async function Page({
 }) {
   const url = await getUrl();
   const stations = await getMostVotedStations(url);
-  const countryCode = params?.countryCode || 'UG';
+  const countryCode = params?.countryCode || 'KE';
   const localStations = await getLocalStations(url, countryCode);
   const mostPlayedStations = await getMostPlayedStations(url);
   const countries = await getCountries(url);
@@ -66,7 +66,7 @@ export default async function Page({
               <div className='flex justify-between items-center py-2'>
                 <p className='text-lg  font-bold md:text-2xl'>
                   Top Stations in{' '}
-                  {getCountryName.of(countryCode.toLocaleUpperCase()) ||
+                  {getCountryName(countryCode.toLocaleUpperCase()) ||
                     'your Area'}
                 </p>
               </div>
