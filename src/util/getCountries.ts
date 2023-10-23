@@ -15,4 +15,11 @@ export const getCountries = async (
   return result.json() as Promise<TCountry[]>;
 };
 
-export const getCountryName = new Intl.DisplayNames(['en'], { type: 'region' });
+export const getCountryName = (countrycode: string) => {
+  if (!countrycode) {
+    return '';
+  }
+  return (
+    new Intl.DisplayNames(['en'], { type: 'region' }).of(countrycode) || ''
+  );
+};
