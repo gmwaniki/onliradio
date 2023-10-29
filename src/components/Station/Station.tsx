@@ -44,6 +44,7 @@ export default function Station({ station }: TProps) {
         <button
           onClick={() => (isliked ? unlike() : like())}
           className='hidden lg:block'
+          aria-label='Like station'
         >
           <HiOutlineHeart
             className={` ${
