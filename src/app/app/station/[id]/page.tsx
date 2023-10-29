@@ -1,6 +1,6 @@
 import { Metadata, ResolvingMetadata } from 'next';
-import { redirect } from 'next/navigation';
 
+import StationPage from '../../../../components/Station/StationPage';
 import { getUrl } from '../../../../util/getUrl';
 import { TStation } from '../../../../util/playableStation';
 
@@ -21,18 +21,10 @@ const getStation = async (id: string) => {
 };
 
 export default async function Page({ params }: { params: { id: string } }) {
-
   const stations = await getStation(params.id);
   const station = stations[0];
-  const stationurl = `${
-    process.env.NEXT_PUBLIC_VERCEL_URL
-      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-      : 'http://localhost:3000'
-  }/app/search?name=${encodeURIComponent(station.name)}&language=${
-    station.language.split(',')[0]
-  }&country=${station.country}`;
-  // console.log(station);
-  return redirect(stationurl);
+
+  return <StationPage station={station} />;
 }
 
 export async function generateMetadata(
@@ -45,8 +37,8 @@ export async function generateMetadata(
   const previousImages = (await parent).openGraph?.images || [];
 
   const stationurl = `${
-    process.env.NEXT_PUBLIC_VERCEL_URL
-      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+    process.env.NODE_ENV === 'production'
+      ? `https://onliradio.vercel.app`
       : 'http://localhost:3000'
   }/app/search?name=${encodeURIComponent(station.name)}&language=${
     station.language.split(',')[0]
@@ -74,5 +66,4 @@ export async function generateMetadata(
       type: 'website',
     },
   };
-
 }
