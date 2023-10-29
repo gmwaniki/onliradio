@@ -28,21 +28,21 @@ export default function Player() {
   //   console.log(hours.toPrecision(3), minutes., seconds.toFixed(2));
   // }, [playtime]);
   const share = async () => {
-    if (navigator.canShare()) {
-      //mobile
-      navigator.share({
-        url: url.toString(),
-        text: station.name,
-        title: 'Onliradio',
-      });
-    } else {
-      //desktop
-      try {
-        await navigator.clipboard.writeText(url.toString());
-      } catch (error) {
-        console.log('unable to write to clipboard');
-      }
+    // if (navigator.canShare()) {
+    //   //mobile
+    //   navigator.share({
+    //     url: url.toString(),
+    //     text: station.name,
+    //     title: 'Onliradio',
+    //   });
+    // } else {
+    //desktop
+    try {
+      await navigator.clipboard.writeText(url.toString());
+    } catch (error) {
+      console.log('unable to write to clipboard');
     }
+    // }
   };
 
   const handleLikeClick = (_e: React.SyntheticEvent<HTMLButtonElement>) => {
