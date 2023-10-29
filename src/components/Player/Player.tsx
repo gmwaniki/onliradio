@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import React, { useContext } from 'react';
 import { HiOutlineHeart } from 'react-icons/hi';
-import { MdOutlinePause, MdOutlinePlayArrow } from 'react-icons/md';
+import { MdOutlinePause, MdOutlinePlayArrow, MdShare } from 'react-icons/md';
 
 import useAudio from '../../app/hooks/useAudio';
 import useLikes from '../../app/hooks/useLikes';
@@ -19,6 +19,7 @@ export default function Player() {
   const { station, isPlaying } = state;
   const { isError, status, playtime } = useAudio();
   const [isliked, _stations, like, unlike] = useLikes(station.stationId);
+  const url = new URL(`http://localhost:3000/app/station/${station.stationId}`);
 
   // const timepassed = useMemo(() => {
   //   const minutes = playtime / 60;
@@ -26,6 +27,23 @@ export default function Player() {
   //   const seconds = playtime - minutes * 60;
   //   console.log(hours.toPrecision(3), minutes., seconds.toFixed(2));
   // }, [playtime]);
+  const share = async () => {
+    if (navigator.canShare()) {
+      //mobile
+      navigator.share({
+        url: url.toString(),
+        text: station.name,
+        title: 'Onliradio',
+      });
+    } else {
+      //desktop
+      try {
+        await navigator.clipboard.writeText(url.toString());
+      } catch (error) {
+        console.log('unable to write to clipboard');
+      }
+    }
+  };
 
   const handleLikeClick = (_e: React.SyntheticEvent<HTMLButtonElement>) => {
     if (isliked) {
@@ -91,6 +109,16 @@ export default function Player() {
               >
                 {status}
               </p>
+              <span className='sm:hidden'>
+                <Button
+                  func={() => {
+                    share();
+                  }}
+                  status='Share'
+                >
+                  <MdShare />
+                </Button>
+              </span>
             </div>
           </div>
         </div>
@@ -120,7 +148,7 @@ export default function Player() {
         </div>
         {/* <div className='flex justify-end items-center gap-x-2'> */}
 
-        <div className='hidden sm:flex sm:flex-col sm:gap-y-2 sm:text-center sm:items-end pr-5'>
+        <div className='hidden sm:flex sm:flex-row sm:gap-y-2 sm:text-center sm:items-center sm:justify-end sm:gap-5 pr-5'>
           <p
             className={`${
               isError ? 'text-red-500 border-red-500' : ''
@@ -128,7 +156,14 @@ export default function Player() {
           >
             {status}
           </p>
-          {/* <p className='text-sm'>{playtime}</p> */}
+          <Button
+            func={() => {
+              share();
+            }}
+            status='Share'
+          >
+            <MdShare />
+          </Button>
         </div>
       </div>
 
