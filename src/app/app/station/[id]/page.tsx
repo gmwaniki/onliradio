@@ -37,8 +37,8 @@ export async function generateMetadata(
   const previousImages = (await parent).openGraph?.images || [];
 
   const stationurl = `${
-    process.env.NEXT_PUBLIC_VERCEL_URL
-      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+    process.env.NODE_ENV === 'production'
+      ? `https://onliradio.vercel.app`
       : 'http://localhost:3000'
   }/app/search?name=${encodeURIComponent(station.name)}&language=${
     station.language.split(',')[0]
