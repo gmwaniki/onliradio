@@ -29,4 +29,13 @@ export default function RootLayout({
 export const metadata: Metadata = {
   title: 'Onliradio',
   description: 'Listen to over 30,000 radio station from over 200 countries',
+  openGraph: {
+    images: [
+      {
+        url: '/images/logo/profile.png',
+        width: 1000,
+        height: 1000,
+      },
+    ],
+  },
 };
