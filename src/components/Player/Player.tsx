@@ -21,10 +21,11 @@ export default function Player() {
   const { isError, status, playtime } = useAudio();
   const [isliked, _stations, like, unlike] = useLikes(station.stationId);
 
+  const hostUrl = new URL(window.location.href);
   const url = new URL(
     `${
-      process.env.NEXT_PUBLIC_VERCEL_URL
-        ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+      process.env.NODE_ENV === 'production'
+        ? `https://${hostUrl.host}`
         : `http://localhost:3000`
     }/app/station/${station.stationId}`
   );
