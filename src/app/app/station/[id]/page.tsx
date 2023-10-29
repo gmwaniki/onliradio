@@ -21,6 +21,7 @@ const getStation = async (id: string) => {
 };
 
 export default async function Page({ params }: { params: { id: string } }) {
+
   const stations = await getStation(params.id);
   const station = stations[0];
   const stationurl = `${
@@ -73,4 +74,5 @@ export async function generateMetadata(
       type: 'website',
     },
   };
+
 }
