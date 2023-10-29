@@ -31,6 +31,9 @@ export default function Player() {
 
   const share = () => {
     setShared(true);
+    setTimeout(() => {
+      setShared(false);
+    }, 2000);
     try {
       navigator.clipboard.writeText(url.toString()).then().catch();
     } catch (error) {
@@ -51,7 +54,7 @@ export default function Player() {
     return null;
   }
   const shareNotificationVariants = {
-    open: { opacity: 1, y: 0, zIndex: 0 },
+    open: { opacity: 1, y: 0, zIndex: 0, transition: {} },
     closed: { opacity: 0, y: '90%', zIndex: -10 },
   };
 
@@ -107,14 +110,15 @@ export default function Player() {
                 {status}
               </p>
               <span className='sm:hidden'>
-                <Button
-                  func={() => {
+                <button
+                  onClick={() => {
                     share();
                   }}
-                  status='Share'
+                  aria-label='Share'
+                  disabled={isShared}
                 >
                   <MdShare />
-                </Button>
+                </button>
               </span>
             </div>
           </div>
@@ -153,24 +157,22 @@ export default function Player() {
           >
             {status}
           </p>
-          <Button
-            func={() => {
+          <button
+            onClick={() => {
               share();
             }}
-            status='Share'
+            aria-label='Share'
           >
             <MdShare />
-          </Button>
+          </button>
         </div>
       </div>
 
       <motion.div
-        className='absolute  p-3 rounded-md right-2  top-0  bg-CustomActive text-CustomBlack'
+        className='absolute  p-3 rounded-md right-2  top-0  bg-CustomActive text-CustomBlack pointer-events-none'
         variants={shareNotificationVariants}
         animate={isShared ? 'open' : 'closed'}
         style={{ translateY: '-120%', opacity: 0 }}
-        transition={{ duration: 1, type: 'spring', bounce: 0.2 }}
-        onAnimationComplete={() => setShared(false)}
       >
         Copied link
       </motion.div>
