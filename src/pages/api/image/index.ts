@@ -32,10 +32,12 @@ export default async function handler(
       .toBuffer();
 
     res.setHeader('Content-Type', 'image/webp');
+    res.setHeader('Cache-Control', 'public, max-age=604800, immutable');
     res.send(newImage);
   } catch (error) {
     const defaultImage = fs.createReadStream(svgFile);
     res.setHeader('Content-Type', 'image/svg+xml');
+    res.setHeader('Cache-Control', 'public, max-age=604800, immutable');
     defaultImage.pipe(res);
   }
 }
