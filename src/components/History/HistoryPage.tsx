@@ -1,6 +1,9 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import Image from 'next/image';
 
+import useHistory from '../../app/hooks/useHistory';
+import historyImg from '../../assets/history.svg';
 import { TStation } from '../../util/playableStation';
 import Station from '../Station/Station';
 
@@ -9,36 +12,53 @@ type TProps = {
 };
 
 export default function HistoryStations({ url }: TProps) {
-  const [stations, setStations] = useState<TStation[]>([]);
+  const getStations = async ({ queryKey }: { queryKey: string[] }) => {
+    console.log(queryKey);
+    const result = await fetch(
+      `${url}/stations/byuuid?uuids=${queryKey.join(',')}`
+    );
+    const resultStations = (await result.json()) as TStation[];
+    return resultStations;
+  };
+  const { historyStation } = useHistory();
 
-  useEffect(() => {
-    const likedStations = localStorage.getItem('history');
-    const getStations = async () => {
-      if (likedStations === null) {
-        return;
-      }
-      const stationIds: string[] = JSON.parse(likedStations);
-      try {
-        const result = await fetch(
-          `${url}/stations/byuuid?uuids=${stationIds.join(',')}`
-        );
-        const resultStations = (await result.json()) as TStation[];
-        setStations(resultStations);
-      } catch (error) {
-        setStations([]);
-      }
-    };
-    getStations();
-  }, [url]);
+  const stations = useQuery({
+    queryKey: Object.keys(historyStation),
+    queryFn: getStations,
+  });
+
+  // if (stations.isLoading) {
+  //   return <span>Loading...</span>;
+  // }
+  if (!stations.isSuccess) {
+    return <span>An Error Occured</span>;
+  }
+
+  if (stations.data.length === 0) {
+    return (
+      <div className='flex flex-col h-full w-full justify-center items-center'>
+        <Image
+          alt='astronaut holding a star'
+          src={historyImg}
+          width={500}
+          height={500}
+        />
+        <h2 className='font-bold text-2xl px-5'>
+          Stations you have listened to will appear hear
+        </h2>
+      </div>
+    );
+  }
+
   return (
-    <>
-      {stations.map((station) => {
+    <ul className='grid grid-flow-row grid-cols-[repeat(auto-fit,150px)]  items-center justify-center  gap-y-4 gap-x-12 lg:grid-cols-[repeat(3,minmax(250px,1fr))]'>
+      {stations.data.map((station) => {
         return (
           <li key={station.stationuuid}>
             <Station station={station} />
           </li>
         );
       })}
-    </>
+    </ul>
   );
 }
