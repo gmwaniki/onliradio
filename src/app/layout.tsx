@@ -29,6 +29,11 @@ export default function RootLayout({
 export const metadata: Metadata = {
   title: 'Onliradio',
   description: 'Listen to over 30,000 radio station from over 200 countries',
+  metadataBase: new URL(
+    process.env.NODE_ENV === 'production'
+      ? `https://onliradio.vercel.app`
+      : 'http://localhost:3000'
+  ),
   openGraph: {
     images: [
       {
