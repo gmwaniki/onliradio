@@ -25,13 +25,18 @@ export default function HistoryStations({ url }: TProps) {
   const stations = useQuery({
     queryKey: Object.keys(historyStation),
     queryFn: getStations,
+    staleTime: Infinity,
   });
 
-  // if (stations.isLoading) {
-  //   return <span>Loading...</span>;
-  // }
+  if (stations.isLoading || stations.isFetching) {
+    return <span>Loading...</span>;
+  }
 
-  if (!stations || stations.data?.length === 0) {
+  if (stations.error) {
+    return <span>An Error Occured</span>;
+  }
+
+  if (stations.data?.length === 0) {
     return (
       <div className='flex flex-col h-full w-full justify-center items-center'>
         <Image
@@ -46,12 +51,10 @@ export default function HistoryStations({ url }: TProps) {
       </div>
     );
   }
-  if (!stations.isSuccess) {
-    return <span>An Error Occured</span>;
-  }
+
   return (
     <ul className='grid grid-flow-row grid-cols-[repeat(auto-fit,150px)]  items-center justify-center  gap-y-4 gap-x-12 lg:grid-cols-[repeat(3,minmax(250px,1fr))]'>
-      {stations.data.map((station) => {
+      {stations.data?.map((station) => {
         return (
           <li key={station.stationuuid}>
             <Station station={station} />
