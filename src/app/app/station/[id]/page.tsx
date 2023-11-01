@@ -48,12 +48,17 @@ export async function generateMetadata(
     title: 'Onliradio',
     keywords: station.tags?.split(',').slice(0, 3),
     authors: { name: 'George Mwaniki', url: 'gmwaniki.com' },
-    // metadataBase: new URL(process.env.VERCEL_URL ||),
+    metadataBase: new URL(
+      process.env.NODE_ENV === 'production'
+        ? `https://onliradio.vercel.app`
+        : 'http://localhost:3000'
+    ),
     openGraph: {
       title: station.name,
       description: 'Listen to all your favorite radio stations in one app',
       url: stationurl,
       siteName: 'Onliradio',
+
       images: [
         {
           url: '/images/logo/profile.png',

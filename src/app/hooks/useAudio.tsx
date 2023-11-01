@@ -2,19 +2,16 @@
 import Hls from 'hls.js';
 import { useContext, useEffect, useState } from 'react';
 
-import { AudioContext } from '../providers/AudioContext';
+import {
+  AudioContext,
+  StationReducerActionType,
+} from '../providers/AudioContext';
 
 const useAudio = () => {
-  const { state } = useContext(AudioContext);
+  const { state, dispatch } = useContext(AudioContext);
   const [isError, setIsError] = useState<boolean>(false);
   const [status, setStatus] = useState('');
   const [playtime, setPlaytime] = useState(0);
-
-  // let audioRef = useRef<HTMLAudioElement>(null);
-
-  // useEffect(()=>{
-  //   audioRef.current = new Audio()
-  // },[])
 
   useEffect(() => {
     const audioElement = new Audio(state.station.stationurl);
@@ -50,14 +47,24 @@ const useAudio = () => {
         });
         navigator.mediaSession.setActionHandler('play', () => {
           load();
+          dispatch({
+            type: StationReducerActionType.PLAY,
+            payload: state.station,
+          });
         });
         navigator.mediaSession.setActionHandler('pause', () => {
           audioElement.pause();
           setStatus('Paused');
+          dispatch({
+            type: StationReducerActionType.PAUSE,
+          });
         });
         navigator.mediaSession.setActionHandler('stop', () => {
           audioElement.pause();
           setStatus('Paused');
+          dispatch({
+            type: StationReducerActionType.PAUSE,
+          });
         });
       }
       setStatus('playing');
@@ -128,7 +135,7 @@ const useAudio = () => {
       audioElement.pause();
       hlsPlayback.stopLoad();
     };
-  }, [state]);
+  }, [state, dispatch]);
 
   return { isError, status, playtime };
 };

@@ -2,13 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string };
-  reset: () => void;
-}) {
+export default function Error() {
   const route = useRouter();
   return (
     <div className='text-white text-center mt-5'>
