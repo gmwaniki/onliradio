@@ -1,15 +1,14 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
 
 import logo from '../../assets/logo.svg';
 
 const Header = () => {
-  const [menu, setMenu] = useState<boolean>(false);
-  function handleMenuClick() {
-    setMenu(!menu);
-  }
+  // const [menu, setMenu] = useState<boolean>(false);
+  // function handleMenuClick() {
+  //   setMenu(!menu);
+  // }
   return (
     <>
       <header className=' grid grid-cols-2 sm:text-lg sm:grid-cols-2  sm:justify-between'>
