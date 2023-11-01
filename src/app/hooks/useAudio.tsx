@@ -16,6 +16,7 @@ const useAudio = () => {
   useEffect(() => {
     const audioElement = new Audio(state.station.stationurl);
     const hlsPlayback = new Hls();
+    ``;
     audioElement.preload = 'auto';
 
     const trackplaytime = () => {
@@ -46,21 +47,18 @@ const useAudio = () => {
           ],
         });
         navigator.mediaSession.setActionHandler('play', () => {
-          load();
           dispatch({
             type: StationReducerActionType.PLAY,
             payload: state.station,
           });
         });
         navigator.mediaSession.setActionHandler('pause', () => {
-          audioElement.pause();
           setStatus('Paused');
           dispatch({
             type: StationReducerActionType.PAUSE,
           });
         });
         navigator.mediaSession.setActionHandler('stop', () => {
-          audioElement.pause();
           setStatus('Paused');
           dispatch({
             type: StationReducerActionType.PAUSE,
