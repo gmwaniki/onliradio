@@ -6,6 +6,7 @@ import { HiOutlineHeart } from 'react-icons/hi';
 import { MdOutlinePause, MdOutlinePlayArrow, MdShare } from 'react-icons/md';
 
 import useAudio from '../../app/hooks/useAudio';
+import useHistory from '../../app/hooks/useHistory';
 import useLikes from '../../app/hooks/useLikes';
 import {
   AudioContext,
@@ -17,10 +18,11 @@ import Button from './Button';
 export default function Player() {
   const { state, dispatch } = useContext(AudioContext);
   const [isShared, setShared] = useState(false);
-  const { station, isPlaying } = state;
-  const { isError, status, playtime } = useAudio();
-  const [isliked, _stations, like, unlike] = useLikes(station.stationId);
 
+  const { isError, status } = useAudio();
+  const [isliked, _stations, like, unlike] = useLikes(state.station.stationId);
+  const {} = useHistory();
+  const { station, isPlaying } = state;
   const share = () => {
     const hostUrl = new URL(window.location.href);
     const url = new URL(
