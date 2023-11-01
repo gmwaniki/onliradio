@@ -21,7 +21,7 @@ export const getStationsUrl: TgetStation = (
   getUrl.searchParams.set('offset', offset ? offset?.toString() : '0');
   getUrl.searchParams.set('order', 'votes');
   getUrl.searchParams.set('reverse', 'true');
-  getUrl.searchParams.set('ishttps', 'true');
+  getUrl.searchParams.set('is_https', 'false');
   getUrl.searchParams.set('hidebroken', 'true');
   if (searchValues.name) {
     getUrl.searchParams.set('name', stringCapitalize(searchValues.name));
