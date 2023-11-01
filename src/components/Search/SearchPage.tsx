@@ -45,7 +45,7 @@ export default function SearchPage({ stations, url }: TProps) {
     return results.json() as Promise<TStation[]>;
   };
 
-  const { data, fetchNextPage, isFetched, isFetching } = useInfiniteQuery({
+  const { data, fetchNextPage } = useInfiniteQuery({
     queryKey: [searchParams?.toString()],
     queryFn: getStationsNext,
     getNextPageParam: (lastpage, allpages) => {
