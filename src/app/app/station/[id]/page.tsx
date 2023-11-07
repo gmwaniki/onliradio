@@ -1,8 +1,8 @@
 import { Metadata, ResolvingMetadata } from 'next';
 
-import StationPage from '../../../../components/Station/StationPage';
-import { getUrl } from '../../../../util/getUrl';
-import { TStation } from '../../../../util/playableStation';
+import StationPage from '@/components/Station/StationPage';
+import { getUrl } from '@/util/getUrl';
+import { TStation } from '@/util/playableStation';
 
 type Props = {
   params: { id: string };

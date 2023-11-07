@@ -1,6 +1,6 @@
-import Countries from '../../../components/Country/Countries';
-import { getCountries } from '../../../util/getCountries';
-import { getUrl } from '../../../util/getUrl';
+import Countries from '@/components/Country/Countries';
+import { getCountries } from '@/util/getCountries';
+import { getUrl } from '@/util/getUrl';
 
 export type TCountry = {
   name: string;

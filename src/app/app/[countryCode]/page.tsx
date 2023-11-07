@@ -2,13 +2,14 @@ import Link from 'next/link';
 import { cache } from 'react';
 import { HiOutlineArrowRight } from 'react-icons/hi';
 
-import Country from '../../../components/Country/Country';
-import Search from '../../../components/Search/Search';
-import HeroCarousel from '../../../components/Station/HeroCarousel';
-import Station from '../../../components/Station/Station';
-import { getCountryName } from '../../../util/getCountries';
-import { getUrl } from '../../../util/getUrl';
-import { TStation } from '../../../util/playableStation';
+import Country from '@/components/Country/Country';
+import Search from '@/components/Search/Search';
+import HeroCarousel from '@/components/Station/HeroCarousel';
+import Station from '@/components/Station/Station';
+import { getCountryName } from '@/util/getCountries';
+import { getUrl } from '@/util/getUrl';
+import { TStation } from '@/util/playableStation';
+
 import { TCountry } from '../countries/page';
 
 const getMostVotedStations = cache(async (url: string) => {

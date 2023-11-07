@@ -1,6 +1,6 @@
-import Station from '../../../../components/Station/Station';
-import { getUrl } from '../../../../util/getUrl';
-import { TStation } from '../../../../util/playableStation';
+import Station from '@/components/Station/Station';
+import { getUrl } from '@/util/getUrl';
+import { TStation } from '@/util/playableStation';
 
 const getMostPlayedStations = async (url: string) => {
   const stations = await fetch(

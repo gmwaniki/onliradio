@@ -1,5 +1,5 @@
-import FavouritesPage from '../../../components/Favourites/FavouritesPage';
-import { getUrl } from '../../../util/getUrl';
+import FavouritesPage from '@/components/Favourites/FavouritesPage';
+import { getUrl } from '@/util/getUrl';
 
 export default async function Page() {
   const url = await getUrl();

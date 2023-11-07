@@ -1,7 +1,7 @@
-import SearchPage from '../../../components/Search/SearchPage';
-import { getStationsUrl } from '../../../util/getStationsUrl';
-import { getUrl } from '../../../util/getUrl';
-import { TStation } from '../../../util/playableStation';
+import SearchPage from '@/components/Search/SearchPage';
+import { getStationsUrl } from '@/util/getStationsUrl';
+import { getUrl } from '@/util/getUrl';
+import { TStation } from '@/util/playableStation';
 
 const getSearchStations = async (
   url: string,
