@@ -1,6 +1,8 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import Header from '../../src/components/Header/Header';
 import '@testing-library/jest-dom';
+
+import { fireEvent, render } from '@testing-library/react';
+
+import Header from '../../src/components/Header/Header';
 
 test('Menu loads with hamburger menu', () => {
   window.innerWidth = 300;

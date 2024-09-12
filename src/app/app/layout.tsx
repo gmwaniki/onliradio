@@ -8,9 +8,9 @@ import {
   HiOutlineSearch,
 } from 'react-icons/hi';
 
-import logo from '../../assets/logo.svg';
-import NavLink from '../../components/NavLink/NavLink';
-import Player from '../../components/Player/Player';
+import logo from '@/assets/logo.svg';
+import NavLink from '@/components/NavLink/NavLink';
+import Player from '@/components/Player/Player';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
