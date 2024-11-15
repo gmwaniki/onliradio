@@ -73,7 +73,9 @@ export default function SearchPage({ stations, url }: TProps) {
         {data.pages.map((stations, index) => {
           return (
             <React.Fragment key={index}>
-              {stations.length === 0 && searchParams?.size > 0 ? (
+              {stations.length === 0 &&
+              searchParams &&
+              searchParams?.size > 0 ? (
                 <li className=' col-span-full text-center text-2xl pt-5 font-semibold'>
                   No result found
                 </li>

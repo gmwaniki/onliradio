@@ -1,6 +1,6 @@
+import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import Home from '../../src/app/page';
-import '@testing-library/jest-dom';
 
 describe('HomePage', () => {
   afterEach(() => {
@@ -8,6 +8,8 @@ describe('HomePage', () => {
   });
   it('Should check if homepage loads without any errors', () => {
     render(<Home />);
+    expect(screen.getByText(/Listen to radio$/i)).toBeInTheDocument();
+    // expect()
   });
   it('Should Check if link to app works', async () => {
     render(<Home />);
